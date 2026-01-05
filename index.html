@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!DOCTYPE html>
+    <html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+            content="Database tecnico posizioni numero telaio, presa diagnosi EOBD e procedure manutenzione auto ibride.">
+        <title>Archivio Tecnico Veicoli</title>
+
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, sans-serif;
+                background-color: #f0f2f5;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+
+            .container {
+                max-width: 650px;
+                margin: auto;
+            }
+
+            header {
+                background: #1a73e8;
+                color: white;
+                padding: 25px;
+                border-radius: 15px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 26px;
+            }
+
+            #barra-ricerca {
+                width: 100%;
+                padding: 18px;
+                font-size: 18px;
+                border-radius: 12px;
+                border: 2px solid #ccc;
+                margin-bottom: 20px;
+                box-sizing: border-box;
+                outline: none;
+            }
+
+            .nascosto {
+                display: none;
+            }
+
+            /* PULSANTI GRANDI */
+            button {
+                width: 100%;
+                padding: 22px;
+                margin: 10px 0;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 12px;
+                background: white;
+                color: #1a73e8;
+                border: 2px solid #e0e0e0;
+                transition: 0.2s;
+                text-transform: uppercase;
+            }
+
+            button:hover {
+                background: #f8faff;
+                border-color: #1a73e8;
+                transform: translateY(-2px);
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+
+            .btn-categoria {
+                background: #1a73e8;
+                color: white;
+                border: none;
+            }
+
+            .btn-ibride {
+                background: #28a745;
+                color: white;
+                border: none;
+            }
+
+            .btn-indietro {
+                background: #6c757d;
+                color: white;
+                width: 48%;
+                border: none;
+            }
+
+            .btn-home {
+                background: #333;
+                color: white;
+                width: 48%;
+                border: none;
+            }
+
+            .btn-stampa {
+                background: #ff9800;
+                color: white;
+                border: none;
+                margin-top: 15px;
+            }
+
+            .nav-buttons {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            /* SCHEDA FINALE */
+            .scheda-finale {
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                text-align: left;
+            }
+
+            .etichetta {
+                font-weight: bold;
+                color: #1a73e8;
+                text-transform: uppercase;
+                font-size: 13px;
+                display: block;
+                margin-top: 15px;
+            }
+
+            .info-testo {
+                font-size: 18px;
+                margin-bottom: 8px;
+                display: block;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 8px;
+            }
+
+            /* BOX SPECIALE PER IBRIDE */
+            .box-ibrido {
+                background: #e8f5e9;
+                padding: 15px;
+                border-left: 5px solid #28a745;
+                margin-top: 20px;
+                border-radius: 8px;
+            }
+
+            .scheda-risultato {
+                background: white;
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                cursor: pointer;
+                border-left: 5px solid #1a73e8;
+                text-align: left;
+            }
+
+            /* STAMPA */
+            @media print {
+
+                button,
+                #barra-ricerca,
+                header,
+                .btn-home,
+                .btn-indietro {
+                    display: none !important;
+                }
+
+                body {
+                    background: white;
+                    padding: 0;
+                }
+
+                .scheda-finale {
+                    box-shadow: none;
+                    border: 1px solid #ccc;
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <header>
+                <h1>ARCHIVIO TECNICO</h1>
+            </header>
+
+            <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
+
+            <div id="risultati-ricerca" class="nascosto"></div>
+
+            <div id="livello-categoria">
+                <button class="btn-categoria" onclick="vaiAMarche('auto')">AUTO (TELAIO / OBD)</button>
+                <button class="btn-categoria" onclick="vaiAMarche('moto')">MOTO / CICLOMOTORI</button>
+                <button class="btn-ibride" onclick="vaiAMarche('ibride')">AUTO IBRIDE (MANUTENZIONE)</button>
+            </div>
+
+            <div id="livello-marche" class="nascosto">
+                <div id="lista-marche"></div>
+                <div class="nav-buttons">
+                    <button class="btn-indietro" onclick="tornaIndietro('livello-categoria')">INDIETRO</button>
+                    <button class="btn-home" onclick="vaiAllaHome()">HOME</button>
+                </div>
+            </div>
+
+            <div id="livello-modelli" class="nascosto">
+                <div id="lista-modelli"></div>
+                <div class="nav-buttons">
+                    <button class="btn-indietro" onclick="tornaIndietro('livello-marche')">INDIETRO</button>
+                    <button class="btn-home" onclick="vaiAllaHome()">HOME</button>
+                </div>
+            </div>
+
+            <div id="livello-scheda" class="nascosto">
+                <div id="dati-veicolo" class="scheda-finale"></div>
+                <button class="btn-stampa" onclick="window.print()">STAMPA SCHEDA</button>
+                <div class="nav-buttons">
+                    <button class="btn-indietro" onclick="tornaIndietro('livello-modelli')">INDIETRO</button>
+                    <button class="btn-home" onclick="vaiAllaHome()">HOME</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const database = {
+                auto: {
+                    "Fiat": [
+                        { modello: "Panda", anni: "2012-2020", telaio: "Vano motore, lato passeggero", eobd: "Sotto il cruscotto a sinistra" },
+                        { modello: "500 Hybrid", anni: "2020+", telaio: "Vano motore dx", eobd: "Sotto volante", procedura: "Premere freno e acceleratore per 30 secondi..." }
+                    ],
+                    "Toyota": [
+                        { modello: "Yaris Hybrid", anni: "2020+", telaio: "Sotto sedile passeggero", eobd: "Presa bianca lato guida", procedura: "Mettere in P, accelerare due volte, mettere in N..." }
+                    ]
+                },
+                moto: {
+                    "Ducati": [
+                        { modello: "Monster", anni: "Tutte", telaio: "Cannotto dello sterzo", eobd: "Sotto la sella" }
+                    ]
+                },
+                ibride: {
+                    // Qui mettiamo i duplicati per il tasto rapido "Ibride",
+                    // ma la ricerca cercherà comunque ovunque.
+                    "Toyota": [
+                        { modello: "Yaris Hybrid", anni: "2020+", telaio: "Sotto sedile passeggero", eobd: "Presa bianca lato guida", procedura: "Mettere in P, accelerare due volte, mettere in N..." }
+                    ]
+                }
+            };
+
+            let categoriaCorrente = "";
+            let marcaCorrente = "";
+
+            function vaiAllaHome() {
+                document.getElementById('barra-ricerca').value = "";
+                nascondiTutti();
+                document.getElementById('livello-categoria').classList.remove('nascosto');
+            }
+
+            function vaiAMarche(cat) {
+                categoriaCorrente = cat;
+                nascondiTutti();
+                document.getElementById('livello-marche').classList.remove('nascosto');
+                let container = document.getElementById('lista-marche');
+                container.innerHTML = "";
+                Object.keys(database[cat]).forEach(marca => {
+                    container.innerHTML += `<button onclick="vaiAModelli('${marca}')">${marca}</button>`;
+                });
+            }
+
+            function vaiAModelli(marca) {
+                marcaCorrente = marca;
+                nascondiTutti();
+                document.getElementById('livello-modelli').classList.remove('nascosto');
+                let container = document.getElementById('lista-modelli');
+                container.innerHTML = "";
+                database[categoriaCorrente][marca].forEach((item, index) => {
+                    container.innerHTML += `<button onclick="mostraScheda(${index})">${item.modello} (${item.anni})</button>`;
+                });
+            }
+
+            function mostraScheda(index) {
+                let veicolo = database[categoriaCorrente][marcaCorrente][index];
+                nascondiTutti();
+                document.getElementById('livello-scheda').classList.remove('nascosto');
+
+                let htmlDati = `<h2>${marcaCorrente} ${veicolo.modello}</h2>`;
+                htmlDati += `<p><strong>Periodo:</strong> ${veicolo.anni}</p>`;
+
+                // MOSTRA SEMPRE TELAIO E OBD SE ESISTONO
+                if (veicolo.telaio) htmlDati += `<span class="etichetta">Posizione Telaio:</span><span class="info-testo">${veicolo.telaio}</span>`;
+                if (veicolo.eobd) htmlDati += `<span class="etichetta">Presa EOBD:</span><span class="info-testo">${veicolo.eobd}</span>`;
+
+                // SE ESISTE LA PROCEDURA IBRIDA, AGGIUNGI IL BOX VERDE
+                if (veicolo.procedura) {
+                    htmlDati += `
+<div class="box-ibrido">
+<span class="etichetta" style="color:#1b5e20">Procedura Solo Benzina:</span>
+<span class="info-testo" style="border:none">${veicolo.procedura}</span>
+</div>
+`;
+                }
+
+                document.getElementById('dati-veicolo').innerHTML = htmlDati;
+            }
+
+            function ricercaVeloce() {
+                let input = document.getElementById('barra-ricerca').value.toLowerCase();
+                let risultatiDiv = document.getElementById('risultati-ricerca');
+                if (input.length < 2) { vaiAllaHome(); return; }
+                nascondiTutti();
+                risultatiDiv.classList.remove('nascosto');
+                risultatiDiv.innerHTML = "";
+                for (let cat in database) {
+                    for (let marca in database[cat]) {
+                        database[cat][marca].forEach((v, i) => {
+                            if ((marca + " " + v.modello).toLowerCase().includes(input)) {
+                                let d = document.createElement('div');
+                                d.className = 'scheda-risultato';
+                                d.innerHTML = `<strong>${marca} ${v.modello}</strong> <br> <small>${cat.toUpperCase()}</small>`;
+                                d.onclick = () => { categoriaCorrente = cat; marcaCorrente = marca; mostraScheda(i); };
+                                risultatiDiv.appendChild(d);
+                            }
+                        });
+                    }
+                }
+            }
+
+            function nascondiTutti() {
+                ['livello-categoria', 'livello-marche', 'livello-modelli', 'livello-scheda', 'risultati-ricerca'].forEach(id => {
+                    document.getElementById(id).classList.add('nascosto');
+                });
+            }
+
+            function tornaIndietro(id) {
+                nascondiTutti();
+                document.getElementById(id).classList.remove('nascosto');
+            }
+        </script>
+    </body>
+
+    </html>
+
+</body>
+
+</html>
