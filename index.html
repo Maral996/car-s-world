@@ -21,7 +21,11 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
         .container { max-width: 650px; margin: auto; }
         header { background: #1a73e8; color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
-        #barra-ricerca { width: 100%; padding: 18px; font-size: 18px; border-radius: 12px; border: 2px solid #ccc; margin-bottom: 20px; box-sizing: border-box; outline: none; }
+        #barra-ricerca { width: 100%; padding: 18px; font-size: 18px; border-radius: 12px; border: 2px solid #ccc; margin-bottom: 20px; box-sizing: border-box; outline: none;
+          position: relative; 
+    z-index: 100;
+    background-color: white;
+        }
         .nascosto { display: none; }
         button { width: 100%; padding: 22px; margin: 10px 0; font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 12px; background: white; color: #1a73e8; border: 2px solid #e0e0e0; transition: 0.2s; text-transform: uppercase; }
         button:hover { background: #f8faff; border-color: #1a73e8; transform: translateY(-2px); }
