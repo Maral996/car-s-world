@@ -1,241 +1,390 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="22fcdb45-4809-417b-9a01-c9683960b17b" type="text/javascript" async></script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="22fcdb45-4809-417b-9a01-c9683960b17b"
+        type="text/javascript" async></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCL5TVJMD5"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HCL5TVJMD5');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HCL5TVJMD5');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car's world</title>
-    
+
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; color: #333; }
-        .container { max-width: 650px; margin: auto; padding: 15px; }
-        
-        header { 
-            position: fixed; top: 0; left: 0; right: 0; height: 60px;
-            background: #1a73e8; color: white; display: flex; 
-            align-items: center; justify-content: space-between; padding: 0 15px;
-            z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding-top: 80px;
+            color: #333;
         }
-        
-        header h1 { font-size: 23px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            padding: 15px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #1a73e8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 10000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 23px;
+            margin: 0;
+            text-transform: uppercase;
+            flex-grow: 1;
+            text-align: center;
+        }
 
         .nav-fissa {
-            background: rgba(255,255,255,0.2); border: none; color: white;
-            padding: 7px 7px; border-radius: 8px; font-weight: bold;
-            cursor: pointer; font-size: 14px; text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 7px 7px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
         }
-        .nav-fissa:disabled { opacity: 0.3; }
 
-        #barra-ricerca { 
-            width: 100%; padding: 10px; font-size: 18px; border-radius: 12px; 
-            border: 2px solid #1a73e8; margin-bottom: 20px; box-sizing: border-box; 
-            outline: none; background-color: #ffffff !important;
+        .nav-fissa:disabled {
+            opacity: 0.3;
         }
 
-        .nascosto { display: none !important; }
-        
-        button.main-btn { 
-            width: 70%; display: block; padding: 30px; margin: 10px auto; font-size: 17px; 
-            font-weight: bold; cursor: pointer; border-radius: 12px; 
-            background: white; color: #1a73e8; border: 2px solid #e0e0e0; 
-            text-transform: uppercase; 
+        #barra-ricerca {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 12px;
+            border: 2px solid #1a73e8;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            outline: none;
+            background-color: #ffffff !important;
         }
-        
-        .btn-categoria { background: #1a73e8 !important; color: white !important; border: none; }
-        .btn-ibride { background: #28a745 !important; color: white !important; border: none; }
-        .btn-tagliandi { background:#ff9800 !important; color: white !important; border: none; }
 
-        .scheda-finale { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: left; }
-        .etichetta { font-weight: bold; color: #1a73e8; text-transform: uppercase; font-size: 12px; display: block; margin-top: 15px; }
-        
-        .info-testo, .box-ibrido { 
-            font-size: 17px; padding: 10px; border-radius: 8px; border: 1px solid #eee;
-            overflow-y: auto; -webkit-overflow-scrolling: touch;
+        .nascosto {
+            display: none !important;
         }
-        .info-testo { max-height: 120px; background: #fdfdfd; }
-        .box-ibrido { max-height: 250px; background: #e8f5e9; border-left: 4px solid #28a745; }
 
-        .info-testo::-webkit-scrollbar, .box-ibrido::-webkit-scrollbar { width: 8px; }
-        .info-testo::-webkit-scrollbar-track, .box-ibrido::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .info-testo::-webkit-scrollbar-thumb { background: #1a73e8 !important; border-radius: 10px; }
-        .box-ibrido::-webkit-scrollbar-thumb { background: #28a745 !important; border-radius: 10px; }
+        button.main-btn {
+            width: 70%;
+            display: block;
+            padding: 30px;
+            margin: 10px auto;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 12px;
+            background: white;
+            color: #1a73e8;
+            border: 2px solid #e0e0e0;
+            text-transform: uppercase;
+        }
 
-        .scheda-risultato { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; border-left: 5px solid #1a73e8; }
-        #sezione-contatti { margin-top: 100px; padding: 20px; background: #fff; border-radius: 15px; text-align: center; }
-        
+        .btn-categoria {
+            background: #1a73e8 !important;
+            color: white !important;
+            border: none;
+        }
+
+        .btn-ibride {
+            background: #28a745 !important;
+            color: white !important;
+            border: none;
+        }
+
+        .btn-tagliandi {
+            background: #ff9800 !important;
+            color: white !important;
+            border: none;
+        }
+
+        .scheda-finale {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+
+        .etichetta {
+            font-weight: bold;
+            color: #1a73e8;
+            text-transform: uppercase;
+            font-size: 12px;
+            display: block;
+            margin-top: 15px;
+        }
+
+        .info-testo,
+        .box-ibrido {
+            font-size: 17px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .info-testo {
+            max-height: 120px;
+            background: #fdfdfd;
+        }
+
+        .box-ibrido {
+            max-height: 250px;
+            background: #e8f5e9;
+            border-left: 4px solid #28a745;
+        }
+
+        .info-testo::-webkit-scrollbar,
+        .box-ibrido::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .info-testo::-webkit-scrollbar-track,
+        .box-ibrido::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .info-testo::-webkit-scrollbar-thumb {
+            background: #1a73e8 !important;
+            border-radius: 10px;
+        }
+
+        .box-ibrido::-webkit-scrollbar-thumb {
+            background: #28a745 !important;
+            border-radius: 10px;
+        }
+
+        .scheda-risultato {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            border-left: 5px solid #1a73e8;
+        }
+
+        #sezione-contatti {
+            margin-top: 100px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 15px;
+            text-align: center;
+        }
+
         @media print {
-            header, #barra-ricerca, .btn-stampa, #sezione-contatti { display: none !important; }
-            body { padding-top: 0; }
+
+            header,
+            #barra-ricerca,
+            .btn-stampa,
+            #sezione-contatti {
+                display: none !important;
+            }
+
+            body {
+                padding-top: 0;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <button class="nav-fissa" id="btn-indietro-fisso" onclick="vaIndietroUniversale()" disabled>Indietro</button>
-    <h1>Car's world</h1>
-    <button class="nav-fissa" onclick="vaiAllaHome()">Home</button>
-</header>
+    <header>
+        <button class="nav-fissa" id="btn-indietro-fisso" onclick="vaIndietroUniversale()" disabled>Indietro</button>
+        <h1>Car's world</h1>
+        <button class="nav-fissa" onclick="vaiAllaHome()">Home</button>
+    </header>
 
-<div class="container">
-    <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
-    
-    <div id="risultati-ricerca" class="nascosto"></div>
+    <div class="container">
+        <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
 
-    <div id="livello-categoria">
-        <button class="main-btn btn-categoria" onclick="vaiAMarche('auto')">AUTO (TELAIO / OBD)</button>
-        <button class="main-btn btn-categoria" onclick="vaiAMarche('moto')">MOTO / CICLOMOTORI</button>
-        <button class="main-btn btn-ibride" onclick="vaiAMarche('ibride')">AUTO IBRIDE (MANUTENZIONE)</button>
-        <button class="main-btn btn-tagliandi" onclick="vaiAMarche('tagliandi')">PIANI TAGLIANDO</button>
+        <div id="risultati-ricerca" class="nascosto"></div>
+
+        <div id="livello-categoria">
+            <button class="main-btn btn-categoria" onclick="vaiAMarche('auto')">AUTO (TELAIO / OBD)</button>
+            <button class="main-btn btn-categoria" onclick="vaiAMarche('moto')">MOTO / CICLOMOTORI</button>
+            <button class="main-btn btn-ibride" onclick="vaiAMarche('ibride')">AUTO IBRIDE (MANUTENZIONE)</button>
+            <button class="main-btn btn-tagliandi" onclick="vaiAMarche('tagliandi')">PIANI TAGLIANDO</button>
+        </div>
+
+        <div id="livello-marche" class="nascosto">
+            <div id="lista-marche"></div>
+        </div>
+        <div id="livello-modelli" class="nascosto">
+            <div id="lista-modelli"></div>
+        </div>
+        <div id="livello-scheda" class="nascosto">
+            <div id="dati-veicolo" class="scheda-finale"></div>
+            <button class="main-btn"
+                style="background: #e91e63; color: white; border: none; margin-top: 15px; padding: 15px;"
+                onclick="window.print()">STAMPA SCHEDA</button>
+        </div>
+
+        <div id="sezione-contatti">
+            <h3 style="color: #1a73e8;">Contattami</h3>
+            <form action="https://formspree.io/f/tuocodice" method="POST" style="text-align: left;">
+                <input type="text" name="nome" placeholder="Il tuo nome" required
+                    style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
+                <input type="email" name="_replyto" placeholder="La tua email" required
+                    style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
+                <label class="etichetta">Cosa manca?</label>
+                <textarea name="messaggio"
+                    placeholder="Cosa altro vorresti trovare in questo sito?&#10;Ho dimenticato qualche veicolo? Dimmi quale e sarò lieto di aggiungerlo il prima possibile!"
+                    required
+                    style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; height:150px; box-sizing: border-box;"></textarea>
+                <button type="submit"
+                    style="background:#333; color:white; padding:12px; width:100%; border-radius:8px; border:none; cursor:pointer;">INVIA</button>
+                <p style="font-size: 10px; color: #888; margin-top: 10px; text-align: center;">Inviando accetti che i
+                    dati siano usati solo per risponderti. No spam.</p>
+            </form>
+        </div>
     </div>
 
-    <div id="livello-marche" class="nascosto"><div id="lista-marche"></div></div>
-    <div id="livello-modelli" class="nascosto"><div id="lista-modelli"></div></div>
-    <div id="livello-scheda" class="nascosto">
-        <div id="dati-veicolo" class="scheda-finale"></div>
-        <button class="main-btn" style="background: #e91e63; color: white; border: none; margin-top: 15px; padding: 15px;" onclick="window.print()">STAMPA SCHEDA</button>
-    </div>
+    <script>
+        const database = {
+            auto: {
+                "Fiat": [{ modello: "Panda", anni: "2012-2020", telaio: "Vano motore dx", eobd: "Sotto cruscotto sx" }],
+                "Mercedes": [{ modello: "Classe C", anni: "2000-2007", telaio: "Sotto il seggiolino lato passeggero", eobd: "Sotto cruscotto lato guida" }],
+                "Audi": [{ modello: "A4", anni: "2012-2016", telaio: "Sgocciolatoio sx sotto protezione VIN", eobd: "Sotto cruscotto sx (fucsia)" }],
+                "Porsche": [{ modello: "Cayman, Boxster, 981", anni: "2015", telaio: "Sotto il seggiolino lato passeggero, va spostato tutto indietro e lo si trova li sotto in un ritaglio della moquette che va alzato", eobd: "Ai piedi del guidatore sulla sinistra c'è uno sportellino, tirare dal ritaglio in alto. ci sono i fusibili e in basso troveremo la presa EOBD" }]
+            },
+            moto: { "Ducati": [{ modello: "Monster", anni: "Tutte", telaio: "Cannotto sterzo", eobd: "Sotto sella" }] },
+            ibride: { "Toyota": [{ modello: "Yaris Hybrid", anni: "2020+", telaio: "Sotto sedile passeggero", eobd: "Presa bianca", procedura: "Procedura test..." }] },
+            tagliandi: { "Fiat": [{ modello: "Panda 1.2 Fire", motore: "188A4000", tagliando: "20.000km/1anno", olio: "2.8L 5W40 ACEA C3", filtri: "Olio: L316", note: "" }] }
+        };
 
-    <div id="sezione-contatti">
-        <h3 style="color: #1a73e8;">Contattami</h3>
-        <form action="https://formspree.io/f/tuocodice" method="POST" style="text-align: left;">
-            <input type="text" name="nome" placeholder="Il tuo nome" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
-            <input type="email" name="_replyto" placeholder="La tua email" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
-            <label class="etichetta">Cosa manca?</label>
-            <textarea name="messaggio" placeholder="Cosa altro vorresti trovare in questo sito?&#10;Ho dimenticato qualche veicolo? Dimmi quale e sarò lieto di aggiungerlo il prima possibile!" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; height:150px; box-sizing: border-box;"></textarea>
-            <button type="submit" style="background:#333; color:white; padding:12px; width:100%; border-radius:8px; border:none; cursor:pointer;">INVIA</button>
-            <p style="font-size: 10px; color: #888; margin-top: 10px; text-align: center;">Inviando accetti che i dati siano usati solo per risponderti. No spam.</p>
-        </form>
-    </div>
-</div>
+        let categoriaCorrente = "", marcaCorrente = "", livelloAttuale = "categoria", ultimoLivelloPrimaDellaRicerca = "categoria";
 
-<script>
-    const database = {
-        auto: {
-            "Fiat": [{ modello: "Panda", anni: "2012-2020", telaio: "Vano motore dx", eobd: "Sotto cruscotto sx" }],
-            "Mercedes": [{modello: "Classe C", anni: "2000-2007", telaio: "Sotto il seggiolino lato passeggero", eobd: "Sotto cruscotto lato guida"}],
-            "Audi": [{modello: "A4", anni: "2012-2016", telaio: "Sgocciolatoio sx sotto protezione VIN", eobd: "Sotto cruscotto sx (fucsia)"}],
-            "Porsche": [{modello: "Cayman, Boxster, 981", anni: "2015", telaio: "Sotto il seggiolino lato passeggero, va spostato tutto indietro e lo si trova li sotto in un ritaglio della moquette che va alzato", eobd: "Ai piedi del guidatore sulla sinistra c'è uno sportellino, tirare dal ritaglio in alto. ci sono i fusibili e in basso troveremo la presa EOBD"}]
-        },
-        moto: { "Ducati": [{ modello: "Monster", anni: "Tutte", telaio: "Cannotto sterzo", eobd: "Sotto sella" }] },
-        ibride: { "Toyota": [{ modello: "Yaris Hybrid", anni: "2020+", telaio: "Sotto sedile passeggero", eobd: "Presa bianca", procedura: "Procedura test..." }] },
-        tagliandi: { "Fiat": [{ modello: "Panda 1.2 Fire", motore: "188A4000", tagliando: "20.000km/1anno", olio: "2.8L 5W40 ACEA C3", filtri: "Olio: L316", note: "" }] }
-    };
-
-    let categoriaCorrente = "", marcaCorrente = "", livelloAttuale = "categoria", ultimoLivelloPrimaDellaRicerca = "categoria";
-
-    function nascondiTutti() {
-        ['livello-categoria', 'livello-marche', 'livello-modelli', 'livello-scheda', 'risultati-ricerca', 'sezione-contatti'].forEach(id => {
-            document.getElementById(id).classList.add('nascosto');
-        });
-    }
-
-    function vaiAllaHome() {
-        livelloAttuale = "categoria"; ultimoLivelloPrimaDellaRicerca = "categoria";
-        document.getElementById('barra-ricerca').value = "";
-        document.getElementById('btn-indietro-fisso').disabled = true;
-        nascondiTutti();
-        document.getElementById('livello-categoria').classList.remove('nascosto');
-        document.getElementById('sezione-contatti').classList.remove('nascosto');
-        window.scrollTo(0,0);
-    }
-
-    function vaiAMarche(cat) {
-        categoriaCorrente = cat; livelloAttuale = "marche"; ultimoLivelloPrimaDellaRicerca = "marche";
-        document.getElementById('btn-indietro-fisso').disabled = false;
-        nascondiTutti();
-        document.getElementById('livello-marche').classList.remove('nascosto');
-        let container = document.getElementById('lista-marche');
-        container.innerHTML = "";
-        Object.keys(database[cat]).forEach(marca => {
-            container.innerHTML += `<button class="main-btn" onclick="vaiAModelli('${marca}')">${marca}</button>`;
-        });
-    }
-
-    function vaiAModelli(marca) {
-        marcaCorrente = marca; livelloAttuale = "modelli"; ultimoLivelloPrimaDellaRicerca = "modelli";
-        nascondiTutti();
-        document.getElementById('livello-modelli').classList.remove('nascosto');
-        let container = document.getElementById('lista-modelli');
-        container.innerHTML = "";
-        database[categoriaCorrente][marca].forEach((item, index) => {
-            container.innerHTML += `<button class="main-btn" onclick="mostraScheda(${index})">${item.modello}</button>`;
-        });
-    }
-
-    function mostraScheda(index, catRicerca, marcaRicerca) {
-        if(catRicerca) categoriaCorrente = catRicerca;
-        if(marcaRicerca) marcaCorrente = marcaRicerca;
-        livelloAttuale = "scheda";
-        document.getElementById('btn-indietro-fisso').disabled = false;
-        nascondiTutti();
-        document.getElementById('livello-scheda').classList.remove('nascosto');
-        let veicolo = database[categoriaCorrente][marcaCorrente][index];
-        let htmlDati = `<h2>${marcaCorrente} ${veicolo.modello}</h2>`;
-        if(categoriaCorrente === 'tagliandi') {
-            htmlDati += `<span class="etichetta">Motore:</span><span class="info-testo">${veicolo.motore}</span><span class="etichetta">Intervallo:</span><span class="info-testo">${veicolo.tagliando}</span><div class="box-ibrido" style="background:#fff3e0; border-left-color:#ff9800"><span class="etichetta" style="color:#e65100">Olio:</span><span class="info-testo" style="border:none">${veicolo.olio}</span></div><span class="etichetta">Filtri:</span><span class="info-testo">${veicolo.filtri}</span>`;
-        } else {
-            htmlDati += `<p><strong>Anni:</strong> ${veicolo.anni || 'N/D'}</p>`;
-            if(veicolo.telaio) htmlDati += `<span class="etichetta">Telaio:</span><div class="info-testo">${veicolo.telaio}</div>`;
-            if(veicolo.eobd) htmlDati += `<span class="etichetta">EOBD:</span><div class="info-testo">${veicolo.eobd}</div>`;
-            if(veicolo.procedura) htmlDati += `<div class="box-ibrido"><span class="etichetta">Manutenzione:</span>${veicolo.procedura}</div>`;
+        function nascondiTutti() {
+            ['livello-categoria', 'livello-marche', 'livello-modelli', 'livello-scheda', 'risultati-ricerca', 'sezione-contatti'].forEach(id => {
+                document.getElementById(id).classList.add('nascosto');
+            });
         }
-        document.getElementById('dati-veicolo').innerHTML = htmlDati;
-        window.scrollTo(0,0);
-    }
 
-    function vaIndietroUniversale() {
-        if(livelloAttuale === "ricerca") tornaAlLivelloPrecedente();
-        else if(livelloAttuale === "marche") vaiAllaHome();
-        else if(livelloAttuale === "modelli") vaiAMarche(categoriaCorrente);
-        else if(livelloAttuale === "scheda") {
-            if(document.getElementById('barra-ricerca').value.length > 0) ricercaVeloce();
-            else vaiAModelli(marcaCorrente);
+        function vaiAllaHome() {
+            livelloAttuale = "categoria"; ultimoLivelloPrimaDellaRicerca = "categoria";
+            document.getElementById('barra-ricerca').value = "";
+            document.getElementById('btn-indietro-fisso').disabled = true;
+            nascondiTutti();
+            document.getElementById('livello-categoria').classList.remove('nascosto');
+            document.getElementById('sezione-contatti').classList.remove('nascosto');
+            window.scrollTo(0, 0);
         }
-    }
 
-    function tornaAlLivelloPrecedente() {
-        document.getElementById('barra-ricerca').value = "";
-        nascondiTutti();
-        if(ultimoLivelloPrimaDellaRicerca === "marche") vaiAMarche(categoriaCorrente);
-        else if(ultimoLivelloPrimaDellaRicerca === "modelli") vaiAModelli(marcaCorrente);
-        else vaiAllaHome();
-    }
+        function vaiAMarche(cat) {
+            categoriaCorrente = cat; livelloAttuale = "marche"; ultimoLivelloPrimaDellaRicerca = "marche";
+            document.getElementById('btn-indietro-fisso').disabled = false;
+            nascondiTutti();
+            document.getElementById('livello-marche').classList.remove('nascosto');
+            let container = document.getElementById('lista-marche');
+            container.innerHTML = "";
+            Object.keys(database[cat]).forEach(marca => {
+                container.innerHTML += `<button class="main-btn" onclick="vaiAModelli('${marca}')">${marca}</button>`;
+            });
+        }
 
-    function ricercaVeloce() {
-        let input = document.getElementById('barra-ricerca').value.toLowerCase();
-        if (input.length === 0) { tornaAlLivelloPrecedente(); return; }
-        nascondiTutti();
-        livelloAttuale = "ricerca";
-        document.getElementById('btn-indietro-fisso').disabled = false;
-        const div = document.getElementById('risultati-ricerca');
-        div.classList.remove('nascosto');
-        div.innerHTML = "";
-        let trovati = 0;
-        for (let cat in database) {
-            for (let marca in database[cat]) {
-                database[cat][marca].forEach((v, i) => {
-                    if ((marca + " " + v.modello).toLowerCase().includes(input)) {
-                        trovati++;
-                        let d = document.createElement('div');
-                        d.className = 'scheda-risultato';
-                        d.innerHTML = `<strong>${marca} ${v.modello}</strong><br><small>${cat.toUpperCase()}</small>`;
-                        d.onclick = () => mostraScheda(i, cat, marca);
-                        div.appendChild(d);
-                    }
-                });
+        function vaiAModelli(marca) {
+            marcaCorrente = marca; livelloAttuale = "modelli"; ultimoLivelloPrimaDellaRicerca = "modelli";
+            nascondiTutti();
+            document.getElementById('livello-modelli').classList.remove('nascosto');
+            let container = document.getElementById('lista-modelli');
+            container.innerHTML = "";
+            database[categoriaCorrente][marca].forEach((item, index) => {
+                container.innerHTML += `<button class="main-btn" onclick="mostraScheda(${index})">${item.modello}</button>`;
+            });
+        }
+
+        function mostraScheda(index, catRicerca, marcaRicerca) {
+            if (catRicerca) categoriaCorrente = catRicerca;
+            if (marcaRicerca) marcaCorrente = marcaRicerca;
+            livelloAttuale = "scheda";
+            document.getElementById('btn-indietro-fisso').disabled = false;
+            nascondiTutti();
+            document.getElementById('livello-scheda').classList.remove('nascosto');
+            let veicolo = database[categoriaCorrente][marcaCorrente][index];
+            let htmlDati = `<h2>${marcaCorrente} ${veicolo.modello}</h2>`;
+            if (categoriaCorrente === 'tagliandi') {
+                htmlDati += `<span class="etichetta">Motore:</span><span class="info-testo">${veicolo.motore}</span><span class="etichetta">Intervallo:</span><span class="info-testo">${veicolo.tagliando}</span><div class="box-ibrido" style="background:#fff3e0; border-left-color:#ff9800"><span class="etichetta" style="color:#e65100">Olio:</span><span class="info-testo" style="border:none">${veicolo.olio}</span></div><span class="etichetta">Filtri:</span><span class="info-testo">${veicolo.filtri}</span>`;
+            } else {
+                htmlDati += `<p><strong>Anni:</strong> ${veicolo.anni || 'N/D'}</p>`;
+                if (veicolo.telaio) htmlDati += `<span class="etichetta">Telaio:</span><div class="info-testo">${veicolo.telaio}</div>`;
+                if (veicolo.eobd) htmlDati += `<span class="etichetta">EOBD:</span><div class="info-testo">${veicolo.eobd}</div>`;
+                if (veicolo.procedura) htmlDati += `<div class="box-ibrido"><span class="etichetta">Manutenzione:</span>${veicolo.procedura}</div>`;
+            }
+            document.getElementById('dati-veicolo').innerHTML = htmlDati;
+            window.scrollTo(0, 0);
+        }
+
+        function vaIndietroUniversale() {
+            if (livelloAttuale === "ricerca") tornaAlLivelloPrecedente();
+            else if (livelloAttuale === "marche") vaiAllaHome();
+            else if (livelloAttuale === "modelli") vaiAMarche(categoriaCorrente);
+            else if (livelloAttuale === "scheda") {
+                if (document.getElementById('barra-ricerca').value.length > 0) ricercaVeloce();
+                else vaiAModelli(marcaCorrente);
             }
         }
-        if(trovati === 0) div.innerHTML = "<p style='padding:20px; text-align:center;'>Nessun veicolo trovato.</p>";
-    }
-</script>
+
+        function tornaAlLivelloPrecedente() {
+            document.getElementById('barra-ricerca').value = "";
+            nascondiTutti();
+            if (ultimoLivelloPrimaDellaRicerca === "marche") vaiAMarche(categoriaCorrente);
+            else if (ultimoLivelloPrimaDellaRicerca === "modelli") vaiAModelli(marcaCorrente);
+            else vaiAllaHome();
+        }
+
+        function ricercaVeloce() {
+            let input = document.getElementById('barra-ricerca').value.toLowerCase();
+            if (input.length === 0) { tornaAlLivelloPrecedente(); return; }
+            nascondiTutti();
+            livelloAttuale = "ricerca";
+            document.getElementById('btn-indietro-fisso').disabled = false;
+            const div = document.getElementById('risultati-ricerca');
+            div.classList.remove('nascosto');
+            div.innerHTML = "";
+            let trovati = 0;
+            for (let cat in database) {
+                for (let marca in database[cat]) {
+                    database[cat][marca].forEach((v, i) => {
+                        if ((marca + " " + v.modello).toLowerCase().includes(input)) {
+                            trovati++;
+                            let d = document.createElement('div');
+                            d.className = 'scheda-risultato';
+                            d.innerHTML = `<strong>${marca} ${v.modello}</strong><br><small>${cat.toUpperCase()}</small>`;
+                            d.onclick = () => mostraScheda(i, cat, marca);
+                            div.appendChild(d);
+                        }
+                    });
+                }
+            }
+            if (trovati === 0) div.innerHTML = "<p style='padding:20px; text-align:center;'>Nessun veicolo trovato.</p>";
+        }
+    </script>
 </body>
+
 </html>
