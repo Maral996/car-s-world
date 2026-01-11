@@ -17,8 +17,7 @@
     <title>Car's world</title>
     
     <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a73e8">
-
+    <meta name="theme-color" content="#1a73e8">
 
     <style>
         body {
@@ -37,9 +36,7 @@
 
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 60px;
             background: #1a73e8;
             color: white;
@@ -71,9 +68,7 @@
             text-transform: uppercase;
         }
 
-        .nav-fissa:disabled {
-            opacity: 0.3;
-        }
+        .nav-fissa:disabled { opacity: 0.3; }
 
         #barra-ricerca {
             width: 100%;
@@ -87,9 +82,7 @@
             background-color: #ffffff !important;
         }
 
-        .nascosto {
-            display: none !important;
-        }
+        .nascosto { display: none !important; }
 
         button.main-btn {
             width: 70%;
@@ -106,23 +99,47 @@
             text-transform: uppercase;
         }
 
-        .btn-categoria {
-            background: #1a73e8 !important;
-            color: white !important;
-            border: none;
+        /* OVERLAY PUBBLICITÀ INTERSTITIAL */
+        #overlay-pubblicita {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            text-align: center;
         }
 
-        .btn-ibride {
-            background: #28a745 !important;
-            color: white !important;
-            border: none;
+        .timer-cerchio {
+            font-size: 50px;
+            border: 5px solid #1a73e8;
+            border-radius: 50%;
+            width: 100px; height: 100px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 20px 0;
+            font-weight: bold;
         }
 
-        .btn-tagliandi {
-            background: #ff9800 !important;
-            color: white !important;
-            border: none;
+        /* BANNER FISSO PRIMA DEI CONTATTI */
+        .banner-fisso-container {
+            width: 100%;
+            min-height: 100px;
+            background: #ffffff;
+            margin: 40px 0 10px 0; /* Spazio sopra e sotto */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px dashed #bbb;
         }
+
+        .btn-categoria { background: #1a73e8 !important; color: white !important; border: none; }
+        .btn-ibride { background: #28a745 !important; color: white !important; border: none; }
+        .btn-tagliandi { background: #ff9800 !important; color: white !important; border: none; }
 
         .scheda-finale {
             background: white;
@@ -141,49 +158,15 @@
             margin-top: 15px;
         }
 
-        .info-testo,
-        .box-ibrido {
+        .info-testo, .box-ibrido {
             font-size: 17px;
             padding: 10px;
             border-radius: 8px;
             border: 1px solid #eee;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            display: block;
             margin-bottom: 10px;
         }
 
-        .info-testo {
-            height: auto;
-            background: #fdfdfd;
-        }
-
-        .box-ibrido {
-            height: auto;
-            background: #e8f5e9;
-            border-left: 4px solid #28a745;
-        }
-
-        .info-testo::-webkit-scrollbar,
-        .box-ibrido::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .info-testo::-webkit-scrollbar-track,
-        .box-ibrido::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .info-testo::-webkit-scrollbar-thumb {
-            background: #1a73e8 !important;
-            border-radius: 10px;
-        }
-
-        .box-ibrido::-webkit-scrollbar-thumb {
-            background: #28a745 !important;
-            border-radius: 10px;
-        }
+        .box-ibrido { background: #e8f5e9; border-left: 4px solid #28a745; }
 
         .scheda-risultato {
             background: white;
@@ -195,29 +178,28 @@
         }
 
         #sezione-contatti {
-            margin-top: 100px;
             padding: 20px;
             background: #fff;
             border-radius: 15px;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         @media print {
-            header,
-            #barra-ricerca,
-            .btn-stampa,
-            #sezione-contatti {
+            header, #barra-ricerca, .btn-stampa, #sezione-contatti, .banner-fisso-container, #overlay-pubblicita {
                 display: none !important;
-            }
-
-            body {
-                padding-top: 0;
             }
         }
     </style>
 </head>
 
 <body>
+
+    <div id="overlay-pubblicita" class="nascosto">
+        <h2 style="padding:0 20px;">Caricamento in corso...</h2>
+        <div id="timer-secondi" class="timer-cerchio">3</div>
+        <p>Stiamo preparando i dati tecnici</p>
+    </div>
 
     <header>
         <button class="nav-fissa" id="btn-indietro-fisso" onclick="vaIndietroUniversale()" disabled>Indietro</button>
@@ -237,35 +219,28 @@
             <button class="main-btn btn-tagliandi" style="opacity: 0.5; cursor: not-allowed;" onclick="return false;" disabled>PIANI TAGLIANDO (In lavorazione)</button>
         </div>
 
-        <div id="livello-marche" class="nascosto">
-            <div id="lista-marche"></div>
-        </div>
-        <div id="livello-modelli" class="nascosto">
-            <div id="lista-modelli"></div>
-        </div>
+        <div id="livello-marche" class="nascosto"><div id="lista-marche"></div></div>
+        <div id="livello-modelli" class="nascosto"><div id="lista-modelli"></div></div>
+        
         <div id="livello-scheda" class="nascosto">
             <div id="dati-veicolo" class="scheda-finale"></div>
-            <button class="main-btn"
-                style="background: #e91e63; color: white; border: none; margin-top: 15px; padding: 15px;"
-                onclick="window.print()">STAMPA SCHEDA</button>
+            <button class="main-btn" style="background: #e91e63; color: white; border: none; margin-top: 15px; padding: 15px;" onclick="window.print()">STAMPA SCHEDA</button>
+        </div>
+
+        <div class="banner-fisso-container">
+            <p style="color:#bbb; font-size:10px; margin-bottom:5px;">ANNUNCIO PUBBLICITARIO</p>
+            <div style="width:320px; height:50px; background:#f9f9f9; border:1px solid #eee; display:flex; align-items:center; justify-content:center; color:#ccc;">
+                Banner Pubblicitario
+            </div>
         </div>
 
         <div id="sezione-contatti">
-            <h3 style="color: #1a73e8;">Contattami</h3>
+            <h3 style="color: #1a73e8; margin-top:0;">Contattami</h3>
             <form action="https://formspree.io/f/tuocodice" method="POST" style="text-align: left;">
-                <input type="text" name="nome" placeholder="Il tuo nome" required
-                    style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
-                <input type="email" name="_replyto" placeholder="La tua email" required
-                    style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
-                <label class="etichetta">Cosa manca?</label>
-                <textarea name="messaggio"
-                    placeholder="Cosa altro vorresti trovare in questo sito?&#10;Ho dimenticato qualche veicolo? Dimmi quale e sarò lieto di aggiungerlo il prima possibile!"
-                    required
-                    style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; height:150px; box-sizing: border-box;"></textarea>
-                <button type="submit"
-                    style="background:#333; color:white; padding:12px; width:100%; border-radius:8px; border:none; cursor:pointer;">INVIA</button>
-                <p style="font-size: 10px; color: #888; margin-top: 10px; text-align: center;">Inviando accetti che i
-                    dati siano usati solo per risponderti. No spam.</p>
+                <input type="text" name="nome" placeholder="Il tuo nome" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
+                <input type="email" name="_replyto" placeholder="La tua email" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box;">
+                <textarea name="messaggio" placeholder="Cosa altro vorresti trovare..." required style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; height:100px; box-sizing: border-box; font-family: sans-serif;"></textarea>
+                <button type="submit" style="background:#333; color:white; padding:12px; width:100%; border-radius:8px; border:none; cursor:pointer; font-weight:bold;">INVIA MESSAGGIO</button>
             </form>
         </div>
     </div>
@@ -284,63 +259,20 @@
                         { versione: "2 serie (2003-2007)", telaio: "Pianale lato passeggero, alzare il tappetino c'è uno sportellino da alzare", eobd: "Sulla sinistra dello sterzo c'è una plastica con due viti a taglio svitare le due viti e la si trova subito li sotto" }
                     ],
                     "500":[
-{versione: "Motore a scoppio", telaio: "Aprire il bagagliaio, alzare il tappetino, si trova sulla destra fuori dal vano ruota di scorta", eobd:"sulla sinistra dello sterzo, c'è uno sportellino di plastica, va tirato dal basso, la presa si trova li davanti, in alcune ce una copertura di plastica"}
-							]
-                    
-                },
-                "Opel": {
-                    "Astra": [
-                        { versione: "Astra J (2009-2015)", telaio: "Pianale lato passeggero, alzare il tappetino c'è uno sportellino vicino al battitacco", eobd: "Sotto lo sterzo, a fine della plastica sulla sinistra" }
+                        {versione: "Motore a scoppio", telaio: "Aprire il bagagliaio, alzare il tappetino, si trova sulla destra fuori dal vano ruota di scorta", eobd:"sulla sinistra dello sterzo, c'è uno sportellino di plastica, va tirato dal basso, la presa si trova li davanti, in alcune ce una copertura di plastica"}
                     ]
                 },
-                "Mercedes": {
-                    "Classe C": [
-                        { versione: "Serie W203 (2000-2007)", telaio: "Sotto il seggiolino lato passeggero, va tirato indietro c'è un ritaglio nella moquette", eobd: "Sotto cruscotto lato guida,c'è uno sportellino nero" }
-                    ]
-                },
-                "Audi": {
-                    "A4": [
-                        { versione: "Serie B8 (2012-2016)", telaio: "Sgocciolatoio destro (lato passeggero) sotto una protezione con scritto VIN", eobd: "Sotto cruscotto sx lo si nota bene per il suo colore fucsia" }
-                    ]
-                },
-                "Porsche": {
-                    "Cayman/Boxster": [
-                        { versione: "981 (2015)", telaio: "Sotto il seggiolino lato passeggero, va tirato tutto indietro, trovi un ritaglio nella moquette e sotto vedrai il telaio", eobd: "Ai piedi del guidatore sulla sinistra c'è una plastica con un'apertura nella parte alta, va aperta tirando da li una volta infilata la mano, la presa la trovi in basso sotto i fusibili" }
-                    ]
-                },
-                "Jeep": {
-                    "Grand Cherokee": [
-                        { versione: "3 Gen WK-WH (2004-2010)", telaio: "Alzare la plastica nel battitacco sportello anteriore destro, una volta levato consiglio di sporgesrsi un pochino dentro la macchina perché rimane sotto la guarnizione e potrebbe sembrare che non ci sia", eobd: "Sotto il cruscotto lato guida" }
-                    ]
-                },
-                "Toyota": {
-                    "Yaris": [
-                        { versione: "Hybrid (2020-oggi)", telaio: "Sotto sedile passeggero", eobd: "Sotto il cruscotto sotto il volante, la si nota bene per il suo colore bianco" }
-                    ]
-                },
-                "Volkswagen": {
-                    "Polo": [
-                        {versione: "V serie (2009-2017)", telaio:"Aprire il cofano motore, guardare nello sgocciolatoio destro (lato passeggero) all'altezza dell'ammortizzatore", eobd: "Sotto il volante sulla sinistra vicino al montante! lo si nota bene dal suo colore fucsia" }
-                        ]
-                        }
+                "Opel": { "Astra": [ { versione: "Astra J (2009-2015)", telaio: "Pianale lato passeggero, alzare il tappetino c'è uno sportellino vicino al battitacco", eobd: "Sotto lo sterzo, a fine della plastica sulla sinistra" } ] },
+                "Mercedes": { "Classe C": [ { versione: "Serie W203 (2000-2007)", telaio: "Sotto il seggiolino lato passeggero, va tirato indietro c'è un ritaglio nella moquette", eobd: "Sotto cruscotto lato guida,c'è uno sportellino nero" } ] },
+                "Audi": { "A4": [ { versione: "Serie B8 (2012-2016)", telaio: "Sgocciolatoio destro (lato passeggero) sotto una protezione con scritto VIN", eobd: "Sotto cruscotto sx lo si nota bene per il suo colore fucsia" } ] },
+                "Porsche": { "Cayman/Boxster": [ { versione: "981 (2015)", telaio: "Sotto il seggiolino lato passeggero, va tirato tutto indietro, trovi un ritaglio nella moquette e sotto vedrai il telaio", eobd: "Ai piedi del guidatore sulla sinistra c'è una plastica con un'apertura nella parte alta, va aperta tirando da li una volta infilata la mano, la presa la trovi in basso sotto i fusibili" } ] },
+                "Jeep": { "Grand Cherokee": [ { versione: "3 Gen WK-WH (2004-2010)", telaio: "Alzare la plastica nel battitacco sportello anteriore destro, una volta levato consiglio di sporgesrsi un pochino dentro la macchina perché rimane sotto la guarnizione e potrebbe sembrare che non ci sia", eobd: "Sotto il cruscotto lato guida" } ] },
+                "Toyota": { "Yaris": [ { versione: "Hybrid (2020-oggi)", telaio: "Sotto sedile passeggero", eobd: "Sotto il cruscotto sotto il volante, la si nota bene per il suo colore bianco" } ] },
+                "Volkswagen": { "Polo": [ {versione: "V serie (2009-2017)", telaio:"Aprire il cofano motore, guardare nello sgocciolatoio destro (lato passeggero) all'altezza dell'ammortizzatore", eobd: "Sotto il volante sulla sinistra vicino al montante! lo si nota bene dal suo colore fucsia" } ] }
             },
-            moto: { 
-                "Ducati": {
-                    "Monster": [{ versione: "Tutte le serie", telaio: "Cannotto sterzo", eobd: "Sotto sella" }]
-                }
-            },
-            ibride: { 
-                "Toyota": {
-                    "Yaris": [
-                        { versione: "Hybrid (2020-oggi)", procedura: "Macchina spenta, cambio in P, quadro acceso. 2 acceleratore in P, 2 acceleratore in N, 2 acceleratore in P. Appare 'Maintenance mode'." }
-                    ]
-                }
-            },
-            tagliandi: { 
-                "Fiat": {
-                    "Panda": [{ versione: "1.2 Fire", motore: "188A4000", tagliando: "20.000km/1anno", olio: "2.8L 5W40 ACEA C3", filtri: "Olio: L316" }]
-                }
-            }
+            moto: { "Ducati": { "Monster": [{ versione: "Tutte le serie", telaio: "Cannotto sterzo", eobd: "Sotto sella" }] } },
+            ibride: { "Toyota": { "Yaris": [ { versione: "Hybrid (2020-oggi)", procedura: "Macchina spenta, cambio in P, quadro acceso. 2 acceleratore in P, 2 acceleratore in N, 2 acceleratore in P. Appare 'Maintenance mode'." } ] } },
+            tagliandi: { "Fiat": { "Panda": [{ versione: "1.2 Fire", motore: "188A4000", tagliando: "20.000km/1anno", olio: "2.8L 5W40 ACEA C3", filtri: "Olio: L316" }] } }
         };
 
         let categoriaCorrente = "", marcaCorrente = "", modelloCorrente = "", livelloAttuale = "categoria", ultimoLivelloPrimaDellaRicerca = "categoria";
@@ -395,7 +327,27 @@
             });
         }
 
+        // LOGICA PUBBLICITÀ A COMPARSA (3 SECONDI)
         function mostraScheda(index, catRicerca, marcaRicerca, modRicerca) {
+            const overlay = document.getElementById('overlay-pubblicita');
+            const timerEl = document.getElementById('timer-secondi');
+            overlay.classList.remove('nascosto');
+            
+            let count = 3;
+            timerEl.innerText = count;
+
+            const countdown = setInterval(() => {
+                count--;
+                timerEl.innerText = count;
+                if (count <= 0) {
+                    clearInterval(countdown);
+                    overlay.classList.add('nascosto');
+                    eseguiCaricamentoDati(index, catRicerca, marcaRicerca, modRicerca);
+                }
+            }, 1000);
+        }
+
+        function eseguiCaricamentoDati(index, catRicerca, marcaRicerca, modRicerca) {
             if (catRicerca) categoriaCorrente = catRicerca;
             if (marcaRicerca) marcaCorrente = marcaRicerca;
             if (modRicerca) modelloCorrente = modRicerca;
@@ -474,6 +426,11 @@
             if (trovati === 0) div.innerHTML = "<p style='padding:20px; text-align:center;'>Nessun veicolo trovato.</p>";
         }
 
+        // REGISTRAZIONE PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+
         document.addEventListener('keydown', function (event) {
             if (event.keyCode === 46 || event.key === 'ArrowLeft') {
                 if (document.activeElement.id !== 'barra-ricerca') {
@@ -483,5 +440,4 @@
         });
     </script>
 </body>
-
 </html>
