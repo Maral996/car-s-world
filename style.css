@@ -1,0 +1,15 @@
+body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; color: #333; }
+.container { max-width: 650px; margin: auto; padding: 15px; }
+header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
+header h1 { font-size: 23px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
+.nav-fissa { background: rgba(255, 255, 255, 0.2); border: none; color: white; padding: 7px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; text-decoration: none; text-transform: uppercase; }
+button.main-btn, a.main-btn { width: 70%; display: block; padding: 30px; margin: 10px auto; font-size: 17px; font-weight: bold; cursor: pointer; border-radius: 12px; background: white; color: #1a73e8; border: 2px solid #e0e0e0; text-transform: uppercase; text-decoration: none; text-align: center; }
+.banner-fisso-container { width: 100%; min-height: 100px; background: #ffffff; margin: 40px 0 10px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; border: 1px dashed #bbb; overflow: hidden; }
+.btn-categoria { background: #1a73e8 !important; color: white !important; border: none; }
+.btn-ibride { background: #28a745 !important; color: white !important; border: none; }
+.scheda-finale { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); text-align: left; }
+.etichetta { font-weight: bold; color: #1a73e8; text-transform: uppercase; font-size: 12px; display: block; margin-top: 15px; }
+.info-testo, .box-ibrido { font-size: 17px; padding: 10px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 10px; }
+.box-ibrido { background: #e8f5e9; border-left: 4px solid #28a745; }
+#sezione-contatti { padding: 20px; background: #fff; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+@media print { header, .banner-fisso-container, #sezione-contatti { display: none !important; } }
