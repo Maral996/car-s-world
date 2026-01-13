@@ -63,6 +63,44 @@
             text-align: center;
         }
 
+        /* --- STILE RICERCA --- */
+        #barra-ricerca {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 12px;
+            border: 2px solid #1a73e8;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            outline: none;
+            background-color: white;
+        }
+
+        #risultati-ricerca {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .risultato-item {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+        }
+
+        .risultato-item:last-child {
+            border-bottom: none;
+        }
+
+        .nascosto {
+            display: none !important;
+        }
+
         /* Stile pulsanti e link */
         .main-btn {
             width: 70%;
@@ -148,10 +186,11 @@
         }
 
         @media print {
-
             header,
             .banner-fisso-container,
-            #sezione-contatti {
+            #sezione-contatti,
+            #barra-ricerca,
+            #risultati-ricerca {
                 display: none !important;
             }
         }
@@ -167,6 +206,9 @@
     </header>
 
     <div class="container">
+
+        <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
+        <div id="risultati-ricerca" class="nascosto"></div>
 
         <div id="livello-categoria">
             <a href="scelta-auto.html" class="main-btn btn-categoria">AUTO (TELAIO / OBD)</a>
@@ -199,6 +241,45 @@
     </div>
 
     <script>
+        function ricercaVeloce() {
+            let input = document.getElementById('barra-ricerca').value.toLowerCase();
+            let div = document.getElementById('risultati-ricerca');
+            
+            // ELENCO DELLE PAGINE DEL SITO
+            const pagine = [
+                { nome: "Fiat Panda", url: "fiat-panda.html" },
+                { nome: "Fiat Punto", url: "fiat-punto.html" },
+                { nome: "Fiat 500", url: "fiat-500.html" },
+                { nome: "Opel Astra", url: "opel-astra.html" },
+                { nome: "Audi A4", url: "audi-a4.html" },
+                { nome: "Mercedes Classe C", url: "mercedes-classe-c.html" },
+                { nome: "Porsche Cayman", url: "porsche-cayman.html" },
+                { nome: "Jeep Grand Cherokee", url: "jeep-grand-cherokee.html" },
+                { nome: "Volkswagen Polo", url: "vw-polo.html" },
+                { nome: "Toyota Yaris", url: "toyota-yaris.html" },
+                { nome: "Toyota Yaris Hybrid (Ibrida)", url: "ibrida-toyota-yaris.html" },
+                { nome: "Ducati Monster", url: "moto-ducati-monster.html" }
+            ];
+
+            if (input.length < 2) {
+                div.innerHTML = "";
+                div.classList.add('nascosto');
+                return;
+            }
+
+            let filtrati = pagine.filter(p => p.nome.toLowerCase().includes(input));
+
+            if (filtrati.length > 0) {
+                div.classList.remove('nascosto');
+                div.innerHTML = filtrati.map(p => 
+                    `<a href="${p.url}" class="risultato-item">${p.nome}</a>`
+                ).join('');
+            } else {
+                div.innerHTML = "<p style='padding:15px; margin:0;'>Nessun risultato trovato</p>";
+                div.classList.remove('nascosto');
+            }
+        }
+
         // Registrazione Service Worker per PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
