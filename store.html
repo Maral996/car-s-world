@@ -17,6 +17,11 @@
         
         #search-ricambi { width: 100%; max-width: 500px; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 20px; outline: none; font-size: 16px; box-sizing: border-box; }
         
+        /* MODULO PREVENTIVO RAPIDO */
+        .preventivo-rapido { background: #333; color: white; width: 100%; max-width: 500px; padding: 20px; border-radius: 15px; margin-bottom: 30px; box-sizing: border-box; text-align: left; }
+        .preventivo-rapido h3 { margin-top: 0; color: #ff9800; }
+        .preventivo-rapido p { font-size: 13px; color: #ccc; margin-bottom: 15px; }
+
         /* LAYOUT PRODOTTI RICHIESTO */
         .product-card { background: white; width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: flex-start; box-sizing: border-box; gap: 15px; }
         .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #eee; }
@@ -65,7 +70,25 @@
     </header>
 
     <div class="container">
-        <input type="text" id="search-ricambi" placeholder="🔍 Cerca ricambi..." onkeyup="filterProducts()">
+        
+        <div class="preventivo-rapido">
+            <h3>Non trovi il tuo ricambio?</h3>
+            <p>Inviaci i dati e ti risponderemo con un preventivo personalizzato.</p>
+            <form action="https://formspree.io/f/tuocodice" method="POST">
+                <input type="text" name="nome_contatto" placeholder="Il tuo Nome" required>
+                <select name="preferenza_contatto" required>
+                    <option value="" disabled selected>Come vuoi essere contattato?</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Email">E-mail</option>
+                </select>
+                <input type="text" name="recapito" placeholder="Inserisci Numero o Email" required>
+                <input type="text" name="targa_richiesta" placeholder="Targa del veicolo" required>
+                <textarea name="ricambio_cercato" placeholder="Quale ricambio stai cercando?" style="height: 80px;" required></textarea>
+                <button type="submit" class="btn-invia" style="padding: 12px; font-size: 14px;">Richiedi Preventivo</button>
+            </form>
+        </div>
+
+        <input type="text" id="search-ricambi" placeholder="🔍 Cerca tra i ricambi pronti..." onkeyup="filterProducts()">
 
         <div id="lista-prodotti" style="width: 100%;">
             <div class="product-card">
@@ -108,7 +131,7 @@
             </div>
 
             <div id="modulo-completo" class="hidden">
-                <form action="https://formspree.io/f/tuocodice" method="POST" onsubmit="return validaInvio()">
+                <form action="https://formspree.io/f/tuocodice" method="POST">
                     
                     <div class="sezione-form">
                         <h3>1. Dati Fatturazione</h3>
@@ -140,8 +163,7 @@
                     </div>
 
                     <div class="sezione-form">
-                        <h3>3. Veicolo e Pagamento</h3>
-                        <input type="text" name="targa" placeholder="Targa del veicolo" required>
+                        <h3>3. Metodo di Pagamento</h3>
                         <select name="pagamento" id="metodo_pag" onchange="aggiornaPrezzi()">
                             <option value="Bonifico">Bonifico Bancario</option>
                             <option value="Contrassegno">Contrassegno (+5.00€)</option>
@@ -212,7 +234,6 @@
             document.getElementById('res-totale').innerText = (sommaLorda + extra).toFixed(2);
             document.getElementById('res-extra').classList.toggle('hidden', extra === 0);
             
-            // Per Formspree
             document.getElementById('hidden_ordine').value = `Articoli: ${carrello.length} - Totale: ${(sommaLorda+extra).toFixed(2)}€`;
         }
 
@@ -220,7 +241,6 @@
             const ditta = document.getElementById('tipo_cliente').value === 'Azienda';
             document.getElementById('box-privato').classList.toggle('hidden', ditta);
             document.getElementById('box-ditta').classList.toggle('hidden', !ditta);
-            document.querySelector('#box-ditta input').required = ditta;
         }
 
         function syncSped() {
