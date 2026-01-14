@@ -101,9 +101,9 @@
             display: none !important;
         }
 
-        /* --- STILE PULSANTI (MOBILE DI BASE) --- */
+        /* --- STILE PULSANTI (BASE) --- */
         .main-btn {
-            width: 85%; /* Più largo su mobile per comodità */
+            width: 85%;
             display: block;
             padding: 30px;
             margin: 10px auto;
@@ -111,44 +111,56 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 12px;
-            background: white;
-            color: #1a73e8;
-            border: 2px solid #e0e0e0;
             text-transform: uppercase;
             text-decoration: none;
             text-align: center;
             transition: 0.3s;
+            box-sizing: border-box;
         }
 
-        /* --- CORREZIONE PER PC (DESKTOP) --- */
+        /* --- PERSONALIZZAZIONE COLORI --- */
+
+        /* 1. AUTO */
+        .btn-auto {
+            background-color: #1a73e8 !important; /* Mattonella */
+            color: #ffffff !important;            /* Scritta */
+            border: 4px solid #0d47a1 !important; /* Bordo (spessore, stile, colore) */
+        }
+
+        /* 2. MOTO */
+        .btn-moto {
+            background-color: #333333 !important; /* Mattonella */
+            color: #ffeb3b !important;            /* Scritta */
+            border: 4px solid #000000 !important; /* Bordo */
+        }
+
+        /* 3. IBRIDE */
+        .btn-ibride {
+            background-color: #9acd32 !important; /* Mattonella */
+            color: #ffffff !important;            /* Scritta */
+            border: 4px solid #6b8e23 !important; /* Bordo */
+        }
+
+        /* 4. ESEMPIO TASTO SINGOLO (es. DUCATI) */
+        .btn-ducati {
+            background-color: #ff0000 !important; /* Rosso Ducati */
+            color: #ffffff !important;            /* Scritta */
+            border: 4px solid #333333 !important; /* Bordo Nero */
+        }
+
+        /* --- FINE PERSONALIZZAZIONE COLORI --- */
+
         @media screen and (min-width: 768px) {
             .main-btn {
-                width: 50%;      /* Più stretto su PC */
-                padding: 20px;   /* Meno esagerato */
+                width: 50%;
+                padding: 20px;
                 font-size: 16px; 
             }
-            #barra-ricerca {
-                width: 70%;      /* Barra ricerca più centrata e stretta */
+            #barra-ricerca, #risultati-ricerca {
+                width: 70%;
                 margin-left: auto;
                 margin-right: auto;
-                display: block;
             }
-            #risultati-ricerca {
-                width: 70%;
-                margin: 0 auto 20px auto;
-            }
-        }
-
-        .btn-categoria {
-            background: #1a73e8 !important;
-            color: white !important;
-            border: none;
-        }
-
-        .btn-ibride {
-            background: #9acd32 !important;
-            color: white !important;
-            border: none;
         }
 
         .btn-tagliandi {
@@ -182,8 +194,7 @@
             margin-top: 20px;
         }
 
-        input,
-        textarea {
+        input, textarea {
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
@@ -206,11 +217,7 @@
         }
 
         @media print {
-            header,
-            .banner-fisso-container,
-            #sezione-contatti,
-            #barra-ricerca,
-            #risultati-ricerca {
+            header, .banner-fisso-container, #sezione-contatti, #barra-ricerca, #risultati-ricerca {
                 display: none !important;
             }
         }
@@ -231,8 +238,8 @@
         <div id="risultati-ricerca" class="nascosto"></div>
 
         <div id="livello-categoria">
-            <a href="scelta-auto.html" class="main-btn btn-categoria">AUTO (TELAIO / OBD)</a>
-            <a href="scelta-moto.html" class="main-btn btn-categoria">MOTO / CICLOMOTORI</a>
+            <a href="scelta-auto.html" class="main-btn btn-auto">AUTO (TELAIO / OBD)</a>
+            <a href="scelta-moto.html" class="main-btn btn-moto">MOTO / CICLOMOTORI</a>
             <a href="scelta-ibride.html" class="main-btn btn-ibride">AUTO IBRIDE (MAINTENANCE MODE)</a>
 
             <button class="main-btn btn-tagliandi" disabled>PIANI TAGLIANDO (In fabbricazione)</button>
