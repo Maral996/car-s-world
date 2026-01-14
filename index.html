@@ -21,7 +21,6 @@
         header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
         header h1 { font-size: 23px; margin: 0; text-transform: uppercase; }
 
-        /* SPAZIO DESCRIZIONE */
         .descrizione-sito {
             width: 90%;
             background: white;
@@ -33,10 +32,9 @@
             box-sizing: border-box;
         }
 
-        /* GRIGLIA 3 PULSANTI */
         .grid-menu {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr; /* Tre colonne uguali */
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
             width: 95%;
             max-width: 600px;
@@ -64,12 +62,6 @@
         .btn-maint { background: #9acd32; border-bottom: 4px solid #6b8e23; }
         .btn-store-home { background: #ff9800; border-bottom: 4px solid #e65100; }
 
-        /* RICERCA */
-        #barra-ricerca { width: 90%; max-width: 500px; padding: 15px; font-size: 18px; border-radius: 12px; border: 2px solid #1a73e8; margin-bottom: 10px; outline: none; }
-        #risultati-ricerca { width: 90%; max-width: 500px; background: white; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; }
-        .risultato-item { display: block; padding: 15px; text-decoration: none; color: #333; border-bottom: 1px solid #eee; font-weight: bold; }
-        .nascosto { display: none !important; }
-
         #sezione-contatti { width: 90%; max-width: 500px; padding: 20px; background: white; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-top: 20px; }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
         .btn-invia { background: #333; color: white; padding: 12px; width: 100%; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; }
@@ -80,10 +72,9 @@
     <header><h1>Car's world</h1></header>
 
     <div class="container">
-        
         <div class="descrizione-sito">
             <h2 style="margin-top:0; color:#1a73e8;">Benvenuto su Car's World</h2>
-            <p>Qui puoi inserire la tua descrizione. Ad esempio: "Il portale completo per la gestione tecnica del tuo veicolo. Trova posizioni telaio, modalità manutenzione e ricambi originali."</p>
+            <p>Esplora il database tecnico per telai, prese OBD e modalità manutenzione ibride.</p>
         </div>
 
         <div class="grid-menu">
@@ -92,40 +83,15 @@
             <a href="store.html" class="btn-box btn-store-home">Store</a>
         </div>
 
-        <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
-        <div id="risultati-ricerca" class="nascosto"></div>
-
         <div id="sezione-contatti">
             <h3 style="color: #1a73e8; margin-top:0;">Contattami</h3>
             <form action="https://formspree.io/f/tuocodice" method="POST">
                 <input type="text" name="nome" placeholder="Il tuo nome" required>
                 <input type="email" name="_replyto" placeholder="La tua email" required>
-                <textarea name="messaggio" placeholder="Cosa altro vorresti trovare..." required style="height:100px;"></textarea>
+                <textarea name="messaggio" placeholder="Cosa altro vorresti trovare in questo sito?&#10;Ho dimenticato qualche veicolo? Dimmi quale e sarò lieto di aggiungerlo il prima possibile!" required style="height:100px;"></textarea>
                 <button type="submit" class="btn-invia">Invia Messaggio</button>
             </form>
         </div>
     </div>
-
-    <script>
-        function ricercaVeloce() {
-            let input = document.getElementById('barra-ricerca').value.toLowerCase();
-            let div = document.getElementById('risultati-ricerca');
-            const pagine = [
-                { nome: "Fiat Panda", url: "fiat-panda.html" },
-                { nome: "Toyota Yaris Hybrid", url: "ibrida-toyota-yaris.html" },
-                { nome: "Ducati Monster", url: "moto-ducati-monster.html" }
-                /* Aggiungi qui gli altri */
-            ];
-            if (input.length < 2) { div.innerHTML = ""; div.classList.add('nascosto'); return; }
-            let filtrati = pagine.filter(p => p.nome.toLowerCase().includes(input));
-            if (filtrati.length > 0) {
-                div.classList.remove('nascosto');
-                div.innerHTML = filtrati.map(p => `<a href="${p.url}" class="risultato-item">${p.nome}</a>`).join('');
-            } else {
-                div.innerHTML = "<p style='padding:15px; margin:0;'>Nessun risultato</p>";
-                div.classList.remove('nascosto');
-            }
-        }
-    </script>
 </body>
 </html>
