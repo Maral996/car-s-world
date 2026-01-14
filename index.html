@@ -118,34 +118,34 @@
             box-sizing: border-box;
         }
 
-        /* --- PERSONALIZZAZIONE COLORI --- */
-
-        /* 1. AUTO */
+        /* --- PERSONALIZZAZIONE PER CATEGORIE (VALE PER TUTTO IL SITO) --- */
+        
+        /* 1. TUTTI I TASTI AUTO (Home e pagine interne marche) */
         .btn-auto {
             background-color: #1a73e8 !important; /* Mattonella */
             color: #ffffff !important;            /* Scritta */
-            border: 4px solid #0d47a1 !important; /* Bordo (spessore, stile, colore) */
+            border: 4px solid #0d47a1 !important; /* Bordo */
         }
 
-        /* 2. MOTO */
+        /* 2. TUTTI I TASTI MOTO (Home e pagine interne marche) */
         .btn-moto {
             background-color: #333333 !important; /* Mattonella */
             color: #ffeb3b !important;            /* Scritta */
             border: 4px solid #000000 !important; /* Bordo */
         }
 
-        /* 3. IBRIDE */
+        /* 3. TUTTI I TASTI IBRIDE */
         .btn-ibride {
             background-color: #9acd32 !important; /* Mattonella */
             color: #ffffff !important;            /* Scritta */
             border: 4px solid #6b8e23 !important; /* Bordo */
         }
 
-        /* 4. ESEMPIO TASTO SINGOLO (es. DUCATI) */
-        .btn-ducati {
-            background-color: #ff0000 !important; /* Rosso Ducati */
-            color: #ffffff !important;            /* Scritta */
-            border: 4px solid #333333 !important; /* Bordo Nero */
+        /* 4. MODELLI SPECIFICI (Se vuoi che tutti i modelli dentro una marca siano uguali) */
+        .btn-modello {
+            background-color: #ffffff !important; 
+            color: #333333 !important;            
+            border: 2px solid #e0e0e0 !important;
         }
 
         /* --- FINE PERSONALIZZAZIONE COLORI --- */
@@ -241,7 +241,7 @@
             <a href="scelta-auto.html" class="main-btn btn-auto">AUTO (TELAIO / OBD)</a>
             <a href="scelta-moto.html" class="main-btn btn-moto">MOTO / CICLOMOTORI</a>
             <a href="scelta-ibride.html" class="main-btn btn-ibride">AUTO IBRIDE (MAINTENANCE MODE)</a>
-
+            
             <button class="main-btn btn-tagliandi" disabled>PIANI TAGLIANDO (In fabbricazione)</button>
         </div>
 
