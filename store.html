@@ -6,106 +6,122 @@
     <title>Store Ricambi - Car's world</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
-        .container { max-width: 650px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 600px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        
         header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #ff9800; color: white; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         header h1 { font-size: 22px; text-transform: uppercase; margin: 0; }
         
-        #search-ricambi { width: 90%; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 20px; outline: none; font-size: 16px; box-sizing: border-box; }
+        #search-ricambi { width: 100%; max-width: 500px; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 20px; outline: none; font-size: 16px; box-sizing: border-box; }
         
-        .product-card { background: white; width: 90%; padding: 15px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; box-sizing: border-box; gap: 15px; }
-        .product-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #eee; }
+        .product-card { background: white; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; box-sizing: border-box; gap: 15px; text-align: left; }
+        .product-img { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; background: #eee; }
         .product-info { flex-grow: 1; }
         .product-info h4 { margin: 0; color: #333; font-size: 17px; }
         .product-info p { margin: 5px 0 0; color: #666; font-size: 14px; }
         .price { font-weight: bold; color: #ff9800; font-size: 18px; margin-right: 10px; }
 
-        .btn-add { background: #4caf50; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .btn-add { background: #4caf50; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 12px; transition: 0.3s; }
+        .btn-add:hover { background: #45a049; }
 
-        #carrello-box { width: 90%; background: #fff; padding: 15px; border-radius: 15px; margin-top: 20px; border: 2px dashed #ff9800; box-sizing: border-box; }
+        #carrello-box { width: 100%; max-width: 500px; background: #fff; padding: 20px; border-radius: 15px; margin-top: 20px; border: 2px dashed #ff9800; box-sizing: border-box; }
         .carrello-item { display: flex; justify-content: space-between; align-items: center; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .btn-remove { background: #ff4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .btn-remove { background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 11px; }
 
-        #modulo-preventivo { width: 90%; background: white; padding: 20px; border-radius: 15px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
-        #modulo-preventivo h3 { margin-top: 0; color: #ff9800; }
+        #modulo-preventivo { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 15px; margin-top: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); box-sizing: border-box; margin-bottom: 40px; }
+        #modulo-preventivo h3 { margin-top: 0; color: #ff9800; margin-bottom: 20px; }
         
+        .sezione-form { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: left; border: 1px solid #eee; }
+        .sezione-form label { font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
+
         input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; font-size: 15px; }
         
-        .btn-invia { background: #ff9800; color: white; padding: 15px; width: 100%; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
-        .btn-invia:hover { background: #e68a00; }
+        .btn-invia { background: #ff9800; color: white; padding: 18px; width: 100%; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 16px; transition: 0.3s; }
+        .btn-invia:hover { background: #e68a00; transform: translateY(-2px); }
         
-        .back-home { margin-top: 20px; text-decoration: none; color: #666; font-weight: bold; font-size: 14px; }
+        .back-home { margin-top: 10px; display: inline-block; text-decoration: none; color: #666; font-weight: bold; font-size: 14px; padding-bottom: 30px; }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
     <header><h1>Store Ricambi</h1></header>
 
     <div class="container">
-        <input type="text" id="search-ricambi" placeholder="🔍 Cerca tra i ricambi disponibili..." onkeyup="filterProducts()">
+        <input type="text" id="search-ricambi" placeholder="🔍 Cerca tra i ricambi..." onkeyup="filterProducts()">
 
         <div id="lista-prodotti" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-            
             <div class="product-card">
                 <img src="img/spazzole.jpg" class="product-img" alt="foto">
-                <div class="product-info"><h4>Spazzole Tergicristallo</h4><p>Coppia anteriore (Bosch/SWF)</p></div>
+                <div class="product-info"><h4>Spazzole Tergicristallo</h4><p>Coppia anteriore</p></div>
                 <div class="price">25.00€</div>
                 <button class="btn-add" onclick="aggiungiCarrello('Spazzole Tergicristallo', 25.00)">AGGIUNGI</button>
             </div>
-
-            <div class="product-card">
-                <img src="img/h7.jpg" class="product-img" alt="foto">
-                <div class="product-info"><h4>Kit Lampadine H7</h4><p>Bianco extra vision (2 pz)</p></div>
-                <div class="price">15.00€</div>
-                <button class="btn-add" onclick="aggiungiCarrello('Kit Lampadine H7', 15.00)">AGGIUNGI</button>
-            </div>
-
-            <div class="product-card">
-                <img src="img/liquido.jpg" class="product-img" alt="foto">
-                <div class="product-info"><h4>Liquido Tergi 5L</h4><p>Antigelo stagionale -20°C</p></div>
-                <div class="price">8.00€</div>
-                <button class="btn-add" onclick="aggiungiCarrello('Liquido Tergi 5L', 8.00)">AGGIUNGI</button>
-            </div>
-
             <div class="product-card">
                 <img src="img/batteria.jpg" class="product-img" alt="foto">
-                <div class="product-info"><h4>Batteria 60Ah</h4><p>Alta resistenza allo spunto</p></div>
+                <div class="product-info"><h4>Batteria 60Ah</h4><p>Alta resistenza</p></div>
                 <div class="price">75.00€</div>
                 <button class="btn-add" onclick="aggiungiCarrello('Batteria 60Ah', 75.00)">AGGIUNGI</button>
             </div>
-            
         </div>
 
         <div id="carrello-box">
-            <h3 style="margin-top: 0; font-size: 18px;">🛒 Il tuo carrello</h3>
-            <div id="lista-carrello">
-                <p style="color: #999; font-size: 13px;">Nessun prodotto selezionato.</p>
-            </div>
-            <div id="box-totale" style="display:none; margin-top:10px; font-weight:bold; border-top:1px solid #333; padding-top:5px;">
+            <h3>🛒 Il tuo carrello</h3>
+            <div id="lista-carrello"><p style="color: #999; font-size: 13px;">Nessun prodotto selezionato.</p></div>
+            <div id="box-totale" style="display:none; margin-top:10px; font-weight:bold; border-top:1px solid #333; padding-top:5px; font-size: 20px;">
                 TOTALE: <span id="valore-totale">0</span>€
             </div>
         </div>
 
         <div id="modulo-preventivo">
-            <h3 style="text-align: center;">Concludi Ordine o Chiedi Preventivo</h3>
+            <h3>Dati per la Fatturazione e Spedizione</h3>
             <form action="https://formspree.io/f/tuocodice" method="POST" onsubmit="confermaOrdine()">
-                <input type="text" name="nome" placeholder="Il tuo nome" required>
-                <input type="text" name="targa" placeholder="Targa del veicolo (Obbligatoria)" required>
                 
-                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Metodo di pagamento:</label>
-                <select name="metodo_pagamento" id="metodo_pagamento" onchange="mostraCarrello()" required>
-                    <option value="Bonifico">Bonifico (Prezzo standard)</option>
-                    <option value="Contrassegno">Contrassegno (+5.00€)</option>
-                </select>
+                <div class="sezione-form">
+                    <label>Tipo Cliente</label>
+                    <select name="tipo_cliente" id="tipo_cliente" onchange="switchCampiFatturazione()" required>
+                        <option value="Privato">Privato</option>
+                        <option value="Ditta">Azienda / Libero Professionista</option>
+                    </select>
+                </div>
 
-                <textarea id="ordine-testo" name="pezzi_richiesti" placeholder="Cosa ti serve? Se hai usato il carrello apparirà qui..." style="height: 100px;" required></textarea>
-                
-                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Come vuoi essere ricontattato?</label>
-                <select name="mezzo_contatto" required>
-                    <option value="WhatsApp">WhatsApp</option>
-                    <option value="Chiamata">Chiamata Telefonica</option>
-                    <option value="Email">Email</option>
-                </select>
-                
-                <input type="text" name="recapito" placeholder="Numero di telefono o Email" required>
+                <div id="campi-privato">
+                    <input type="text" name="nome_cognome" placeholder="Nome e Cognome" id="input_nome">
+                    <input type="text" name="codice_fiscale" placeholder="Codice Fiscale" id="input_cf">
+                </div>
+
+                <div id="campi-ditta" class="hidden">
+                    <input type="text" name="ragione_sociale" placeholder="Ragione Sociale" id="input_ragione">
+                    <input type="text" name="partita_iva" placeholder="Partita IVA" id="input_piva">
+                    <input type="text" name="codice_univoco_pec" placeholder="Codice Univoco o PEC" id="input_sdi">
+                </div>
+
+                <div class="sezione-form">
+                    <label>Indirizzi e Contatto Corriere</label>
+                    <textarea name="indirizzo_fatturazione" placeholder="Indirizzo di Fatturazione completo" required></textarea>
+                    <textarea name="indirizzo_spedizione" placeholder="Indirizzo di Spedizione (Scrivi 'Come fatturazione' se uguale)" required></textarea>
+                    <input type="tel" name="telefono_corriere" placeholder="Cellulare per il corriere (Obbligatorio)" required>
+                </div>
+
+                <div class="sezione-form">
+                    <label>Dati Veicolo</label>
+                    <input type="text" name="targa" placeholder="Targa del veicolo (Fondamentale)" required>
+                </div>
+
+                <div class="sezione-form">
+                    <label>Pagamento e Contatto Rapido</label>
+                    <select name="metodo_pagamento" id="metodo_pagamento" onchange="mostraCarrello()" required>
+                        <option value="Bonifico">Bonifico (Prezzo standard)</option>
+                        <option value="Contrassegno">Contrassegno (+5.00€)</option>
+                    </select>
+                    <select name="mezzo_contatto_preferito" required>
+                        <option value="WhatsApp">Ricontattami su WhatsApp</option>
+                        <option value="Email">Ricontattami via Email</option>
+                        <option value="Chiamata">Chiamata Telefonica</option>
+                    </select>
+                    <input type="text" name="recapito_veloce" placeholder="Numero o Email per conferma ordine" required>
+                </div>
+
+                <textarea id="ordine-testo" name="riepilogo_carrello" class="hidden"></textarea>
                 
                 <button type="submit" class="btn-invia">Invia Ordine</button>
             </form>
@@ -118,9 +134,25 @@
         let carrello = [];
         let totaleProdotti = 0;
 
-        // FUNZIONE MESSAGGIO DI CONFERMA
+        function switchCampiFatturazione() {
+            const tipo = document.getElementById('tipo_cliente').value;
+            const isPrivato = (tipo === 'Privato');
+            
+            document.getElementById('campi-privato').classList.toggle('hidden', !isPrivato);
+            document.getElementById('campi-ditta').classList.toggle('hidden', isPrivato);
+
+            // Rende i campi obbligatori solo se visibili
+            document.getElementById('input_nome').required = isPrivato;
+            document.getElementById('input_cf').required = isPrivato;
+            document.getElementById('input_ragione').required = !isPrivato;
+            document.getElementById('input_piva').required = !isPrivato;
+            document.getElementById('input_sdi').required = !isPrivato;
+        }
+        // Avvio iniziale per settare i required corretti
+        switchCampiFatturazione();
+
         function confermaOrdine() {
-            alert("Ordine effettuato con successo!\n\nA breve verrai contattato tramite il metodo scelto per la conferma definitiva. \n\nVerificheremo insieme i dati del veicolo tramite la targa per assicurarci che i ricambi siano corretti ed evitare ordini errati.");
+            alert("Ordine effettuato! Verificheremo la compatibilità dei pezzi tramite la targa e ti contatteremo a breve per la conferma finale.");
         }
 
         function aggiungiCarrello(nome, prezzo) {
@@ -142,45 +174,36 @@
             let metodoPagamento = document.getElementById('metodo_pagamento').value;
 
             if (carrello.length === 0) {
-                lista.innerHTML = '<p style="color: #999; font-size: 13px;">Nessun prodotto selezionato.</p>';
+                lista.innerHTML = '<p style="color: #999;">Nessun prodotto selezionato.</p>';
                 boxTotale.style.display = "none";
                 areaTesto.value = "";
                 return;
             }
 
             lista.innerHTML = "";
-            let testoRiepilogo = "ORDINE DAL SITO:\n";
-            
+            let testoRiepilogo = "RIEPILOGO PRODOTTI:\n";
             carrello.forEach((item, i) => {
-                lista.innerHTML += `<div class="carrello-item">
-                    <span>${item.nome} (${item.prezzo.toFixed(2)}€)</span>
-                    <button class="btn-remove" onclick="rimuoviDalCarrello(${i})">X</button>
-                </div>`;
+                lista.innerHTML += `<div class="carrello-item"><span>${item.nome}</span><span>${item.prezzo.toFixed(2)}€ <button class="btn-remove" onclick="rimuoviDalCarrello(${i})">X</button></span></div>`;
                 testoRiepilogo += `- ${item.nome} (${item.prezzo.toFixed(2)}€)\n`;
             });
 
-            let supplemento = (metodoPagamento === "Contrassegno") ? 5.00 : 0.00;
+            let supplemento = (metodoPagamento === "Contrassegno") ? 5.0 : 0;
             let totaleFinale = totaleProdotti + supplemento;
 
             if (supplemento > 0) {
-                lista.innerHTML += `<div class="carrello-item" style="color: #d32f2f; font-weight: bold;">
-                    <span>Supplemento Contrassegno</span>
-                    <span>+5.00€</span>
-                </div>`;
-                testoRiepilogo += `+ Supplemento Contrassegno (5.00€)\n`;
+                lista.innerHTML += `<div class="carrello-item" style="color:red; font-weight:bold;"><span>Supplemento Contrassegno</span><span>+5.00€</span></div>`;
             }
 
             document.getElementById('valore-totale').innerText = totaleFinale.toFixed(2);
             boxTotale.style.display = "block";
-            areaTesto.value = testoRiepilogo + "\nMETODO PAGAMENTO: " + metodoPagamento + "\nTOTALE DA PAGARE: " + totaleFinale.toFixed(2) + "€";
+            areaTesto.value = testoRiepilogo + "\nTOTALE ORDINE: " + totaleFinale.toFixed(2) + "€\nMETODO SCELTO: " + metodoPagamento;
         }
 
         function filterProducts() {
             let input = document.getElementById('search-ricambi').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
             for (let card of cards) {
-                let text = card.textContent.toLowerCase();
-                card.style.display = text.includes(input) ? "flex" : "none";
+                card.style.display = card.textContent.toLowerCase().includes(input) ? "flex" : "none";
             }
         }
     </script>
