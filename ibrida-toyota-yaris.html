@@ -1,30 +1,132 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887"
-        crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous"></script>
+    
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toyota Yaris Hybrid - Car's world</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; color: #333; }
+        
+        .container { 
+            max-width: 650px; 
+            margin: auto; 
+            padding: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        header { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 60px; 
+            background: #9acd32; /* Colore verde manutenzione */
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 15px;
+            z-index: 10000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+
+        header h1 { font-size: 16px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
+        
+        .nav-fissa { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 13px; 
+            background: rgba(0,0,0,0.1); 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+        }
+
+        /* SCHEDA TECNICA */
+        .scheda-finale {
+            background: white;
+            width: 95%;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .scheda-finale h2 {
+            color: #9acd32;
+            margin-top: 0;
+            font-size: 22px;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 10px;
+        }
+
+        .box-ibrido {
+            background: #f9fdf4;
+            padding: 20px;
+            border-left: 5px solid #9acd32;
+            border-radius: 8px;
+            text-align: left;
+            line-height: 1.6;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .step {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .avviso {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 15px;
+            border: 1px solid #ffeeba;
+        }
+
+        .banner-fisso-container { width: 100%; margin-top: 30px; text-align: center; }
+    </style>
 </head>
 
 <body>
-    <header><a href="scelta-ibride.html" class="nav-fissa">Indietro</a>
-        <h1>Yaris Hybrid</h1><a href="index.html" class="nav-fissa">Home</a>
+    <header>
+        <a href="scelta-ibride.html" class="nav-fissa">Indietro</a>
+        <h1>Toyota Yaris Hybrid</h1>
+        <a href="index.html" class="nav-fissa">Home</a>
     </header>
+
     <div class="container">
         <div class="scheda-finale">
             <h2>Manutenzione (2020-oggi)</h2>
-            <div class="box-ibrido">Macchina spenta, accenderla solo il quadro (senza premere il freno, la parola "READY" non deve accendersi, lasciare il cambio in P e dare 2 accelerate, mettere il cambio in N e dare due accellerate, mettere di nuovo il cambio in P e dare 2 accelerate, nel quadro appare 'Maintenance mode'. Proseguire con l'accensione della macchina premendo il freno, si accendono varie spie di errore ma non preoccuparsi una volta usciti dal Maintenance mode tutto ritorno come prima. Per spegnere questa modalità basta spengere la macchina e riaccenderla normalmente</div>
+            <div class="box-ibrido">
+                <span class="step">1. A macchina spenta, accendere <strong>solo il quadro</strong> (senza premere il freno, la scritta "READY" deve essere spenta).</span>
+                <span class="step">2. Cambio in <strong>P</strong>: dare 2 accelerate a fondo.</span>
+                <span class="step">3. Cambio in <strong>N</strong>: dare 2 accelerate a fondo.</span>
+                <span class="step">4. Cambio in <strong>P</strong>: dare 2 accelerate a fondo.</span>
+                <span class="step">5. Sul quadro apparirà la scritta <strong>'Maintenance mode'</strong>.</span>
+                <span class="step">6. Accendere il motore premendo il freno.</span>
+
+                <div class="avviso">
+                    <strong>Nota:</strong> Si accenderanno varie spie di errore, è normale. Una volta spenta e riaccesa la macchina normalmente, tutto tornerà alla normalità.
+                </div>
+            </div>
         </div>
-        <div class="banner-fisso-container"><ins class="adsbygoogle" style="display:block"
+
+        <div class="banner-fisso-container">
+            <ins class="adsbygoogle" style="display:block"
                 data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto"
                 data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 </body>
-
 </html>
