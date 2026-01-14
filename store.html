@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Ricambi - Car's world</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
+        .container { max-width: 650px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #ff9800; color: white; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header h1 { font-size: 22px; text-transform: uppercase; margin: 0; }
+        
+        #search-ricambi { width: 90%; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 20px; outline: none; font-size: 16px; box-sizing: border-box; }
+        
+        .product-card { background: white; width: 90%; padding: 15px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .product-info h4 { margin: 0; color: #333; font-size: 17px; }
+        .product-info p { margin: 5px 0 0; color: #666; font-size: 14px; }
+        .price { font-weight: bold; color: #ff9800; font-size: 18px; white-space: nowrap; margin-left: 10px; }
+
+        #modulo-preventivo { width: 90%; background: white; padding: 20px; border-radius: 15px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
+        #modulo-preventivo h3 { margin-top: 0; color: #ff9800; }
+        
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; font-size: 15px; }
+        
+        .btn-invia { background: #ff9800; color: white; padding: 15px; width: 100%; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        .btn-invia:hover { background: #e68a00; }
+        
+        .back-home { margin-top: 20px; text-decoration: none; color: #666; font-weight: bold; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <header><h1>Store Ricambi</h1></header>
+
+    <div class="container">
+        <input type="text" id="search-ricambi" placeholder="🔍 Cerca tra i ricambi disponibili..." onkeyup="filterProducts()">
+
+        <div id="lista-prodotti" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            
+            <div class="product-card">
+                <div class="product-info"><h4>Spazzole Tergicristallo</h4><p>Coppia anteriore (Bosch/SWF)</p></div>
+                <div class="price">25.00€</div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-info"><h4>Kit Lampadine H7</h4><p>Bianco extra vision (2 pz)</p></div>
+                <div class="price">15.00€</div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-info"><h4>Liquido Tergi 5L</h4><p>Antigelo stagionale -20°C</p></div>
+                <div class="price">8.00€</div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-info"><h4>Batteria 60Ah</h4><p>Alta resistenza allo spunto</p></div>
+                <div class="price">75.00€</div>
+            </div>
+            
+            </div>
+
+        <div id="modulo-preventivo">
+            <h3 style="text-align: center;">Richiedi Preventivo</h3>
+            <p style="text-align: center; font-size: 13px; color: #555; margin-bottom: 20px;">Non trovi quello che cerchi? Scrivici la targa e il pezzo che ti serve.</p>
+            
+            <form action="https://formspree.io/f/tuocodice" method="POST">
+                <input type="text" name="nome" placeholder="Il tuo nome" required>
+                <input type="text" name="targa" placeholder="Targa del veicolo (Obbligatoria)" required>
+                
+                <textarea name="pezzi_richiesti" placeholder="Esempio: Filtro Olio, Pastiglie anteriori, ecc..." style="height: 80px;" required></textarea>
+                
+                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Come preferisci essere ricontattato?</label>
+                <select name="mezzo_contatto" required>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Chiamata">Chiamata Telefonica</option>
+                    <option value="Email">Email</option>
+                </select>
+                
+                <input type="text" name="recapito" placeholder="Numero di telefono o Email" required>
+                
+                <button type="submit" class="btn-invia">Invia Richiesta Preventivo</button>
+            </form>
+        </div>
+        
+        <a href="index.html" class="back-home">← Torna alla Home</a>
+    </div>
+
+    <script>
+        // Funzione per cercare tra i ricambi che hai inserito
+        function filterProducts() {
+            let input = document.getElementById('search-ricambi').value.toLowerCase();
+            let cards = document.getElementsByClassName('product-card');
+            for (let card of cards) {
+                let text = card.textContent.toLowerCase();
+                card.style.display = text.includes(input) ? "flex" : "none";
+            }
+        }
+    </script>
+</body>
+</html>
