@@ -101,9 +101,9 @@
             display: none !important;
         }
 
-        /* Stile pulsanti e link */
+        /* --- STILE PULSANTI (MOBILE DI BASE) --- */
         .main-btn {
-            width: 70%;
+            width: 85%; /* Più largo su mobile per comodità */
             display: block;
             padding: 30px;
             margin: 10px auto;
@@ -117,6 +117,26 @@
             text-transform: uppercase;
             text-decoration: none;
             text-align: center;
+            transition: 0.3s;
+        }
+
+        /* --- CORREZIONE PER PC (DESKTOP) --- */
+        @media screen and (min-width: 768px) {
+            .main-btn {
+                width: 50%;      /* Più stretto su PC */
+                padding: 20px;   /* Meno esagerato */
+                font-size: 16px; 
+            }
+            #barra-ricerca {
+                width: 70%;      /* Barra ricerca più centrata e stretta */
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+            #risultati-ricerca {
+                width: 70%;
+                margin: 0 auto 20px auto;
+            }
         }
 
         .btn-categoria {
@@ -245,7 +265,6 @@
             let input = document.getElementById('barra-ricerca').value.toLowerCase();
             let div = document.getElementById('risultati-ricerca');
             
-            // ELENCO DELLE PAGINE DEL SITO
             const pagine = [
                 { nome: "Fiat Panda", url: "fiat-panda.html" },
                 { nome: "Fiat Punto", url: "fiat-punto.html" },
@@ -280,7 +299,6 @@
             }
         }
 
-        // Registrazione Service Worker per PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
