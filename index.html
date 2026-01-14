@@ -33,10 +33,14 @@
             color: #333;
         }
 
+        /* Contenitore principale centrato */
         .container {
             max-width: 650px;
             margin: auto;
             padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra tutto il contenuto */
         }
 
         header {
@@ -63,20 +67,23 @@
             text-align: center;
         }
 
-        /* --- STILE RICERCA --- */
+        /* --- STILE RICERCA (ALLINEATA AI PULSANTI) --- */
         #barra-ricerca {
-            width: 100%;
+            width: 90%; /* Stessa larghezza dei pulsanti */
+            max-width: 500px;
             padding: 15px;
             font-size: 18px;
             border-radius: 12px;
             border: 2px solid #1a73e8;
-            margin-bottom: 10px;
+            margin: 0 auto 10px auto;
             box-sizing: border-box;
             outline: none;
-            background-color: white;
+            display: block;
         }
 
         #risultati-ricerca {
+            width: 90%;
+            max-width: 500px;
             background: white;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -93,19 +100,14 @@
             font-weight: bold;
         }
 
-        .risultato-item:last-child {
-            border-bottom: none;
-        }
+        .nascosto { display: none !important; }
 
-        .nascosto {
-            display: none !important;
-        }
-
-        /* --- STILE PULSANTI (BASE) --- */
+        /* --- STILE PULSANTI UNIVERSALE --- */
         .main-btn {
-            width: 85%;
+            width: 90%; /* Allineato alla barra ricerca */
+            max-width: 500px; /* Limite per non farlo diventare troppo largo su PC */
             display: block;
-            padding: 30px;
+            padding: 25px 15px;
             margin: 10px auto;
             font-size: 17px;
             font-weight: bold;
@@ -118,49 +120,29 @@
             box-sizing: border-box;
         }
 
-        /* --- PERSONALIZZAZIONE PER CATEGORIE (VALE PER TUTTO IL SITO) --- */
-        
-        /* 1. TUTTI I TASTI AUTO (Home e pagine interne marche) */
+        /* --- COLORI CATEGORIE --- */
         .btn-auto {
-            background-color: #1a73e8 !important; /* Mattonella */
-            color: #ffffff !important;            /* Scritta */
-            border: 1px solid #0d47a1 !important; /* Bordo */
+            background-color: #1a73e8 !important;
+            color: #ffffff !important;
+            border: 4px solid #0d47a1 !important;
         }
 
-        /* 2. TUTTI I TASTI MOTO (Home e pagine interne marche) */
         .btn-moto {
-            background-color: #ff00ff !important; /* Mattonella */
-            color: #ffeb3b !important;            /* Scritta */
-            border: 1px solid #000000 !important; /* Bordo */
+            background-color: #333333 !important;
+            color: #ffeb3b !important;
+            border: 4px solid #000000 !important;
         }
 
-        /* 3. TUTTI I TASTI IBRIDE */
         .btn-ibride {
-            background-color: #9acd32 !important; /* Mattonella */
-            color: #ffffff !important;            /* Scritta */
-            border: 1px solid #6b8e23 !important; /* Bordo */
+            background-color: #9acd32 !important;
+            color: #ffffff !important;
+            border: 4px solid #6b8e23 !important;
         }
 
-        /* 4. MODELLI SPECIFICI (Se vuoi che tutti i modelli dentro una marca siano uguali) */
         .btn-modello {
-            background-color: #ffffff !important; 
-            color: #333333 !important;            
+            background-color: #ffffff !important;
+            color: #333333 !important;
             border: 2px solid #e0e0e0 !important;
-        }
-
-        /* --- FINE PERSONALIZZAZIONE COLORI --- */
-
-        @media screen and (min-width: 768px) {
-            .main-btn {
-                width: 50%;
-                padding: 20px;
-                font-size: 16px; 
-            }
-            #barra-ricerca, #risultati-ricerca {
-                width: 70%;
-                margin-left: auto;
-                margin-right: auto;
-            }
         }
 
         .btn-tagliandi {
@@ -171,27 +153,32 @@
             cursor: not-allowed;
         }
 
+        /* --- FINE COLORI --- */
+
         .banner-fisso-container {
-            width: 100%;
+            width: 90%;
+            max-width: 500px;
             min-height: 100px;
             background: #ffffff;
-            margin: 40px 0 10px 0;
+            margin: 30px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             border-radius: 10px;
             border: 1px dashed #bbb;
-            overflow: hidden;
         }
 
         #sezione-contatti {
+            width: 90%;
+            max-width: 500px;
             padding: 20px;
             background: #fff;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            margin-top: 20px;
+            margin: 20px auto;
+            box-sizing: border-box;
         }
 
         input, textarea {
@@ -201,7 +188,6 @@
             border-radius: 8px;
             border: 1px solid #ccc;
             box-sizing: border-box;
-            font-family: inherit;
         }
 
         .btn-invia {
@@ -237,11 +223,10 @@
         <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
         <div id="risultati-ricerca" class="nascosto"></div>
 
-        <div id="livello-categoria">
+        <div id="livello-categoria" style="width: 100%; text-align: center;">
             <a href="scelta-auto.html" class="main-btn btn-auto">AUTO (TELAIO / OBD)</a>
             <a href="scelta-moto.html" class="main-btn btn-moto">MOTO / CICLOMOTORI</a>
             <a href="scelta-ibride.html" class="main-btn btn-ibride">AUTO IBRIDE (MAINTENANCE MODE)</a>
-            
             <button class="main-btn btn-tagliandi" disabled>PIANI TAGLIANDO (In fabbricazione)</button>
         </div>
 
@@ -249,19 +234,15 @@
             <p style="color:#bbb; font-size:10px; margin-bottom:5px;">ANNUNCIO PUBBLICITARIO</p>
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"
                 data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <div id="sezione-contatti">
             <h3 style="color: #1a73e8; margin-top:0;">Contattami</h3>
-            <form action="https://formspree.io/f/tuocodice" method="POST" style="text-align: left;">
+            <form action="https://formspree.io/f/tuocodice" method="POST">
                 <input type="text" name="nome" placeholder="Il tuo nome" required>
                 <input type="email" name="_replyto" placeholder="La tua email" required>
-                <textarea name="messaggio"
-                    placeholder="Cosa altro vorresti trovare in questo sito?&#10;Ho dimenticato qualche veicolo? Dimmi quale e sarò lieto di aggiungerlo il prima possibile!"
-                    required style="height:100px;"></textarea>
+                <textarea name="messaggio" placeholder="Messaggio..." required style="height:100px;"></textarea>
                 <button type="submit" class="btn-invia">Invia Messaggio</button>
             </form>
         </div>
@@ -271,7 +252,6 @@
         function ricercaVeloce() {
             let input = document.getElementById('barra-ricerca').value.toLowerCase();
             let div = document.getElementById('risultati-ricerca');
-            
             const pagine = [
                 { nome: "Fiat Panda", url: "fiat-panda.html" },
                 { nome: "Fiat Punto", url: "fiat-punto.html" },
@@ -286,30 +266,21 @@
                 { nome: "Toyota Yaris Hybrid (Ibrida)", url: "ibrida-toyota-yaris.html" },
                 { nome: "Ducati Monster", url: "moto-ducati-monster.html" }
             ];
-
             if (input.length < 2) {
                 div.innerHTML = "";
                 div.classList.add('nascosto');
                 return;
             }
-
             let filtrati = pagine.filter(p => p.nome.toLowerCase().includes(input));
-
             if (filtrati.length > 0) {
                 div.classList.remove('nascosto');
-                div.innerHTML = filtrati.map(p => 
-                    `<a href="${p.url}" class="risultato-item">${p.nome}</a>`
-                ).join('');
+                div.innerHTML = filtrati.map(p => `<a href="${p.url}" class="risultato-item">${p.nome}</a>`).join('');
             } else {
                 div.innerHTML = "<p style='padding:15px; margin:0;'>Nessun risultato trovato</p>";
                 div.classList.remove('nascosto');
             }
         }
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
     </script>
 </body>
-
 </html>
