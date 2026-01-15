@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marche Moto - Car's world</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
         
         header { 
             position: fixed; top: 0; left: 0; right: 0; height: 60px; 
@@ -18,20 +18,32 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
         
+        /* TASTI HEADER RIPRISTINATI: Rettangolo opaco e maiuscolo */
         .nav-fissa {
-            color: white !important;
-            text-decoration: none !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
-            background: none !important;
-            border: none !important;
-            padding: 5px 10px !important;
-            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.2) !important; 
+            border: none !important; 
+            color: white !important; 
+            padding: 7px 12px !important; 
+            border-radius: 8px !important; 
+            font-weight: bold !important; 
+            font-size: 13px !important; 
+            text-decoration: none !important; 
+            text-transform: uppercase !important; 
+            min-width: 70px !important;
+            text-align: center !important;
+            display: inline-block !important;
         }
 
         .wrapper { display: grid; grid-template-columns: 160px 160px 1fr 160px 160px; gap: 15px; max-width: 1400px; margin: auto; padding: 10px; }
         .container { grid-column: 3; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .main-btn { width: 95%; max-width: 400px; padding: 20px; margin: 8px 0; background: white; border: 2px solid #1a73e8; border-radius: 12px; text-decoration: none; color: #1a73e8; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        /* TASTI DELLE MARCHE (Bianchi con bordo blu) */
+        .main-btn { 
+            width: 95%; max-width: 400px; padding: 20px; margin: 8px 0; 
+            background: white; border: 2px solid #1a73e8; border-radius: 12px; 
+            text-decoration: none; color: #1a73e8; font-weight: bold; 
+            text-align: center; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        }
 
         .ads-side { display: flex; flex-direction: column; gap: 15px; }
         .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
@@ -45,7 +57,7 @@
 </head>
 <body>
     <header>
-        <a href="scelta-telai.html" class="nav-fissa">Indietro</a>
+        <a href="scelta-moto.html" class="nav-fissa">Indietro</a>
         <h1>Marche Moto</h1>
         <a href="index.html" class="nav-fissa">Home</a>
     </header>
@@ -61,7 +73,6 @@
 
         <div class="container">
             <a href="moto-ducati.html" class="main-btn">DUCATI</a>
-            
             <div class="banner-fisso-container">
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
