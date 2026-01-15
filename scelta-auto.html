@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marche Auto - Car's world</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; }
         
-        /* Header con stile tasti identico alla scheda Audi */
+        /* Header identico alla pagina Audi.html */
         header { 
-            position: fixed; top: 0; left: 0; right: 0; height: 65px; 
+            position: fixed; top: 0; left: 0; right: 0; height: 60px; 
             background: #1a73e8; color: white; display: flex; 
             align-items: center; justify-content: space-between; 
             padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
@@ -21,12 +21,12 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
         
-        /* Stile link Indietro/Home ricopiato fedelmente */
-        .nav-fissa { 
+        /* Stile link Indietro/Home ricopiato fedelmente (solo testo bianco e bold) */
+        header a { 
             color: white; 
             text-decoration: none; 
             font-weight: bold; 
-            font-size: 14px;
+            font-size: 14px; 
         }
 
         /* Struttura PC con colonne pubblicitarie laterali */
@@ -39,7 +39,7 @@
             padding: 10px;
         }
 
-        /* Container centrale */
+        /* Container centrale perfettamente centrato */
         .container { 
             grid-column: 3; 
             display: flex; 
@@ -74,9 +74,9 @@
 
 <body>
     <header>
-        <a href="scelta-telai.html" class="nav-fissa">Indietro</a>
+        <a href="scelta-telai.html">Indietro</a>
         <h1>Marche Auto</h1>
-        <a href="index.html" class="nav-fissa">Home</a>
+        <a href="index.html">Home</a>
     </header>
 
     <div class="wrapper">
