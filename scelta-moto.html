@@ -34,30 +34,68 @@
             display: inline-block !important;
         }
 
-        .wrapper { display: grid; grid-template-columns: 160px 160px 1fr 160px 160px; gap: 15px; max-width: 1400px; margin: auto; padding: 10px; }
-        .container { grid-column: 3; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        
-        /* TASTI DELLE MARCHE (Bianchi con bordo blu) */
-        .main-btn { 
-            width: 95%; max-width: 400px; padding: 20px; margin: 8px 0; 
-            background: white; border: 2px solid #1a73e8; border-radius: 12px; 
-            text-decoration: none; color: #1a73e8; font-weight: bold; 
-            text-align: center; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        /* GRIGLIA PC: Centratura perfetta con 3 colonne */
+        .wrapper { 
+            display: grid; 
+            grid-template-columns: 320px 1fr 320px; 
+            gap: 20px; 
+            max-width: 100%; 
+            margin: auto; 
+            padding: 0 20px; 
+            align-items: start;
         }
 
-        .ads-side { display: flex; flex-direction: column; gap: 15px; }
-        .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
+        /* CONTENITORE CENTRALE */
+        .container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%;
+        }
+        
+        /* TASTI DELLE MARCHE */
+        .main-btn { 
+            width: 100%; 
+            max-width: 450px; 
+            padding: 18px; 
+            margin: 8px 0; 
+            background: white; 
+            border: 2px solid #1a73e8; 
+            border-radius: 12px; 
+            text-decoration: none; 
+            color: #1a73e8; 
+            font-weight: bold; 
+            text-align: center; 
+            text-transform: uppercase; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+            box-sizing: border-box;
+        }
 
+        .ads-side { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+        }
+
+        .banner-fisso-container { 
+            width: 100%; 
+            max-width: 600px;
+            margin-top: 25px; 
+            text-align: center; 
+        }
+
+        /* MOBILE: Nasconde ads laterali e centra tutto */
         @media (max-width: 1100px) {
-            .wrapper { display: flex; flex-direction: column; align-items: center; }
+            .wrapper { display: block; padding: 10px; }
             .ads-side { display: none; }
             .container { width: 100%; }
+            .main-btn { max-width: 100%; }
         }
     </style>
 </head>
 <body>
     <header>
-        <a href="scelta-moto.html" class="nav-fissa">Indietro</a>
+        <a href="scelta-telai.html" class="nav-fissa">Indietro</a>
         <h1>Marche Moto</h1>
         <a href="index.html" class="nav-fissa">Home</a>
     </header>
@@ -69,14 +107,14 @@
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-        <div class="ads-side"></div>
 
         <div class="container">
             <a href="moto-ducati.html" class="main-btn">DUCATI</a>
+            
             <div class="banner-fisso-container">
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <ins class="adsbygoogle" style="display:block; margin-top:15px;" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
@@ -87,7 +125,6 @@
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-        <div class="ads-side"></div>
     </div>
 </body>
 </html>
