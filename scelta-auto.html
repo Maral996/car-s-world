@@ -8,7 +8,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marche Auto - Car's world</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; }
+        
+        header { 
+            position: fixed; top: 0; left: 0; right: 0; height: 60px; 
+            background: #1a73e8; color: white; display: flex; 
+            align-items: center; justify-content: space-between; 
+            padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+
+        header h1 { font-size: 18px; margin: 0; text-transform: uppercase; }
+        .nav-fissa { color: white; text-decoration: none; font-weight: bold; font-size: 14px; }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: 160px 160px 1fr 160px 160px;
+            gap: 15px;
+            max-width: 1400px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .container { 
+            grid-column: 3; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        .main-btn { 
+            width: 100%; max-width: 400px; padding: 20px; margin: 8px 0; 
+            background: white; border: 2px solid #1a73e8; border-radius: 12px; 
+            text-decoration: none; color: #1a73e8; font-weight: bold; 
+            text-align: center; text-transform: uppercase; transition: 0.3s; 
+        }
+
+        .main-btn:hover { background: #1a73e8; color: white; }
+
+        .ads-side { display: flex; flex-direction: column; gap: 15px; }
+        .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
+
+        @media (max-width: 1100px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .ads-side { display: none; }
+            .container { grid-column: 1; }
+        }
+    </style>
 </head>
 
 <body>
@@ -17,25 +63,70 @@
         <h1>Marche Auto</h1>
         <a href="index.html" class="nav-fissa">Home</a>
     </header>
-    <div class="container">
-        <a href="auto-audi.html" class="main-btn">AUDI</a>
-        <a href="auto-fiat.html" class="main-btn">FIAT</a>
-        <a href="auto-ford.html" class="main-btn">FORD</a>
-        <a href="auto-jeep.html" class="main-btn">JEEP</a>
-        <a href="auto-lancia.html" class="main-btn">LANCIA</a>
-        <a href="auto-mercedes.html" class="main-btn">MERCEDES</a>
-        <a href="auto-opel.html" class="main-btn">OPEL</a>
-        <a href="auto-porsche.html" class="main-btn">PORSCHE</a>
-        <a href="auto-renault.html" class="main-btn">RENAULT</a>
-        <a href="auto-toyota.html" class="main-btn">TOYOTA</a>
-        <a href="auto-vw.html" class="main-btn">VOLKSWAGEN</a>   
-        
-        <div class="banner-fisso-container">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"
-                data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+    <div class="wrapper">
+        <div class="ads-side">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-    </div>
-</body>
+        <div class="ads-side"></div>
 
+        <div class="container">
+            <a href="auto-audi.html" class="main-btn js-link">AUDI</a>
+            <a href="auto-fiat.html" class="main-btn js-link">FIAT</a>
+            <a href="auto-ford.html" class="main-btn js-link">FORD</a>
+            <a href="auto-jeep.html" class="main-btn js-link">JEEP</a>
+            <a href="auto-lancia.html" class="main-btn js-link">LANCIA</a>
+            <a href="auto-mercedes.html" class="main-btn js-link">MERCEDES</a>
+            <a href="auto-opel.html" class="main-btn js-link">OPEL</a>
+            <a href="auto-porsche.html" class="main-btn js-link">PORSCHE</a>
+            <a href="auto-renault.html" class="main-btn js-link">RENAULT</a>
+            <a href="auto-toyota.html" class="main-btn js-link">TOYOTA</a>
+            <a href="auto-vw.html" class="main-btn js-link">VOLKSWAGEN</a>   
+            
+            <div class="banner-fisso-container">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"
+                    data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+        </div>
+
+        <div class="ads-side">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        <div class="ads-side"></div>
+    </div>
+
+    <script>
+        // LOGICA TEMPORALE PUBBLICITÀ (Impostata a 45 minuti)
+        const INTERVALLO_PUBBLICITA = 45 * 60 * 1000; 
+
+        document.querySelectorAll('.js-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                const oraAttuale = new Date().getTime();
+                const ultimaVisualizzazione = localStorage.getItem('last_ad_time');
+
+                if (!ultimaVisualizzazione || (oraAttuale - ultimaVisualizzazione > INTERVALLO_PUBBLICITA)) {
+                    // Blocchiamo un secondo il cambio pagina per far "sentire" il click ad AdSense
+                    e.preventDefault();
+                    localStorage.setItem('last_ad_time', oraAttuale);
+                    
+                    console.log("45 minuti passati: Attivazione pubblicità Vignette...");
+                    
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 100); 
+                } else {
+                    console.log("Intervallo non ancora superato.");
+                }
+            });
+        });
+    </script>
+</body>
 </html>
