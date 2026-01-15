@@ -24,10 +24,9 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; }
 
-        /* Wrapper Grid per mantenere la centratura assoluta su PC */
         .wrapper {
             display: grid;
-            grid-template-columns: 1fr minmax(auto, 450px) 1fr; /* Colonna centrale fissa, laterali flessibili */
+            grid-template-columns: 1fr minmax(auto, 450px) 1fr;
             gap: 20px;
             max-width: 1400px;
             margin: 0 auto;
@@ -35,9 +34,8 @@
             align-items: start;
         }
 
-        /* Container pulsanti centrale */
         .container { 
-            grid-column: 2; /* Forza il contenuto nella colonna centrale */
+            grid-column: 2;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -58,18 +56,11 @@
 
         .main-btn:active { transform: scale(0.98); background: #1a73e8; color: white; }
 
-        /* Spazi per banner laterali su PC */
         .ads-side { display: flex; flex-direction: column; gap: 15px; }
-
         .banner-fisso-container { width: 100%; margin-top: 30px; text-align: center; }
 
-        /* Mobile: Centratura semplificata */
         @media (max-width: 1100px) {
-            .wrapper { 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-            }
+            .wrapper { display: flex; flex-direction: column; align-items: center; }
             .ads-side { display: none; }
             .container { width: 100%; }
         }
@@ -105,5 +96,4 @@
         </div>
     </div>
 </body>
-
 </html>
