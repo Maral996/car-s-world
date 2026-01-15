@@ -17,17 +17,43 @@
     <title>Scelta Telai - Car's world</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; color: #333; }
+        
+        /* HEADER CON DUE TASTI */
+        header { 
+            position: fixed; top: 0; left: 0; right: 0; height: 60px; 
+            background: #1a73e8; color: white; display: flex; 
+            align-items: center; justify-content: space-between; 
+            padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+
+        header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
+
+        /* STILE TASTI HEADER */
+        .nav-fissa {
+            background: rgba(255, 255, 255, 0.2) !important; 
+            border: none !important; 
+            color: white !important; 
+            padding: 7px 12px !important; 
+            border-radius: 8px !important; 
+            font-weight: bold !important; 
+            font-size: 13px !important; 
+            text-decoration: none !important; 
+            text-transform: uppercase !important; 
+            min-width: 70px !important;
+            text-align: center !important;
+            display: inline-block !important;
+        }
+
         .container { max-width: 650px; margin: auto; padding: 20px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
-        header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        header h1 { font-size: 20px; margin: 0; text-transform: uppercase; }
+        
         #barra-ricerca { width: 100%; max-width: 450px; padding: 15px; font-size: 18px; border-radius: 12px; border: 2px solid #1a73e8; margin-bottom: 5px; outline: none; box-sizing: border-box; }
         #risultati-ricerca { width: 100%; max-width: 450px; background: white; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; }
         .risultato-item { display: block; padding: 15px; text-decoration: none; color: #333; border-bottom: 1px solid #eee; font-weight: bold; text-align: center; }
         .nascosto { display: none !important; }
+        
         .main-btn { width: 100%; max-width: 450px; display: block; padding: 25px 15px; margin: 10px 0; font-size: 17px; font-weight: bold; border-radius: 12px; text-transform: uppercase; text-decoration: none; text-align: center; box-sizing: border-box; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-auto { background: #1a73e8; color: white; border: 2px solid #0d47a1; }
         .btn-moto { background: #ff00ff; color: #ffeb3b; border: 2px solid #800080; }
-        .back { margin-top: 20px; text-decoration: none; color: #666; font-weight: bold; padding: 10px; }
 
         /* Stile Modulo Contatti */
         #sezione-contatti { width: 100%; max-width: 450px; padding: 20px; background: white; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); box-sizing: border-box; margin-top: 30px; }
@@ -38,7 +64,11 @@
     </style>
 </head>
 <body>
-    <header><h1>Telai & EOBD</h1></header>
+    <header>
+        <a href="index.html" class="nav-fissa">Indietro</a>
+        <h1>Telai & EOBD</h1>
+        <a href="index.html" class="nav-fissa">Home</a>
+    </header>
 
     <div class="container">
         <input type="text" id="barra-ricerca" placeholder="🔍 Cerca marca o modello..." onkeyup="ricercaVeloce()">
@@ -63,8 +93,7 @@
             </form>
         </div>
         
-        <a href="index.html" class="back">← Torna alla Home</a>
-    </div>
+        </div>
 
     <script>
         function ricercaVeloce() {
