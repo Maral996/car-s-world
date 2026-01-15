@@ -11,7 +11,6 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; }
         
-        /* Header identico alla pagina Audi.html */
         header { 
             position: fixed; top: 0; left: 0; right: 0; height: 60px; 
             background: #1a73e8; color: white; display: flex; 
@@ -21,7 +20,6 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
         
-        /* STILE ESATTO TASTI .nav-fissa (Testo bianco e grassetto) */
         .nav-fissa {
             color: white !important;
             text-decoration: none !important;
@@ -30,7 +28,6 @@
             padding: 5px 10px;
         }
 
-        /* Struttura PC con colonne pubblicitarie laterali */
         .wrapper {
             display: grid;
             grid-template-columns: 160px 160px 1fr 160px 160px;
@@ -53,8 +50,6 @@
             box-sizing: border-box; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .main-btn:active { transform: scale(0.98); background: #1a73e8; color: white; }
-
         .ads-side { display: flex; flex-direction: column; gap: 15px; }
         .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
 
@@ -62,7 +57,6 @@
             .wrapper { display: flex; flex-direction: column; align-items: center; }
             .ads-side { display: none; }
             .container { width: 100%; }
-            header h1 { font-size: 16px; }
         }
     </style>
 </head>
@@ -84,11 +78,12 @@
         <div class="ads-side"></div>
 
         <div class="container">
-            <a href="moto-ducati.html" class="main-btn js-link">DUCATI</a>
+            <a href="moto-ducati.html" class="main-btn">DUCATI</a>
             
             <div class="banner-fisso-container">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"
-                    data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
@@ -101,25 +96,5 @@
         </div>
         <div class="ads-side"></div>
     </div>
-
-    <script>
-        const INTERVALLO_PUBBLICITA = 45 * 60 * 1000; 
-
-        document.querySelectorAll('.js-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                const oraAttuale = new Date().getTime();
-                const ultimaVisualizzazione = localStorage.getItem('last_ad_time');
-
-                if (!ultimaVisualizzazione || (oraAttuale - ultimaVisualizzazione > INTERVALLO_PUBBLICITA)) {
-                    e.preventDefault();
-                    localStorage.setItem('last_ad_time', oraAttuale);
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 150); 
-                }
-            });
-        });
-    </script>
 </body>
 </html>
