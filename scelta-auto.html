@@ -9,18 +9,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marche Auto - Car's world</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
         
+        /* Header centrato e proporzionato */
         header { 
-            position: fixed; top: 0; left: 0; right: 0; height: 60px; 
+            position: fixed; top: 0; left: 0; right: 0; height: 65px; 
             background: #1a73e8; color: white; display: flex; 
             align-items: center; justify-content: space-between; 
             padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
         }
 
-        header h1 { font-size: 18px; margin: 0; text-transform: uppercase; }
-        .nav-fissa { color: white; text-decoration: none; font-weight: bold; font-size: 14px; }
+        header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
+        
+        .nav-fissa { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 14px; 
+            background: rgba(0,0,0,0.15); 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            min-width: 60px;
+            text-align: center;
+        }
 
+        /* Struttura PC con colonne pubblicitarie laterali */
         .wrapper {
             display: grid;
             grid-template-columns: 160px 160px 1fr 160px 160px;
@@ -30,36 +43,42 @@
             padding: 10px;
         }
 
+        /* Container centrale perfettamente centrato */
         .container { 
             grid-column: 3; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
+            width: 100%;
         }
 
         .main-btn { 
-            width: 100%; max-width: 400px; padding: 20px; margin: 8px 0; 
+            width: 95%; max-width: 400px; padding: 20px; margin: 8px 0; 
             background: white; border: 2px solid #1a73e8; border-radius: 12px; 
             text-decoration: none; color: #1a73e8; font-weight: bold; 
-            text-align: center; text-transform: uppercase; transition: 0.3s; 
+            text-align: center; text-transform: uppercase; transition: 0.2s; 
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .main-btn:hover { background: #1a73e8; color: white; }
+        .main-btn:active { transform: scale(0.98); background: #1a73e8; color: white; }
 
         .ads-side { display: flex; flex-direction: column; gap: 15px; }
         .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
 
+        /* Gestione Mobile */
         @media (max-width: 1100px) {
             .wrapper { grid-template-columns: 1fr; }
             .ads-side { display: none; }
             .container { grid-column: 1; }
+            header h1 { font-size: 16px; }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <a href="index.html" class="nav-fissa">Indietro</a>
+        <a href="scelta.html" class="nav-fissa">Indietro</a>
         <h1>Marche Auto</h1>
         <a href="index.html" class="nav-fissa">Home</a>
     </header>
@@ -103,7 +122,7 @@
     </div>
 
     <script>
-        // LOGICA TEMPORALE PUBBLICITÀ (Impostata a 45 minuti)
+        // LOGICA TEMPORALE PUBBLICITÀ (45 minuti)
         const INTERVALLO_PUBBLICITA = 45 * 60 * 1000; 
 
         document.querySelectorAll('.js-link').forEach(link => {
@@ -113,17 +132,12 @@
                 const ultimaVisualizzazione = localStorage.getItem('last_ad_time');
 
                 if (!ultimaVisualizzazione || (oraAttuale - ultimaVisualizzazione > INTERVALLO_PUBBLICITA)) {
-                    // Blocchiamo un secondo il cambio pagina per far "sentire" il click ad AdSense
                     e.preventDefault();
                     localStorage.setItem('last_ad_time', oraAttuale);
                     
-                    console.log("45 minuti passati: Attivazione pubblicità Vignette...");
-                    
                     setTimeout(() => {
                         window.location.href = href;
-                    }, 100); 
-                } else {
-                    console.log("Intervallo non ancora superato.");
+                    }, 150); 
                 }
             });
         });
