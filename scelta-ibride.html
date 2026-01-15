@@ -11,22 +11,13 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
         
-        .container { 
-            max-width: 650px; 
-            margin: auto; 
-            padding: 15px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
-
         header { 
             position: fixed; 
             top: 0; 
             left: 0; 
             right: 0; 
             height: 60px; 
-            background: #9acd32; /* Colore verde manutenzione */
+            background: #9acd32; 
             color: white; 
             display: flex; 
             align-items: center; 
@@ -48,9 +39,26 @@
             border-radius: 8px; 
         }
 
-        /* PULSANTI GRANDI E PROPORZIONATI */
+        /* STRUTTURA A COLONNE PER PC */
+        .wrapper {
+            display: grid;
+            grid-template-columns: 160px 160px 1fr 160px 160px;
+            gap: 15px;
+            max-width: 1400px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .container { 
+            grid-column: 3;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%;
+        }
+
         .main-btn { 
-            width: 95%; 
+            width: 100%; 
             max-width: 450px; 
             display: block; 
             padding: 25px 15px; 
@@ -71,7 +79,17 @@
 
         .main-btn:active { transform: scale(0.98); }
 
+        /* PUBBLICITÀ LATERALE */
+        .ads-side { display: flex; flex-direction: column; gap: 15px; }
+
         .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
+
+        /* GESTIONE MOBILE: NASCONDE COLONNE PUBBLICITÀ */
+        @media (max-width: 1100px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .ads-side { display: none; }
+            .container { grid-column: 1; }
+        }
     </style>
 </head>
 
@@ -82,16 +100,61 @@
         <a href="index.html" class="nav-fissa">Home</a>
     </header>
 
-    <div class="container">
-        <a href="ibrida-toyota-yaris.html" class="main-btn">TOYOTA YARIS HYBRID</a>
-        <a href="ibrida-porsche-cayenne.html" class="main-btn">PORSCHE CAYENNE E-HYBRID</a>
-        
-        <div class="banner-fisso-container">
-            <ins class="adsbygoogle" style="display:block"
-                data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
+    <div class="wrapper">
+        <div class="ads-side">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+        <div class="ads-side"></div>
+
+        <div class="container">
+            <a href="ibrida-toyota-yaris.html" class="main-btn js-link">TOYOTA YARIS HYBRID</a>
+            <a href="ibrida-porsche-cayenne.html" class="main-btn js-link">PORSCHE CAYENNE E-HYBRID</a>
+            
+            <div class="banner-fisso-container">
+                <ins class="adsbygoogle" style="display:block"
+                    data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+        </div>
+
+        <div class="ads-side">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        <div class="ads-side"></div>
     </div>
+
+    <script>
+        // LOGICA TEMPORALE PUBBLICITÀ (Impostata a 45 minuti)
+        const INTERVALLO_PUBBLICITA = 45 * 60 * 1000; 
+
+        document.querySelectorAll('.js-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                const oraAttuale = new Date().getTime();
+                const ultimaVisualizzazione = localStorage.getItem('last_ad_time');
+
+                if (!ultimaVisualizzazione || (oraAttuale - ultimaVisualizzazione > INTERVALLO_PUBBLICITA)) {
+                    // Segnala a AdSense l'intenzione di cambiare pagina (attiva Vignette)
+                    e.preventDefault();
+                    localStorage.setItem('last_ad_time', oraAttuale);
+                    
+                    console.log("Tempo scaduto (45 min): Caricamento pubblicità...");
+                    
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 150); 
+                } else {
+                    console.log("Intervallo 45 min non ancora trascorso.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
