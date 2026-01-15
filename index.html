@@ -16,37 +16,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car's world - Home</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; color: #333; }
-        .container { max-width: 650px; margin: auto; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; color: #333; }
+        
         header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; z-index: 10000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
-        .descrizione-sito { width: 95%; background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); box-sizing: border-box; }
-        .grid-menu { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; width: 95%; max-width: 600px; margin-bottom: 15px; }
-        .btn-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 12px; text-align: center; text-transform: uppercase; transition: 0.3s; color: white; min-height: 90px; }
-        .btn-telai { background: #1a73e8; border-bottom: 4px solid #0d47a1; }
-        .btn-maint { background: #9acd32; border-bottom: 4px solid #6b8e23; }
-        .btn-store-home { background: #ff9800; border-bottom: 4px solid #e65100; }
-        .banner-home { width: 100%; max-width: 500px; margin: 0 auto 15px auto; text-align: center; min-height: 50px; }
-        h1 { margin: 0 0 10px 0; color:#1a73e8; font-size: 26px; }
-        p { margin: 5px 0; }
+
+        /* STRUTTURA PRINCIPALE PER PC */
+        .wrapper {
+            display: grid;
+            grid-template-columns: 180px 180px 1fr 180px 180px; /* Due spazi laterali per lato */
+            gap: 15px;
+            max-width: 1600px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .container { 
+            grid-column: 3; /* Il contenuto sta al centro */
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        /* TASTI E TESTI GRANDI PER PC */
+        .descrizione-sito { 
+            width: 100%; background: white; padding: 30px; border-radius: 15px; 
+            margin-bottom: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); box-sizing: border-box; 
+        }
+        .descrizione-sito h1 { font-size: 36px; color:#1a73e8; margin: 0 0 15px 0; }
+        .descrizione-sito p { font-size: 20px; margin: 10px 0; }
+
+        .grid-menu { 
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; 
+            width: 100%; margin-bottom: 20px; 
+        }
+
+        .btn-box { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            padding: 30px 10px; border-radius: 15px; text-decoration: none; font-weight: bold; 
+            font-size: 18px; text-align: center; text-transform: uppercase; transition: 0.3s; 
+            color: white; min-height: 120px; 
+        }
+
+        .btn-telai { background: #1a73e8; border-bottom: 6px solid #0d47a1; }
+        .btn-maint { background: #9acd32; border-bottom: 6px solid #6b8e23; }
+        .btn-store-home { background: #ff9800; border-bottom: 6px solid #e65100; }
+        .btn-box:hover { transform: translateY(-3px); opacity: 0.9; }
+
+        /* PUBBLICITÀ LATERALE PC */
+        .ads-side { display: flex; flex-direction: column; gap: 15px; }
+        .ad-placeholder { background: #ddd; border: 1px dashed #999; min-height: 600px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #777; }
+
+        /* PUBBLICITÀ IN BASSO */
+        .banner-home { width: 100%; margin-top: 20px; text-align: center; }
+
+        /* --- MOBILE --- */
+        @media (max-width: 1100px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .ads-side { display: none; } /* Nasconde pubblicità laterali su mobile */
+            .container { grid-column: 1; max-width: 650px; margin: auto; }
+            
+            /* Ridimensiona testi per cellulare */
+            .descrizione-sito h1 { font-size: 26px; }
+            .descrizione-sito p { font-size: 16px; }
+            .btn-box { font-size: 14px; padding: 15px 5px; min-height: 90px; }
+            
+            /* Spazio per le due pubblicità una sopra l'altra in fondo */
+            .mobile-ads-bottom { display: flex !important; flex-direction: column; gap: 15px; width: 100%; margin-top: 20px; }
+        }
+
+        .mobile-ads-bottom { display: none; }
     </style>
 </head>
 <body>
+
     <header></header>
-    <div class="container">
-        <div class="descrizione-sito">
-            <h1>Car's World</h1>
-            <p>Esplora il database tecnico per telai, prese OBD e modalità manutenzione ibride.</p>
-            <p style="font-weight: bold; color: #ff9800;">Trova il ricambio più adatto alle tue esigenze nel nostro Store!</p>
-        </div>
-        <div class="grid-menu">
-            <a href="scelta-telai.html" class="btn-box btn-telai">Telai EOBD</a>
-            <a href="scelta-ibride.html" class="btn-box btn-maint">Maintenance Mode</a>
-            <a href="store.html" class="btn-box btn-store-home">Store</a>
-        </div>
-        <div class="banner-home">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+    <div class="wrapper">
+        <div class="ads-side">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="1111111111" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="2222222222" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+        <div class="ads-side"></div> <div class="container">
+            <div class="descrizione-sito">
+                <h1>Car's World</h1>
+                <p>Esplora il database tecnico per telai, prese OBD e modalità manutenzione ibride.</p>
+                <p style="font-weight: bold; color: #ff9800;">Trova il ricambio più adatto alle tue esigenze nel nostro Store!</p>
+            </div>
+
+            <div class="grid-menu">
+                <a href="scelta-telai.html" class="btn-box btn-telai">Telai EOBD</a>
+                <a href="scelta-ibride.html" class="btn-box btn-maint">Maintenance Mode</a>
+                <a href="store.html" class="btn-box btn-store-home">Store</a>
+            </div>
+
+            <div class="banner-home">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="3333333333" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <div class="mobile-ads-bottom">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="4444444444" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="5555555555" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+        </div>
+
+        <div class="ads-side">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="6666666666" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="7777777777" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        <div class="ads-side"></div>
     </div>
+
 </body>
 </html>
