@@ -9,11 +9,9 @@
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887"
         crossorigin="anonymous"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car's world - Home</title>
-    
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; }
         
@@ -26,48 +24,49 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; }
 
-        /* Struttura a 3 colonne per PC */
-        .main-wrapper {
+        .wrapper {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            max-width: 1400px;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px;
         }
 
-        .ads-side { width: 160px; flex-shrink: 0; display: flex; flex-direction: column; gap: 15px; }
+        .ads-top {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
 
-        /* Area pulsanti centrale */
-        .buttons-container { 
+        .container { 
             display: flex; 
-            justify-content: center; 
-            gap: 20px; 
-            flex-grow: 1;
-            padding: 0 20px;
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%;
+            max-width: 400px;
         }
 
         .main-btn { 
-            flex: 1;
-            max-width: 300px; 
-            padding: 40px 20px; 
+            width: 100%; 
+            padding: 25px; 
+            margin: 10px 0; 
             background: white; border: 2px solid #1a73e8; border-radius: 12px; 
             text-decoration: none; color: #1a73e8; font-weight: bold; 
             text-align: center; text-transform: uppercase; transition: 0.2s; 
-            box-sizing: border-box; font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 18px;
         }
 
         .main-btn:active { transform: scale(0.98); background: #1a73e8; color: white; }
 
-        .banner-fisso-container { width: 100%; margin-top: 30px; text-align: center; }
+        .banner-bottom { width: 100%; margin-top: 20px; text-align: center; }
 
-        /* Responsive per Mobile */
-        @media (max-width: 900px) {
-            .main-wrapper { flex-direction: column; align-items: center; }
-            .ads-side { display: none; }
-            .buttons-container { flex-direction: column; width: 100%; align-items: center; }
-            .main-btn { width: 100%; max-width: 400px; margin-bottom: 15px; }
+        @media (max-width: 600px) {
+            .ads-top { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -77,28 +76,27 @@
         <h1>Car's World</h1>
     </header>
 
-    <div class="main-wrapper">
-        <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+    <div class="wrapper">
+        <div class="ads-top">
+            <ins class="adsbygoogle" style="display:inline-block;width:160px;height:200px" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:inline-block;width:160px;height:200px" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
-        <div class="buttons-container">
+        <div class="container">
             <a href="scelta-telai.html" class="main-btn">TELAIO / EOBD</a>
             <a href="#" class="main-btn">PIANI TAGLIANDI</a>
             <a href="#" class="main-btn">UTILITÀ</a>
         </div>
 
-        <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
+        <div class="banner-bottom">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <br>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-    </div>
-
-    <div class="banner-fisso-container">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"
-            data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 </body>
 </html>
