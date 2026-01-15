@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
-    <loc>https://www.carsworld.it/index.html</loc>
+    <loc>https://cars-world.github.io/index.html</loc>
     <lastmod>2026-01-15</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://www.carsworld.it/scelta-telai.html</loc>
+    <loc>https://cars-world.github.io/scelta-telai.html</loc>
+    <lastmod>2026-01-15</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://cars-world.github.io/store.html</loc>
     <lastmod>2026-01-15</lastmod>
     <priority>0.80</priority>
   </url>
 
   <url>
-    <loc>https://www.carsworld.it/auto.html</loc>
+    <loc>https://cars-world.github.io/scelta-auto.html</loc>
     <lastmod>2026-01-15</lastmod>
-    <priority>0.90</priority>
+    <priority>0.85</priority>
   </url>
-  <url><loc>https://www.carsworld.it/auto-audi.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-fiat.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-ford.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-jeep.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-lancia.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-mercedes.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-opel.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-porsche.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-renault.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-toyota.html</loc><priority>0.70</priority></url>
-  <url><loc>https://www.carsworld.it/auto-vw.html</loc><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-audi.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-fiat.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-ford.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-jeep.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-lancia.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-mercedes.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-opel.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-porsche.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-renault.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-toyota.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/auto-vw.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
 
   <url>
-    <loc>https://www.carsworld.it/moto.html</loc>
+    <loc>https://cars-world.github.io/scelta-moto.html</loc>
     <lastmod>2026-01-15</lastmod>
-    <priority>0.90</priority>
+    <priority>0.85</priority>
   </url>
-  <url><loc>https://www.carsworld.it/moto-ducati.html</loc><priority>0.70</priority></url>
+  <url><loc>https://cars-world.github.io/moto-ducati.html</loc><lastmod>2026-01-15</lastmod><priority>0.70</priority></url>
 
-  <url>
-    <loc>https://www.carsworld.it/audi-a4.html</loc>
-    <lastmod>2026-01-15</lastmod>
-    <priority>0.60</priority>
-  </url>
 </urlset>
