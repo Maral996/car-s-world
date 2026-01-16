@@ -106,8 +106,9 @@
             font-size: 28px; font-weight: bold; cursor: pointer; color: #666;
         }
 
+        /* RIDOTTO MARGINE SOTTO IL LINK */
         .footer-link {
-            margin: 20px 0;
+            margin: 10px 0 5px 0; 
             font-size: 13px;
             color: #666;
             cursor: pointer;
@@ -116,10 +117,11 @@
 
         .ads-side { display: flex; flex-direction: column; gap: 10px; }
 
+        /* RIDOTTO MARGINE SUPERIORE DEL BANNER */
         .banner-home { 
             width: 100%; 
             max-width: 500px; 
-            margin: 10px auto; 
+            margin: 0 auto 10px auto; 
             text-align: center; 
         }
         
@@ -191,13 +193,12 @@
     <script>
         function openPrivacy() {
             document.getElementById("privacyModal").style.display = "block";
-            document.body.style.overflow = "hidden"; // Blocca lo scroll del sito sotto
+            document.body.style.overflow = "hidden";
         }
         function closePrivacy() {
             document.getElementById("privacyModal").style.display = "none";
-            document.body.style.overflow = "auto"; // Riattiva lo scroll
+            document.body.style.overflow = "auto";
         }
-        // Chiude se clicchi fuori dal rettangolo bianco
         window.onclick = function(event) {
             let modal = document.getElementById("privacyModal");
             if (event.target == modal) { closePrivacy(); }
