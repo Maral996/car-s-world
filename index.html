@@ -7,8 +7,6 @@
 
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="22fcdb45-4809-417b-9a01-c9683960b17b" data-blockingmode="auto" type="text/javascript"></script>
 
-    <script id="usercentrics-ppg" privacy-policy-id="31e1696f-4f6e-4d42-8a02-dd83cef8b20b" src="https://policygenerator.usercentrics.eu/api/privacy-policy" defer></script>
-    
     <meta name="google-site-verification" content="fLvCP8UeCvOP3I34urOfoCCUW7eNlXPNyvsTcWHe1Dk" />
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
     
@@ -92,23 +90,28 @@
     <div id="privacyModal" class="modal-privacy">
         <div class="modal-content">
             <span class="close-modal" onclick="closePrivacy()">&times;</span>
-            <div class="uc-privacy-policy"></div>
-            <hr>
-            <script id="CookieDeclaration" src="https://consent.cookiebot.com/22fcdb45-4809-417b-9a01-c9683960b17b/cd.js" type="text/javascript" async></script>
+            <div id="usercentrics-content"></div>
         </div>
     </div>
 
     <script>
-        function openPrivacy() { document.getElementById("privacyModal").style.display = "block"; document.body.style.overflow = "hidden"; }
+        // Carica Usercentrics SOLO quando l'utente clicca il link privacy
+        function openPrivacy() {
+            document.getElementById("privacyModal").style.display = "block";
+            document.body.style.overflow = "hidden";
+            
+            if (!document.getElementById("usercentrics-script")) {
+                var script = document.createElement("script");
+                script.id = "usercentrics-script";
+                script.src = "https://policygenerator.usercentrics.eu/api/privacy-policy";
+                script.setAttribute("privacy-policy-id", "31e1696f-4f6e-4d42-8a02-dd83cef8b20b");
+                document.getElementById("usercentrics-content").innerHTML = '<div class="uc-privacy-policy"></div>';
+                document.head.appendChild(script);
+            }
+        }
+
         function closePrivacy() { document.getElementById("privacyModal").style.display = "none"; document.body.style.overflow = "auto"; }
         window.onclick = function(event) { if (event.target == document.getElementById("privacyModal")) { closePrivacy(); } }
-
-        // Forza ri-esecuzione se non appare
-        window.addEventListener('load', function() {
-            if (typeof Cookiebot !== 'undefined') {
-                Cookiebot.runScripts();
-            }
-        });
     </script>
 
 </body>
