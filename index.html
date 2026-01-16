@@ -6,10 +6,12 @@
     <meta name="google-site-verification" content="fLvCP8UeCvOP3I34urOfoCCUW7eNlXPNyvsTcWHe1Dk" />
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous"></script>
+    <script type="text/plain" data-cookieconsent="marketing" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous"></script>
+    
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="22fcdb45-4809-417b-9a01-c9683960b17b" type="text/javascript" async></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCL5TVJMD5"></script>
-    <script>
+    
+    <script type="text/plain" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-HCL5TVJMD5"></script>
+    <script type="text/plain" data-cookieconsent="statistics">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
@@ -21,128 +23,26 @@
     <title>Car's world - Home</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; color: #333; }
-        
         header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; z-index: 10000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
-
-        .main-wrapper {
-            display: grid;
-            grid-template-columns: 160px 160px 1fr 160px 160px;
-            gap: 10px;
-            max-width: 1500px;
-            margin: auto;
-            padding: 10px;
-            align-items: start;
-        }
-
-        .container { 
-            grid-column: 3;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            width: 100%;
-        }
-        
-        .descrizione-sito {
-            width: 100%;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            box-sizing: border-box;
-        }
-
-        .grid-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            width: 100%;
-            max-width: 600px;
-            margin-bottom: 15px;
-        }
-
-        .btn-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 15px 5px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px; 
-            text-align: center;
-            text-transform: uppercase;
-            transition: 0.3s;
-            color: white;
-            min-height: 90px;
-        }
-
+        .main-wrapper { display: grid; grid-template-columns: 160px 160px 1fr 160px 160px; gap: 10px; max-width: 1500px; margin: auto; padding: 10px; align-items: start; }
+        .container { grid-column: 3; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .descrizione-sito { width: 100%; background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); box-sizing: border-box; }
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; width: 100%; max-width: 600px; margin-bottom: 15px; }
+        .btn-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; text-align: center; text-transform: uppercase; transition: 0.3s; color: white; min-height: 90px; }
         .btn-telai { background: #1a73e8; border-bottom: 4px solid #0d47a1; }
         .btn-maint { background: #9acd32; border-bottom: 4px solid #6b8e23; }
         .btn-store-home { background: #ff9800; border-bottom: 4px solid #e65100; }
-
-        /* STILE POPUP (MODAL) */
-        .modal-privacy {
-            display: none;
-            position: fixed;
-            z-index: 20000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            overflow: auto;
-        }
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 800px;
-            position: relative;
-        }
-        .close-modal {
-            position: sticky; top: 0; float: right;
-            font-size: 28px; font-weight: bold; cursor: pointer; color: #666;
-        }
-
-        /* CONTROLLO SPAZI LINK E BANNER */
-        .footer-container {
-            text-align: center;
-            width: 100%;
-            margin: 0; /* Rimuove spazi esterni */
-            padding: 0;
-        }
-
-        .footer-link {
-            display: inline-block;
-            margin: 5px 0; /* Spazio minimo sopra e sotto la scritta */
-            font-size: 13px;
-            color: #666;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
+        .modal-privacy { display: none; position: fixed; z-index: 20000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); overflow: auto; }
+        .modal-content { background-color: white; margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 800px; position: relative; }
+        .close-modal { position: sticky; top: 0; float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #666; }
+        .footer-container { text-align: center; width: 100%; margin: 0; padding: 0; }
+        .footer-link { display: inline-block; margin: 5px 0; font-size: 13px; color: #666; cursor: pointer; text-decoration: underline; }
         .ads-side { display: flex; flex-direction: column; gap: 10px; }
-
-        .banner-home { 
-            width: 100%; 
-            max-width: 500px; 
-            margin: 0 auto; /* Centrato senza margini verticali */
-            text-align: center; 
-        }
-
-        /* Forza AdSense a non aggiungere spazi extra se possibile */
+        .banner-home { width: 100%; max-width: 500px; margin: 0 auto; text-align: center; }
         ins.adsbygoogle { margin: 0 !important; }
-        
         h1 { margin: 0 0 10px 0; color:#1a73e8; font-size: 26px; }
         p { margin: 5px 0; }
-
-        @media (max-width: 1100px) {
-            .main-wrapper { display: flex; flex-direction: column; align-items: center; }
-            .ads-side { display: none; }
-            .container { width: 95%; }
-        }
+        @media (max-width: 1100px) { .main-wrapper { display: flex; flex-direction: column; align-items: center; } .ads-side { display: none; } .container { width: 95%; } }
     </style>
 </head>
 <body>
