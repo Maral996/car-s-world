@@ -93,6 +93,34 @@
         h1 { margin: 0 0 10px 0; color:#1a73e8; font-size: 26px; }
         p { margin: 5px 0; }
 
+        /* Stile Banner Cookie */
+        #cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 20000;
+            display: none;
+            text-align: center;
+        }
+        .btn-accept {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+
         @media (max-width: 1100px) {
             .main-wrapper { display: flex; flex-direction: column; align-items: center; }
             .ads-side { display: none; }
@@ -144,6 +172,31 @@
         </div>
         <div class="ads-side"></div>
     </div>
+
+    <div id="cookie-banner">
+        <p>Utilizziamo cookie per personalizzare contenuti e annunci e analizzare il nostro traffico.</p>
+        <button class="btn-accept" onclick="acceptCookies()">Accetto i Cookie</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Car's World | <a href="privacy.html" style="color: #666;">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Funzione per accettare i cookie
+        function acceptCookies() {
+            localStorage.setItem("cookieConsent", "true");
+            document.getElementById("cookie-banner").style.display = "none";
+            location.reload(); // Ricarica per attivare AdSense/Analytics
+        }
+
+        // Controllo all'avvio
+        window.onload = function() {
+            if (!localStorage.getItem("cookieConsent")) {
+                document.getElementById("cookie-banner").style.display = "block";
+            }
+        };
+    </script>
 
 </body>
 </html>
