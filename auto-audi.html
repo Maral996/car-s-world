@@ -24,7 +24,10 @@
     <style>
         body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; padding-top: 80px; }
         
-        /* Sistema il contenitore per centrare il pulsante */
+        header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
+        .nav-fissa { background: rgba(255, 255, 255, 0.2); color: white; padding: 7px 12px; border-radius: 8px; font-weight: bold; font-size: 13px; text-decoration: none; text-transform: uppercase; }
+
         .container { 
             flex: 1; 
             display: flex; 
@@ -34,12 +37,12 @@
             box-sizing: border-box;
         }
 
-        /* Ripristino grandezza pulsante originale */
+        /* TASTO PROPORZIONATO PC E MOBILE */
         .main-btn { 
             width: 100%; 
-            max-width: 450px; 
+            max-width: 450px; /* Dimensione PC */
             display: block; 
-            padding: 25px 15px; 
+            padding: 22px 15px; 
             margin: 10px 0; 
             font-size: 17px; 
             font-weight: bold; 
@@ -49,19 +52,27 @@
             text-align: center; 
             box-sizing: border-box; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-            background: #1a73e8; /* Blu Audi/Fiat */
+            background: #1a73e8; 
             color: white;
             border: 2px solid #0d47a1;
+            transition: transform 0.2s;
         }
+
+        .main-btn:active { transform: scale(0.98); }
 
         .banner-fisso-container { width: 100%; max-width: 450px; margin-top: 20px; text-align: center; }
         
         footer { text-align: center; padding: 25px; font-size: 13px; color: #666; width: 100%; margin-top: auto; }
         footer a { color: #666; text-decoration: underline; }
-        
-        header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
-        .nav-fissa { background: rgba(255, 255, 255, 0.2); color: white; padding: 7px 12px; border-radius: 8px; font-weight: bold; font-size: 13px; text-decoration: none; text-transform: uppercase; }
+
+        /* Regole per il cellulare */
+        @media (max-width: 600px) {
+            .main-btn { 
+                width: 90%; /* Più stretto sui bordi per estetica */
+                font-size: 16px;
+                padding: 18px 10px;
+            }
+        }
     </style>
 </head>
 
@@ -78,7 +89,9 @@
         <div class="banner-fisso-container">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto"
                 data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <script type="text/plain" data-cookieconsent="marketing">
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
     </div>
 
