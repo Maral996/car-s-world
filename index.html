@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car's world - Home</title>
 
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="22fcdb45-4809-417b-9a01-c9683960b17b" data-blockingmode="auto" type="text/javascript"></script>
-
     <meta name="google-site-verification" content="fLvCP8UeCvOP3I34urOfoCCUW7eNlXPNyvsTcWHe1Dk" />
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
     
@@ -23,42 +21,38 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 70px; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
         header { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #1a73e8; z-index: 10000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
         
-        /* Layout principale bilanciato */
-        .main-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; max-width: 1400px; margin: auto; padding: 10px; flex: 1; justify-content: center; }
+        .main-wrapper { display: grid; grid-template-columns: 160px 160px 1fr 160px 160px; gap: 10px; max-width: 1500px; margin: auto; padding: 10px; align-items: start; flex: 1; }
+        .container { grid-column: 3; display: flex; flex-direction: column; align-items: center; width: 100%; }
         
-        .container { grid-column: 2; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 700px; }
-        .descrizione-sito { width: 100%; background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); box-sizing: border-box; }
+        .descrizione-sito { width: 100%; background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* Griglia pulsanti: centrata e responsiva */
-        .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin-bottom: 15px; }
+        /* RIPRISTINO GRIGLIA ORIGINALE (Sempre 3 colonne) */
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 15px auto; }
         
-        .btn-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 14px; text-align: center; text-transform: uppercase; transition: 0.3s; color: white; min-height: 80px; box-sizing: border-box; }
+        .btn-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; text-align: center; text-transform: uppercase; transition: 0.3s; color: white; min-height: 90px; }
         .btn-telai { background: #1a73e8; border-bottom: 4px solid #0d47a1; }
         .btn-maint { background: #9acd32; border-bottom: 4px solid #6b8e23; }
         .btn-store-home { background: #ff9800; border-bottom: 4px solid #e65100; }
         
-        footer { text-align: center; padding: 20px; width: 100%; margin-top: auto; }
+        footer { text-align: center; padding: 20px; width: 100%; background: transparent; margin-top: auto; }
         .footer-link { font-size: 13px; color: #666; cursor: pointer; text-decoration: underline; }
 
-        /* Modal Privacy ottimizzato per Mobile */
-        .modal-privacy { display: none; position: fixed; z-index: 20000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); overflow: auto; }
-        .modal-content { background-color: white; margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 800px; position: relative; line-height: 1.5; box-sizing: border-box; }
-        .close-modal { position: sticky; top: 0; float: right; font-size: 30px; font-weight: bold; cursor: pointer; color: #333; background: white; border-radius: 50%; padding: 0 10px; }
+        .modal-privacy { display: none; position: fixed; z-index: 20000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); overflow: auto; }
+        .modal-content { background-color: white; margin: 2% auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 900px; position: relative; line-height: 1.6; }
+        .close-modal { position: sticky; top: 0; float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #666; background: white; z-index: 10; padding: 0 5px; }
         
-        .privacy-text-content { font-size: 14px; color: #444; text-align: left; white-space: pre-line; margin-top: 10px; }
-        .privacy-text-content h2 { color: #1a73e8; font-size: 20px; margin: 0 0 10px 0; border-bottom: 1px solid #eee; }
+        .privacy-text-content { font-size: 14px; color: #444; text-align: left; white-space: pre-line; }
+        .privacy-text-content h2 { color: #1a73e8; font-size: 22px; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
 
-        .ads-side { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .banner-home { width: 100%; max-width: 100%; margin: 15px auto; text-align: center; }
-        h1 { margin: 0 0 10px 0; color:#1a73e8; font-size: 24px; }
+        .ads-side { display: flex; flex-direction: column; gap: 10px; }
+        .banner-home { width: 100%; max-width: 500px; margin: 10px auto; text-align: center; }
+        h1 { margin: 0 0 10px 0; color:#1a73e8; font-size: 26px; }
 
-        /* Tablet e Mobile */
         @media (max-width: 1100px) { 
-            .main-wrapper { display: flex; flex-direction: column; align-items: center; }
-            .ads-side { display: none; } /* Nasconde le sidebar su mobile per pulizia */
-            .container { width: 95%; }
-            .grid-menu { grid-template-columns: 1fr; } /* Pulsanti uno sotto l'altro su mobile per facilità di tocco */
-            .btn-box { min-height: 60px; font-size: 16px; }
+            .main-wrapper { display: flex; flex-direction: column; align-items: center; } 
+            .ads-side { display: none; } 
+            .container { width: 95%; } 
+            /* Rimosso il cambio a 1 colonna per mantenere i tasti affiancati */
         }
     </style>
 </head>
@@ -68,9 +62,10 @@
 
     <div class="main-wrapper">
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block; width:160px; height:600px" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="vertical"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+        <div class="ads-side"></div>
 
         <div class="container">
             <div class="descrizione-sito">
@@ -92,9 +87,10 @@
         </div>
 
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block; width:160px; height:600px" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="vertical"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+        <div class="ads-side"></div>
     </div>
 
     <footer>
@@ -107,31 +103,7 @@
             <div class="privacy-text-content">
                 <h2>Privacy Policy</h2>
                 Data di entrata in vigore: 16/01/2026, 12:46:47
-
-                <strong>Introduzione e informazioni sull'organizzazione</strong>
-                Noi di Maral, ci impegniamo a servire i nostri clienti e contatti al meglio delle nostre possibilità. Parte del nostro impegno comporta la gestione responsabile delle informazioni personali raccolte attraverso i nostri siti web www.carsworld.it, e le relative interazioni. I nostri obiettivi principali nell'elaborazione di queste informazioni sono:
-                - Migliorare l'esperienza dell'utente sulla nostra piattaforma comprendendo le esigenze e le preferenze dei clienti.
-                - Fornire un'assistenza tempestiva e rispondere alle richieste di informazioni o di servizio.
-                - Migliorare i nostri prodotti e servizi per soddisfare le esigenze in continua evoluzione dei nostri utenti.
-                - Svolgere le operazioni commerciali necessarie, come la fatturazione e la gestione degli account.
-                
-                Contatti: 996maral@gmail.com o +39 3519095063.
-
-                <strong>Ambito e applicazione</strong>
-                La nostra politica sulla privacy protegge le informazioni personali di visitatori, utenti registrati e clienti su www.carsworld.it.
-
-                <strong>Archiviazione e protezione dei dati</strong>
-                Dati conservati su server sicuri in: US. Utilizziamo crittografia, controlli di accesso e audit regolari. Accordi DPA garantiscono la protezione nel caso di condivisione con terze parti.
-
-                <strong>Diritti dell'utente (GDPR)</strong>
-                Avete diritto di: Accesso (Art. 15), Rettifica (Art. 16), Cancellazione (Art. 17), Limitazione (Art. 18), Portabilità (Art. 20), Opposizione (Art. 21) e Revoca del consenso. Per esercitarli: 996maral@gmail.com.
-
-                <strong>Cookie e tecnologie di tracciamento</strong>
-                Utilizziamo cookie essenziali, di prestazione, funzionali e pubblicitari. Il banner iniziale (Cookiebot) permette di gestire le vostre preferenze.
-
-                <strong>Aggiornamenti</strong>
-                Eventuali modifiche significative verranno comunicate via e-mail o tramite avvisi sul sito.
-            </div>
+                </div>
         </div>
     </div>
 
