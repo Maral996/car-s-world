@@ -1,18 +1,27 @@
+/* --- BASE E LAYOUT --- */
 body { 
     font-family: 'Segoe UI', sans-serif; 
     background-color: #f0f2f5; 
     margin: 0; 
     padding-top: 80px; 
     color: #333; 
+    /* Aggiunto per gestire il footer in fondo */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container { 
     max-width: 650px; 
-    margin: auto; 
+    margin: 0 auto; 
     padding: 15px; 
+    /* Aggiunto per spingere il footer in basso */
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Header perfetto: bilancia i tasti latali */
+/* --- HEADER --- */
 header { 
     position: fixed; 
     top: 0; 
@@ -37,7 +46,6 @@ header h1 {
     text-align: center; 
 }
 
-/* Tasti Indietro/Home nell'header */
 .nav-fissa { 
     background: rgba(255, 255, 255, 0.2); 
     border: none; 
@@ -53,13 +61,14 @@ header h1 {
     text-align: center;
 }
 
-/* Pulsanti principali (Grandi e centrati) */
+/* --- PULSANTI (CORRETTI PER PROPORZIONE) --- */
 button.main-btn, a.main-btn { 
-    width: 85%; /* Leggermente più largo per i nomi lunghi */
+    width: 90%;            /* Aumentato per Mobile */
+    max-width: 500px;      /* Limitato per PC */
     display: block; 
-    padding: 25px; 
+    padding: 22px 15px;    /* Altezza bilanciata */
     margin: 15px auto; 
-    font-size: 17px; 
+    font-size: 18px; 
     font-weight: bold; 
     cursor: pointer; 
     border-radius: 12px; 
@@ -70,9 +79,14 @@ button.main-btn, a.main-btn {
     text-decoration: none; 
     text-align: center; 
     box-sizing: border-box;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: 0.2s;
 }
 
-/* Classi di colore */
+button.main-btn:active, a.main-btn:active {
+    transform: scale(0.97);
+}
+
 .btn-categoria { 
     background: #1a73e8 !important; 
     color: white !important; 
@@ -85,7 +99,7 @@ button.main-btn, a.main-btn {
     border: none !important; 
 }
 
-/* Scheda Tecnica Finale */
+/* --- SCHEDA TECNICA --- */
 .scheda-finale { 
     background: white; 
     padding: 25px; 
@@ -118,33 +132,45 @@ button.main-btn, a.main-btn {
     border-left: 4px solid #28a745; 
 }
 
-/* Banner e Contatti */
+/* --- BANNER PUBBLICITÀ --- */
 .banner-fisso-container { 
     width: 100%; 
-    min-height: 100px; 
-    background: #ffffff; 
-    margin: 30px 0; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    border-radius: 10px; 
-    border: 1px dashed #bbb; 
+    max-width: 500px;
+    margin: 25px auto; 
+    text-align: center;
 }
 
-#sezione-contatti { 
-    padding: 20px; 
-    background: #fff; 
-    border-radius: 15px; 
-    text-align: center; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+/* --- FOOTER (PRIVACY/COOKIE) --- */
+footer {
+    text-align: center;
+    padding: 25px;
+    font-size: 13px;
+    color: #666;
+    background: #f0f2f5;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Per la stampa */
+footer a {
+    color: #666;
+    text-decoration: underline;
+}
+
+/* --- OTTIMIZZAZIONE MOBILE --- */
+@media (max-width: 600px) {
+    header h1 { font-size: 17px; }
+    button.main-btn, a.main-btn { 
+        width: 95%; 
+        font-size: 16px; 
+        padding: 18px 10px;
+    }
+}
+
+/* --- STAMPA --- */
 @media print { 
-    header, .banner-fisso-container, #sezione-contatti, .main-btn { 
+    header, .banner-fisso-container, footer, .main-btn, #Cookiebot { 
         display: none !important; 
     } 
-    body { padding-top: 0; }
-    .scheda-finale { box-shadow: none; border: 1px solid #ccc; }
+    body { padding-top: 0; background-color: white; }
+    .scheda-finale { box-shadow: none; border: 1px solid #ccc; width: 100%; }
 }
