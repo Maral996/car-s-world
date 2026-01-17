@@ -10,7 +10,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marche Auto - Car's world</title>
+    
+    <link rel="stylesheet" href="style.css">
+
     <style>
+        /* Layout e struttura pagina (non toccano i pulsanti) */
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; scroll-behavior: smooth; display: flex; flex-direction: column; min-height: 100vh; }
         
         header { 
@@ -22,21 +26,6 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
         
-        .nav-fissa {
-            background: rgba(255, 255, 255, 0.2) !important; 
-            border: none !important; 
-            color: white !important; 
-            padding: 7px 12px !important; 
-            border-radius: 8px !important; 
-            font-weight: bold !important; 
-            font-size: 13px !important; 
-            text-decoration: none !important; 
-            text-transform: uppercase !important; 
-            min-width: 70px !important;
-            text-align: center !important;
-            display: inline-block !important;
-        }
-
         .wrapper { 
             display: grid; 
             grid-template-columns: 320px 1fr 320px; 
@@ -45,7 +34,7 @@
             margin: auto; 
             padding: 0 20px; 
             align-items: start;
-            flex: 1; /* Spinge il footer in basso */
+            flex: 1;
         }
 
         .container { 
@@ -54,57 +43,18 @@
             align-items: center; 
             width: 100%;
         }
-        
-        .main-btn { 
-            width: 100%; 
-            max-width: 450px; 
-            padding: 18px; 
-            margin: 8px 0; 
-            background: white; 
-            border: 2px solid #1a73e8; 
-            border-radius: 12px; 
-            text-decoration: none; 
-            color: #1a73e8; 
-            font-weight: bold; 
-            text-align: center; 
-            text-transform: uppercase; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-            box-sizing: border-box;
-        }
+
+        /* Il resto della grafica di .main-btn viene dal file style.css */
 
         #btnBackToTop {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 99;
-            border: none;
-            outline: none;
-            background-color: #1a73e8;
-            color: white;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 22px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: opacity 0.3s;
+            display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99;
+            border: none; outline: none; background-color: #1a73e8; color: white;
+            cursor: pointer; width: 50px; height: 50px; border-radius: 50%;
+            font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s;
         }
 
-        #btnBackToTop:hover { background-color: #0d47a1; }
-
-        .ads-side { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
-        }
-
-        .banner-fisso-container { 
-            width: 100%; 
-            max-width: 600px;
-            margin-top: 25px; 
-            text-align: center; 
-        }
+        .ads-side { display: flex; flex-direction: column; gap: 20px; }
+        .banner-fisso-container { width: 100%; max-width: 600px; margin-top: 25px; text-align: center; }
 
         footer { text-align: center; padding: 25px; font-size: 13px; color: #666; width: 100%; }
         footer a { color: #666; text-decoration: underline; }
@@ -113,7 +63,6 @@
             .wrapper { display: block; padding: 10px; }
             .ads-side { display: none; }
             .container { width: 100%; }
-            .main-btn { max-width: 100%; }
         }
     </style>
 </head>
@@ -149,8 +98,6 @@
             
             <div class="banner-fisso-container">
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" data-cookieconsent="marketing"></ins>
-                <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <ins class="adsbygoogle" style="display:block; margin-top:15px;" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" data-cookieconsent="marketing"></ins>
                 <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
