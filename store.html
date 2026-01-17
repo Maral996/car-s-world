@@ -8,60 +8,42 @@
     <title>Store Ricambi - Car's world</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 90px; }
-        
         header { position: fixed; top: 0; left: 0; right: 0; height: 75px; background: #ff9800; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        
         .brand-box { display: flex; flex-direction: column; align-items: flex-start; }
         header h1 { font-size: 19px; text-transform: uppercase; margin: 0; line-height: 1.1; }
         .sub-title { font-size: 14px; font-weight: bold; text-transform: uppercase; opacity: 0.9; margin-top: 2px; }
-        
         .btn-apri-carrello { background: white; color: #ff9800; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
-
         .container { max-width: 650px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        
         #search-ricambi { width: 100%; max-width: 500px; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 20px; outline: none; font-size: 16px; box-sizing: border-box; }
-        
         .product-card { background: white; width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: flex-start; box-sizing: border-box; gap: 15px; }
         .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #eee; }
         .product-info { flex-grow: 1; text-align: left; }
         .product-info h4 { margin: 0; color: #333; font-size: 17px; }
         .product-info p { margin: 5px 0 10px 0; color: #666; font-size: 14px; line-height: 1.3; }
-        
         .right-side { text-align: right; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 100px; min-height: 80px; }
         .price { font-weight: bold; color: #ff9800; font-size: 18px; margin-bottom: 5px; }
         .btn-add { background: #4caf50; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 11px; text-transform: uppercase; width: 100%; }
-
         .preventivo-rapido { background: #333; color: white; width: 100%; max-width: 500px; padding: 20px; border-radius: 15px; margin-top: 40px; margin-bottom: 30px; box-sizing: border-box; text-align: left; }
         .preventivo-rapido h3 { margin-top: 0; color: #ff9800; }
         .preventivo-rapido p { font-size: 13px; color: #ccc; margin-bottom: 15px; }
-
         #overlay-carrello { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 20000; overflow-y: auto; display: none; }
         .carrello-content { max-width: 600px; margin: 20px auto; padding: 20px; }
         .header-carrello { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff9800; padding-bottom: 10px; margin-bottom: 20px; }
         .btn-chiudi { background: #333; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
         .carrello-vuoto { color: #999; padding: 40px 0; text-align: center; }
         .carrello-item { background: white; padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .btn-remove { background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
-
         .btn-svuota { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 12px; margin-bottom: 15px; text-transform: uppercase; transition: background 0.3s; }
         .btn-svuota:hover { background: #ff4444; }
-
         .sezione-form { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .sezione-form h3 { margin-top: 0; color: #ff9800; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        
         input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 15px; }
-        
         .riepilogo-finale-box { background: #fff3e0; padding: 20px; border-radius: 12px; border: 2px solid #ff9800; margin: 20px 0; text-align: right; }
         .totale-grande { font-size: 24px; font-weight: bold; color: #e65100; }
-
         .btn-invia { background: #ff9800; color: white; padding: 20px; width: 100%; border-radius: 12px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 18px; box-shadow: 0 4px 15px rgba(255,152,0,0.3); }
-
         .hidden { display: none; }
         .back-home { margin: 20px 0; text-decoration: none; color: #666; font-weight: bold; }
-
         #msg-conferma { display: none; background: #4caf50; color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-weight: bold; }
-
         footer { background: #333; color: white; padding: 40px 20px; margin-top: 50px; text-align: center; font-size: 14px; width: 100%; box-sizing: border-box; }
         .footer-container { max-width: 650px; margin: auto; text-align: left; }
     </style>
@@ -79,7 +61,6 @@
     </header>
 
     <div class="container">
-        
         <input type="text" id="search-ricambi" placeholder="🔍 Cerca tra i ricambi pronti..." onkeyup="filterProducts()">
 
         <div id="lista-prodotti" style="width: 100%;">
@@ -124,7 +105,6 @@
             <h3>Non trovi il tuo ricambio?</h3>
             <p>Inviaci i dati e ti risponderemo con un preventivo personalizzato.</p>
             <div id="msg-conferma">Richiesta inviata correttamente!</div>
-
             <form id="form-preventivo" action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="resetPreventivo()">
                 <input type="text" name="nome_contatto" placeholder="Il tuo Nome" required>
                 <select name="preferenza_contatto" required>
@@ -137,17 +117,24 @@
                 <textarea name="ricambio_cercato" placeholder="Quale ricambio stai cercando?" style="height: 80px;" required></textarea>
                 <button type="submit" class="btn-invia" style="padding: 12px; font-size: 14px;">Richiedi Preventivo</button>
             </form>
+            <p style="text-align: center; font-size: 13px; margin-top: 15px; color: #ff9800;">Per assistenza mandare un’e-mail all’indirizzo 996maral@gmail.com</p>
         </div>
-        
         <a href="index.html" class="back-home">← Torna alla Home</a>
     </div>
 
     <footer>
         <div class="footer-container">
             <h3 style="color: #ff9800; margin-top: 0;">Car's World - Store Online</h3>
-            <p><strong>Assistenza Clienti:</strong> Specialisti in Ricambi Auto</p>
+            <p><strong>Assistenza Clienti:</strong> Specialisti in Ricambi Auto - Vendita e Consulenza Tecnica Online</p>
             <hr style="border: 0; border-top: 1px solid #555; margin: 20px 0;">
-            <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">&copy; 2026 Car's World | <a href="privacy.html" style="color: #888; text-decoration: underline;">Privacy Policy</a></p>
+            <p><strong>Cosa devi sapere:</strong></p>
+            <ul style="list-style-type: none; padding: 0; line-height: 1.6; color: #bbb;">
+                <li>🚚 <strong>Spedizioni:</strong> Consegna tramite corriere in 3-5 giorni lavorativi con codice di tracking.</li>
+                <li>📦 <strong>Resi:</strong> Il cliente ha diritto al recesso entro 14 giorni dalla consegna del prodotto.</li>
+                <li>💳 <strong>Pagamenti:</strong> Accettiamo Bonifico Bancario o Contrassegno (pagamento alla consegna).</li>
+                <li>🔍 <strong>Compatibilità:</strong> Per i preventivi personalizzati, la compatibilità è verificata tramite targa dal nostro staff.</li>
+            </ul>
+            <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">&copy; 2026 Car's World - Store Ricambi Online | <a href="privacy.html" style="color: #888; text-decoration: underline;">Privacy Policy</a></p>
         </div>
     </footer>
 
@@ -157,14 +144,11 @@
                 <h2>Riepilogo Ordine</h2>
                 <button class="btn-chiudi" onclick="toggleCarrello(false)">Chiudi ✕</button>
             </div>
-
             <div id="lista-carrello-full">
                 <div class="carrello-vuoto">Il tuo carrello è attualmente vuoto.</div>
             </div>
-
             <div id="modulo-completo" class="hidden">
                 <button class="btn-svuota" onclick="svuotaCarrello()">🗑 Svuota Carrello</button>
-
                 <form action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="puliziaOrdine()">
                     <div class="sezione-form">
                         <h3>1. Dati Fatturazione</h3>
@@ -182,7 +166,6 @@
                         </div>
                         <textarea name="ind_fatturazione" id="ind_fatt" placeholder="Indirizzo" required onkeyup="syncSped()"></textarea>
                     </div>
-
                     <div class="sezione-form">
                         <h3>2. Spedizione e Contatti</h3>
                         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
@@ -192,7 +175,6 @@
                         <textarea name="ind_spedizione" id="ind_sped" placeholder="Indirizzo di spedizione" required></textarea>
                         <input type="tel" name="telefono" placeholder="Cellulare per il corriere">
                     </div>
-
                     <div class="sezione-form">
                         <h3>3. Metodo di Pagamento</h3>
                         <select name="pagamento" id="metodo_pag" onchange="aggiornaPrezzi()">
@@ -200,11 +182,9 @@
                             <option value="Contrassegno">Contrassegno (+5.00€)</option>
                         </select>
                     </div>
-
                     <div class="riepilogo-finale-box">
                         <div class="totale-grande">TOTALE: <span id="res-totale">0.00</span>€</div>
                     </div>
-
                     <input type="hidden" name="ordine_dettagliato" id="hidden_ordine">
                     <button type="submit" class="btn-invia">Invia Ordine</button>
                 </form>
@@ -214,57 +194,20 @@
 
     <script>
         let carrello = JSON.parse(localStorage.getItem('carrello_carsworld')) || [];
-        let sommaLorda = 0;
-
         window.onload = function() { aggiornaPrezzi(); }
-
-        // SVUOTA CARRELLO QUANDO SI INVIA L'ORDINE
-        function puliziaOrdine() {
-            localStorage.removeItem('carrello_carsworld');
-        }
-
-        function toggleCarrello(show) {
-            document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none';
-            document.body.style.overflow = show ? 'hidden' : 'auto';
-        }
-
-        function aggiungiCarrello(nome, prezzo) {
-            carrello.push({nome, prezzo});
-            salvaEMostra();
-            alert(nome + " aggiunto!");
-        }
-
-        function rimuovi(index) {
-            carrello.splice(index, 1);
-            salvaEMostra();
-        }
-
-        function svuotaCarrello() {
-            if(confirm("Svuotare il carrello?")) {
-                carrello = [];
-                salvaEMostra();
-            }
-        }
-
-        function salvaEMostra() {
-            localStorage.setItem('carrello_carsworld', JSON.stringify(carrello));
-            aggiornaPrezzi();
-        }
-
+        function puliziaOrdine() { localStorage.removeItem('carrello_carsworld'); }
+        function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; document.body.style.overflow = show ? 'hidden' : 'auto'; }
+        function aggiungiCarrello(nome, prezzo) { carrello.push({nome, prezzo}); salvaEMostra(); alert(nome + " aggiunto!"); }
+        function rimuovi(index) { carrello.splice(index, 1); salvaEMostra(); }
+        function svuotaCarrello() { if(confirm("Svuotare il carrello?")) { carrello = []; salvaEMostra(); } }
+        function salvaEMostra() { localStorage.setItem('carrello_carsworld', JSON.stringify(carrello)); aggiornaPrezzi(); }
         function aggiornaPrezzi() {
-            sommaLorda = 0;
-            carrello.forEach(item => { sommaLorda += item.prezzo; });
+            let sommaLorda = 0; carrello.forEach(item => { sommaLorda += item.prezzo; });
             document.getElementById('count-cart').innerText = carrello.length;
-
             const lista = document.getElementById('lista-carrello-full');
             const modulo = document.getElementById('modulo-completo');
             const pag = document.getElementById('metodo_pag').value;
-
-            if(carrello.length === 0) {
-                lista.innerHTML = '<div class="carrello-vuoto">Il tuo carrello è attualmente vuoto.</div>';
-                modulo.classList.add('hidden');
-                return;
-            }
+            if(carrello.length === 0) { lista.innerHTML = '<div class="carrello-vuoto">Il tuo carrello è attualmente vuoto.</div>'; modulo.classList.add('hidden'); return; }
             modulo.classList.remove('hidden');
             lista.innerHTML = "<h3>Articoli selezionati:</h3>";
             let dettagli = "";
@@ -276,32 +219,24 @@
             document.getElementById('res-totale').innerText = (sommaLorda + extra).toFixed(2);
             document.getElementById('hidden_ordine').value = `Articoli: ${dettagli} - Totale: ${(sommaLorda+extra).toFixed(2)}€`;
         }
-
         function switchFatt() {
             const ditta = document.getElementById('tipo_cliente').value === 'Azienda';
             document.getElementById('box-privato').classList.toggle('hidden', ditta);
             document.getElementById('box-ditta').classList.toggle('hidden', !ditta);
         }
-
         function syncSped() {
             const check = document.getElementById('check_uguale');
             if(check.checked) document.getElementById('ind_sped').value = document.getElementById('ind_fatt').value;
         }
-
         function filterProducts() {
             let val = document.getElementById('search-ricambi').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
             for(let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "flex" : "none"; }
         }
-
         function resetPreventivo() {
             const form = document.getElementById('form-preventivo');
             const msg = document.getElementById('msg-conferma');
-            setTimeout(() => {
-                form.reset();
-                msg.style.display = 'block';
-                setTimeout(() => { msg.style.display = 'none'; }, 4000);
-            }, 500);
+            setTimeout(() => { form.reset(); msg.style.display = 'block'; setTimeout(() => { msg.style.display = 'none'; }, 4000); }, 500);
         }
     </script>
 </body>
