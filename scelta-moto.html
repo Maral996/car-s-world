@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="5d23d7d2-db15-446e-8c3f-297de6dfca55" data-blockingmode="auto" type="text/javascript"></script>
+
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous"></script>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous" type="text/plain" data-cookieconsent="marketing"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marche Moto - Car's world</title>
+
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; display: flex; flex-direction: column; min-height: 100vh; }
         
         header { 
             position: fixed; top: 0; left: 0; right: 0; height: 60px; 
@@ -18,7 +25,6 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
         
-        /* TASTI HEADER RIPRISTINATI: Rettangolo opaco e maiuscolo */
         .nav-fissa {
             background: rgba(255, 255, 255, 0.2) !important; 
             border: none !important; 
@@ -34,7 +40,6 @@
             display: inline-block !important;
         }
 
-        /* GRIGLIA PC: Centratura perfetta con 3 colonne */
         .wrapper { 
             display: grid; 
             grid-template-columns: 320px 1fr 320px; 
@@ -43,9 +48,9 @@
             margin: auto; 
             padding: 0 20px; 
             align-items: start;
+            flex: 1; /* Spinge il footer in basso */
         }
 
-        /* CONTENITORE CENTRALE */
         .container { 
             display: flex; 
             flex-direction: column; 
@@ -53,23 +58,8 @@
             width: 100%;
         }
         
-        /* TASTI DELLE MARCHE */
-        .main-btn { 
-            width: 100%; 
-            max-width: 450px; 
-            padding: 18px; 
-            margin: 8px 0; 
-            background: white; 
-            border: 2px solid #1a73e8; 
-            border-radius: 12px; 
-            text-decoration: none; 
-            color: #1a73e8; 
-            font-weight: bold; 
-            text-align: center; 
-            text-transform: uppercase; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-            box-sizing: border-box;
-        }
+        /* Stile strutturale del pulsante (l'aspetto grafico è in style.css) */
+        .main-btn { width: 100%; box-sizing: border-box; }
 
         .ads-side { 
             display: flex; 
@@ -84,12 +74,13 @@
             text-align: center; 
         }
 
-        /* MOBILE: Nasconde ads laterali e centra tutto */
+        footer { text-align: center; padding: 25px; font-size: 13px; color: #666; width: 100%; }
+        footer a { color: #666; text-decoration: underline; }
+
         @media (max-width: 1100px) {
             .wrapper { display: block; padding: 10px; }
             .ads-side { display: none; }
             .container { width: 100%; }
-            .main-btn { max-width: 100%; }
         }
     </style>
 </head>
@@ -102,29 +93,33 @@
 
     <div class="wrapper">
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <div class="container">
             <a href="moto-ducati.html" class="main-btn">DUCATI</a>
             
             <div class="banner-fisso-container">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <ins class="adsbygoogle" style="display:block; margin-top:15px;" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" data-cookieconsent="marketing"></ins>
+                <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <ins class="adsbygoogle" style="display:block; margin-top:15px;" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" data-cookieconsent="marketing"></ins>
+                <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
 
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2026 Car's World | <a href="javascript: Cookiebot.renew()">Gestisci consenso cookie</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
 </body>
 </html>
