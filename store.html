@@ -194,45 +194,70 @@
 
     <script>
         let carrello = JSON.parse(localStorage.getItem('carrello_carsworld')) || [];
-        window.onload = function() { aggiornaPrezzi(); }
-        function puliziaOrdine() { localStorage.removeItem('carrello_carsworld'); }
+        
+        window.onload = function() {
+            // Controllo antifrode/ritorno: se l'utente torna indietro dal browser dopo l'invio, svuota.
+            if (performance.navigation.type === 2) {
+                localStorage.removeItem('carrello_carsworld');
+                carrello = [];
+            }
+            aggiornaPrezzi();
+        }
+
+        // Svuota istantaneamente al click dell'invio
+        function puliziaOrdine() {
+            localStorage.removeItem('carrello_carsworld');
+        }
+
         function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; document.body.style.overflow = show ? 'hidden' : 'auto'; }
         function aggiungiCarrello(nome, prezzo) { carrello.push({nome, prezzo}); salvaEMostra(); alert(nome + " aggiunto!"); }
         function rimuovi(index) { carrello.splice(index, 1); salvaEMostra(); }
         function svuotaCarrello() { if(confirm("Svuotare il carrello?")) { carrello = []; salvaEMostra(); } }
         function salvaEMostra() { localStorage.setItem('carrello_carsworld', JSON.stringify(carrello)); aggiornaPrezzi(); }
+        
         function aggiornaPrezzi() {
             let sommaLorda = 0; carrello.forEach(item => { sommaLorda += item.prezzo; });
             document.getElementById('count-cart').innerText = carrello.length;
             const lista = document.getElementById('lista-carrello-full');
             const modulo = document.getElementById('modulo-completo');
             const pag = document.getElementById('metodo_pag').value;
-            if(carrello.length === 0) { lista.innerHTML = '<div class="carrello-vuoto">Il tuo carrello è attualmente vuoto.</div>'; modulo.classList.add('hidden'); return; }
+            
+            if(carrello.length === 0) {
+                lista.innerHTML = '<div class="carrello-vuoto">Il tuo carrello è attualmente vuoto.</div>';
+                modulo.classList.add('hidden');
+                return;
+            }
+            
             modulo.classList.remove('hidden');
             lista.innerHTML = "<h3>Articoli selezionati:</h3>";
             let dettagli = "";
             carrello.forEach((item, i) => {
                 lista.innerHTML += `<div class="carrello-item"><span>${item.nome}</span><span>${item.prezzo.toFixed(2)}€ <button class="btn-remove" onclick="rimuovi(${i})">X</button></span></div>`;
-                dettagli += item.nome + ", ";
+                dettagli += item.nome + " (" + item.prezzo + "€), ";
             });
+            
             let extra = (pag === "Contrassegno") ? 5.0 : 0;
             document.getElementById('res-totale').innerText = (sommaLorda + extra).toFixed(2);
-            document.getElementById('hidden_ordine').value = `Articoli: ${dettagli} - Totale: ${(sommaLorda+extra).toFixed(2)}€`;
+            document.getElementById('hidden_ordine').value = `Articoli: ${dettagli} Totale Finale: ${(sommaLorda+extra).toFixed(2)}€`;
         }
+
         function switchFatt() {
             const ditta = document.getElementById('tipo_cliente').value === 'Azienda';
             document.getElementById('box-privato').classList.toggle('hidden', ditta);
             document.getElementById('box-ditta').classList.toggle('hidden', !ditta);
         }
+
         function syncSped() {
             const check = document.getElementById('check_uguale');
             if(check.checked) document.getElementById('ind_sped').value = document.getElementById('ind_fatt').value;
         }
+
         function filterProducts() {
             let val = document.getElementById('search-ricambi').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
             for(let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "flex" : "none"; }
         }
+
         function resetPreventivo() {
             const form = document.getElementById('form-preventivo');
             const msg = document.getElementById('msg-conferma');
