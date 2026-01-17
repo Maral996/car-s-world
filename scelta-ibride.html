@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="5d23d7d2-db15-446e-8c3f-297de6dfca55" data-blockingmode="auto" type="text/javascript"></script>
+
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous"></script>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous" type="text/plain" data-cookieconsent="marketing"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ibride - Car's world</title>
     
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; display: flex; flex-direction: column; min-height: 100vh; }
         
         header { 
             position: fixed; 
@@ -47,6 +50,7 @@
             max-width: 1400px;
             margin: auto;
             padding: 10px;
+            flex: 1; /* Spinge il footer in basso */
         }
 
         .container { 
@@ -84,7 +88,10 @@
 
         .banner-fisso-container { width: 100%; margin-top: 20px; text-align: center; }
 
-        /* GESTIONE MOBILE: NASCONDE COLONNE PUBBLICITÀ */
+        footer { text-align: center; padding: 25px; font-size: 13px; color: #666; width: 100%; margin-top: auto; }
+        footer a { color: #666; text-decoration: underline; }
+
+        /* GESTIONE MOBILE */
         @media (max-width: 1100px) {
             .wrapper { grid-template-columns: 1fr; }
             .ads-side { display: none; }
@@ -102,10 +109,10 @@
 
     <div class="wrapper">
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
         <div class="ads-side"></div>
 
@@ -116,22 +123,25 @@
             <div class="banner-fisso-container">
                 <ins class="adsbygoogle" style="display:block"
                     data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    data-full-width-responsive="true" data-cookieconsent="marketing"></ins>
+                <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
 
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
         <div class="ads-side"></div>
     </div>
 
+    <footer>
+        <p>&copy; 2026 Car's World | <a href="javascript: Cookiebot.renew()">Gestisci consenso cookie</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+
     <script>
-        // LOGICA TEMPORALE PUBBLICITÀ (Impostata a 45 minuti)
         const INTERVALLO_PUBBLICITA = 45 * 60 * 1000; 
 
         document.querySelectorAll('.js-link').forEach(link => {
@@ -141,17 +151,12 @@
                 const ultimaVisualizzazione = localStorage.getItem('last_ad_time');
 
                 if (!ultimaVisualizzazione || (oraAttuale - ultimaVisualizzazione > INTERVALLO_PUBBLICITA)) {
-                    // Segnala a AdSense l'intenzione di cambiare pagina (attiva Vignette)
                     e.preventDefault();
                     localStorage.setItem('last_ad_time', oraAttuale);
-                    
-                    console.log("Tempo scaduto (45 min): Caricamento pubblicità...");
                     
                     setTimeout(() => {
                         window.location.href = href;
                     }, 150); 
-                } else {
-                    console.log("Intervallo 45 min non ancora trascorso.");
                 }
             });
         });
