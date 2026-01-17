@@ -6,13 +6,13 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous" type="text/plain" data-cookieconsent="marketing"></script>
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Marche Auto - Car's world</title>
     
     <link rel="stylesheet" href="style.css">
 
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; scroll-behavior: smooth; display: flex; flex-direction: column; min-height: 100vh; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; scroll-behavior: smooth; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
         header { 
             position: fixed; top: 0; left: 0; right: 0; height: 60px; 
@@ -36,52 +36,61 @@
             text-align: center !important;
         }
 
-        /* CORREZIONE GRID: Proteggiamo lo spazio centrale */
         .wrapper { 
             display: grid; 
-            grid-template-columns: 300px minmax(320px, 600px) 300px; /* Colonna centrale protetta tra 320px e 600px */
-            justify-content: center; /* Centra l'intero blocco nella pagina */
+            grid-template-columns: 300px minmax(320px, 600px) 300px; 
+            justify-content: center; 
             gap: 20px; 
-            max-width: 100%; 
+            width: 100%; 
             margin: auto; 
-            padding: 0 10px; 
+            padding: 0; 
             align-items: start;
             flex: 1;
         }
 
-        /* ISTRUZIONE CHIAVE: Forziamo i figli a riempire lo spazio protetto */
         .container { 
             display: flex !important; 
             flex-direction: column !important; 
-            align-items: stretch !important; 
+            align-items: center !important; 
             width: 100% !important;
+            padding: 0 10px;
+            box-sizing: border-box;
         }
 
-        /* Rimuoviamo ogni rimpicciolimento automatico dei pulsanti */
+        /* Tasti a larghezza piena */
         .main-btn { 
             display: block !important;
-            width: 100% !important;
+            width: 100% !important; 
+            max-width: 100% !important;
             box-sizing: border-box !important;
+            margin: 10px 0 !important;
         }
 
         #btnBackToTop {
             display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99;
             border: none; outline: none; background-color: #1a73e8; color: white;
             cursor: pointer; width: 50px; height: 50px; border-radius: 50%;
-            font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s;
+            font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .ads-side { display: flex; flex-direction: column; gap: 20px; width: 300px; overflow: hidden; }
+        .ads-side { display: flex; flex-direction: column; gap: 20px; width: 300px; }
         .banner-fisso-container { width: 100%; margin: 25px auto; text-align: center; }
 
         footer { text-align: center; padding: 25px; font-size: 13px; color: #666; width: 100%; margin-top: auto; }
-        footer a { color: #666; text-decoration: underline; }
 
-        /* Mobile: i banner spariscono e la colonna centrale prende tutto il posto */
+        /* MOBILE: Qui forziamo i tasti a riprendersi lo schermo */
         @media (max-width: 1100px) {
-            .wrapper { display: block; padding: 10px; }
+            body { padding-top: 70px; }
+            .wrapper { display: block; width: 100%; padding: 0; }
             .ads-side { display: none; }
-            .container { width: 100%; max-width: 100%; }
+            .container { 
+                width: 100% !important; 
+                padding: 0 15px !important; /* Margine minimo ai lati del telefono */
+            }
+            .main-btn { 
+                width: 100% !important; 
+                margin: 8px 0 !important; 
+            }
         }
     </style>
 </head>
