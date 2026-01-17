@@ -4,15 +4,24 @@
 <head>
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="5d23d7d2-db15-446e-8c3f-297de6dfca55" data-blockingmode="auto" type="text/javascript"></script>
 
-    <meta name="google-adsense-account" content="ca-pub-1515990058526887">
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887"
-        crossorigin="anonymous" type="text/plain" data-cookieconsent="marketing"></script>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCL5TVJMD5" type="text/plain" data-cookieconsent="statistics"></script>
-    <script type="text/plain" data-cookieconsent="statistics">
+    <script type="text/javascript">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+
+    <meta name="google-adsense-account" content="ca-pub-1515990058526887">
+    
+    <script type="text/plain" data-cookieconsent="marketing" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous"></script>
+    
+    <script type="text/plain" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-HCL5TVJMD5"></script>
+    <script type="text/plain" data-cookieconsent="statistics">
         gtag('js', new Date());
         gtag('config', 'G-HCL5TVJMD5');
     </script>
@@ -23,7 +32,6 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Regole minime per il footer senza toccare il tuo stile esistente */
         body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; }
         .container { flex: 1; }
         footer { text-align: center; padding: 20px; font-size: 13px; color: #666; }
