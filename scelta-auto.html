@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Layout e struttura pagina (non toccano i pulsanti) */
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding-top: 80px; scroll-behavior: smooth; display: flex; flex-direction: column; min-height: 100vh; }
         
         header { 
@@ -26,6 +25,21 @@
 
         header h1 { font-size: 18px; margin: 0; text-transform: uppercase; flex-grow: 1; text-align: center; }
         
+        /* Tasti Header */
+        .nav-fissa {
+            background: rgba(255, 255, 255, 0.2) !important; 
+            color: white !important; 
+            padding: 7px 12px !important; 
+            border-radius: 8px !important; 
+            font-weight: bold !important; 
+            font-size: 13px !important; 
+            text-decoration: none !important; 
+            text-transform: uppercase !important; 
+            min-width: 70px !important;
+            text-align: center !important;
+            display: inline-block !important;
+        }
+
         .wrapper { 
             display: grid; 
             grid-template-columns: 320px 1fr 320px; 
@@ -44,7 +58,15 @@
             width: 100%;
         }
 
-        /* Il resto della grafica di .main-btn viene dal file style.css */
+        /* FIX PROPORZIONI PULSANTI */
+        .main-btn { 
+            display: block;
+            width: 100%; 
+            max-width: 450px; /* Impedisce che diventino troppo larghi su PC */
+            margin: 8px 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
 
         #btnBackToTop {
             display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99;
@@ -63,6 +85,7 @@
             .wrapper { display: block; padding: 10px; }
             .ads-side { display: none; }
             .container { width: 100%; }
+            .main-btn { max-width: 100%; } /* Su mobile prendono tutta la larghezza disponibile */
         }
     </style>
 </head>
