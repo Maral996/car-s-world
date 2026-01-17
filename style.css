@@ -1,6 +1,6 @@
-/* --- BASE E LAYOUT --- */
+/* --- RESET E LAYOUT DI BASE --- */
 body { 
-    font-family: 'Segoe UI', sans-serif; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     background-color: #f0f2f5; 
     margin: 0; 
     padding-top: 80px; 
@@ -10,25 +10,22 @@ body {
     min-height: 100vh;
 }
 
-/* Contenitore standard per pagine singole (es. scheda tecnica) */
+/* Contenitore che centra i contenuti */
 .container { 
     flex: 1;
     width: 100%;
-    max-width: 800px; 
     margin: 0 auto;
-    padding: 15px;
+    padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Centra i pulsanti orizzontalmente */
 }
 
 /* --- HEADER --- */
 header { 
     position: fixed; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
+    top: 0; left: 0; right: 0; 
     height: 60px; 
     background: #1a73e8; 
     color: white; 
@@ -63,35 +60,44 @@ header h1 {
     text-align: center;
 }
 
-/* --- PULSANTI (CORREZIONE LARGHEZZA) --- */
-.main-btn { 
-    width: 95% !important;    /* Quasi tutta la larghezza disponibile */
-    max-width: 500px !important; /* Ma non oltre i 500px su PC */
-    display: block !important; 
-    padding: 22px 15px; 
-    margin: 12px auto !important; /* Centrati con spazio verticale */
-    font-size: 18px; 
-    font-weight: bold; 
-    cursor: pointer; 
-    border-radius: 12px; 
-    background: white; 
-    color: #1a73e8; 
-    border: 2px solid #1a73e8; 
-    text-transform: uppercase; 
-    text-decoration: none; 
-    text-align: center; 
-    box-sizing: border-box;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s, background 0.2s;
+/* --- PULSANTI (CORREZIONE DEFINITIVA) --- */
+/* Usiamo una classe combinata per assicurarci di colpire sia <a> che <button> */
+.main-btn, a.main-btn, button.main-btn { 
+    display: block !important;
+    width: 100% !important;           /* Prende tutto lo spazio del contenitore */
+    max-width: 550px !important;       /* Dimensione generosa su PC */
+    margin: 12px auto !important;      /* Centratura e distanziamento */
+    padding: 20px 15px !important;     /* Altezza del tasto */
+    
+    /* Font e Testo */
+    font-size: 20px !important;        /* Testo grande */
+    font-weight: 800 !important;       /* Testo molto evidente */
+    text-align: center !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    
+    /* Colori e Bordi */
+    background-color: white !important;
+    color: #1a73e8 !important;
+    border: 3px solid #1a73e8 !important; /* Bordo marcato */
+    border-radius: 15px !important;
+    
+    /* Extra */
+    box-sizing: border-box !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
 
+/* Effetto al click/passaggio */
 .main-btn:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
+    background-color: #f0f7ff !important;
 }
 
-/* Varianti Colori */
-.btn-categoria { background: #1a73e8 !important; color: white !important; }
-.btn-ibride { background: #9acd32 !important; color: white !important; border-color: #9acd32 !important; }
+/* Varianti Colore */
+.btn-categoria { background-color: #1a73e8 !important; color: white !important; }
+.btn-ibride { background-color: #9acd32 !important; color: white !important; border-color: #9acd32 !important; }
 
 /* --- SCHEDA TECNICA --- */
 .scheda-finale { 
@@ -102,6 +108,7 @@ header h1 {
     text-align: left; 
     margin-bottom: 20px;
     width: 100%;
+    max-width: 600px;
 }
 
 .etichetta { 
@@ -133,20 +140,20 @@ header h1 {
 /* --- FOOTER --- */
 footer {
     text-align: center;
-    padding: 25px;
+    padding: 30px 15px;
     font-size: 13px;
     color: #666;
-    margin-top: auto; /* Spinge il footer in fondo */
+    margin-top: auto;
 }
 
 footer a { color: #666; text-decoration: underline; }
 
-/* --- OTTIMIZZAZIONE MOBILE --- */
+/* --- OTTIMIZZAZIONE PER CELLULARI --- */
 @media (max-width: 600px) {
-    header h1 { font-size: 16px; }
+    header h1 { font-size: 15px; }
     .main-btn { 
-        width: 98% !important; /* Ancora più larghi su schermi piccolissimi */
-        font-size: 17px; 
-        padding: 18px 10px;
+        width: 95% !important;  /* Quasi a filo schermo su mobile */
+        font-size: 18px !important; 
+        padding: 18px 10px !important;
     }
 }
