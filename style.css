@@ -58,6 +58,45 @@ header h1 {
     text-overflow: ellipsis;
 }
 
+/* --- GESTIONE LOGO NELL'HEADER --- */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 10px; /* Distanza tra l'immagine e la scritta */
+}
+
+.logo-img {
+    height: 35px; /* Dimensione perfetta per la fascia da 60px */
+    width: auto;  /* Mantiene le proporzioni originali */
+    border-radius: 5px; /* Arrotonda leggermente gli angoli se il logo è quadrato */
+    object-fit: contain;
+}
+
+/* Modifica specifica per il titolo accanto al logo */
+.logo-container h1 {
+    font-size: 18px !important;
+    margin: 0 !important;
+    color: white !important;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* OTTIMIZZAZIONE MOBILE: rimpicciolisce il tutto se lo schermo è stretto */
+@media (max-width: 480px) {
+    .logo-img {
+        height: 28px;
+    }
+    .logo-container h1 {
+        font-size: 15px !important;
+    }
+    .logo-container {
+        gap: 6px;
+    }
+}
+
+
 .nav-fissa { 
     background: rgba(255, 255, 255, 0.2); 
     color: white; 
