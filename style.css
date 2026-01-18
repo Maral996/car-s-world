@@ -1,10 +1,10 @@
 /* --- RESET E LAYOUT DI BASE --- */
 * {
-    box-sizing: border-box !important; /* Fondamentale per evitare che i bordi allarghino i tasti */
+    box-sizing: border-box !important;
 }
 
 html, body {
-    overflow-x: hidden; /* Blocca lo scorrimento laterale che causa lo zoom */
+    overflow-x: hidden; /* Impedisce lo scivolamento laterale su mobile */
     width: 100%;
     margin: 0;
     padding: 0;
@@ -17,19 +17,31 @@ body {
     color: #333; 
     display: flex;
     flex-direction: column;
+    align-items: center; /* Forza la centratura orizzontale di tutti i blocchi */
     min-height: 100vh;
+}
+
+/* --- WRAPPER PER PUBBLICITÀ (Se presente nel tuo HTML) --- */
+.main-wrapper {
+    display: grid;
+    grid-template-columns: 1fr minmax(320px, 600px) 1fr; /* 1fr ai lati spinge il contenuto al centro esatto */
+    gap: 15px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
 }
 
 /* --- CONTAINER CENTRALE --- */
 .container { 
-    flex: 1;
+    grid-column: 2; /* Si posiziona nella colonna centrale della griglia */
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    padding: 10px 15px; /* Ridotto leggermente per il mobile */
+    padding: 10px 15px;
     display: flex;
     flex-direction: column;
-    align-items: stretch; 
+    align-items: center; /* Centra i bottoni internamente */
 }
 
 /* --- HEADER --- */
@@ -48,7 +60,7 @@ header {
 }
 
 header h1 { 
-    font-size: 16px; /* Ridotto leggermente per evitare sovrapposizioni su schermi piccoli */
+    font-size: 16px;
     margin: 0; 
     text-transform: uppercase; 
     flex-grow: 1; 
@@ -61,13 +73,13 @@ header h1 {
 .nav-fissa { 
     background: rgba(255, 255, 255, 0.2); 
     color: white; 
-    padding: 6px 10px; 
+    padding: 6px 12px; 
     border-radius: 8px; 
     font-weight: bold; 
     font-size: 12px; 
     text-decoration: none; 
     text-transform: uppercase; 
-    min-width: 65px;
+    min-width: 70px;
     text-align: center;
 }
 
@@ -77,12 +89,13 @@ header h1 {
     align-items: center;
     justify-content: center;
     
-    width: 100% !important;          /* Ora i tasti occupano sempre tutta la larghezza disponibile */
+    width: 100%;
+    max-width: 450px; /* Evita che i tasti diventino troppo larghi su tablet */
     min-height: 65px;
-    margin: 8px 0 !important;
+    margin: 10px 0 !important;
     padding: 15px !important; 
     
-    font-size: 19px !important; 
+    font-size: 18px !important; 
     font-weight: 800 !important; 
     text-align: center !important;
     text-transform: uppercase !important;
@@ -94,13 +107,12 @@ header h1 {
     border-radius: 15px !important;
     
     box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-    transition: transform 0.1s ease;
+    transition: 0.2s ease;
     cursor: pointer;
-    word-wrap: break-word; /* Evita che parole lunghe allarghino il tasto */
 }
 
 .main-btn:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
     background-color: #f0f7ff !important;
 }
 
@@ -114,30 +126,44 @@ header h1 {
     padding: 20px; 
     border-radius: 15px; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); 
-    margin-bottom: 20px;
+    margin: 15px 0;
     width: 100%;
+    max-width: 500px;
 }
 
 /* --- FOOTER --- */
 footer {
     text-align: center;
-    padding: 25px 15px;
+    padding: 30px 15px;
     font-size: 13px;
     color: #666;
     margin-top: auto;
+    width: 100%;
 }
 
 /* --- OTTIMIZZAZIONE PER CELLULARI --- */
 @media (max-width: 1100px) {
+    .main-wrapper {
+        grid-template-columns: 1fr; /* Rimuove le colonne laterali delle pubblicità */
+        padding: 0;
+    }
+
     .container {
-        padding: 5px 15px;
+        grid-column: 1;
+        padding: 10px 20px;
     }
+
     .main-btn { 
-        font-size: 17px !important;
+        font-size: 16px !important;
         min-height: 60px;
-        border-width: 2px !important; /* Bordo leggermente più sottile su mobile */
+        max-width: 100%; /* Su mobile occupa tutta la larghezza del container */
     }
+
     header h1 {
         font-size: 14px;
+    }
+
+    .ads-side {
+        display: none; /* Nasconde i banner laterali su mobile per non sfasare il centro */
     }
 }
