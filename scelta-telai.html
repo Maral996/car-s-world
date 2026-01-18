@@ -60,9 +60,10 @@
             text-transform: uppercase; min-width: 70px; text-align: center;
         }
 
+        /* MODIFICATO: grid-template-columns con 1fr ai lati per centratura matematica */
         .main-wrapper {
             display: grid;
-            grid-template-columns: 160px minmax(320px, 650px) 160px;
+            grid-template-columns: 1fr minmax(320px, 450px) 1fr;
             gap: 15px; width: 100%; max-width: 1200px;
             margin: 0 auto; padding: 10px; align-items: start;
             flex: 1;
@@ -74,7 +75,7 @@
             align-items: center; 
             width: 100%; 
             box-sizing: border-box; 
-            text-align: center; /* Forza la centratura dei contenuti inline */
+            text-align: center; 
         }
 
         #barra-ricerca { width: 100%; max-width: 450px; padding: 15px; font-size: 18px; border-radius: 12px; border: 2px solid #1a73e8; margin: 0 auto 5px auto; outline: none; box-sizing: border-box; display: block; }
@@ -82,13 +83,12 @@
         .risultato-item { display: block; padding: 15px; text-decoration: none; color: #333; border-bottom: 1px solid #eee; font-weight: bold; text-align: center; }
         .nascosto { display: none !important; }
 
-        /* PULSANTI: Aggiunto margin auto e display block per centratura assoluta */
         .main-btn { 
             width: 100%; 
             max-width: 450px; 
             display: block; 
             padding: 25px 15px; 
-            margin: 10px auto !important; /* Centra orizzontalmente */
+            margin: 10px auto !important; 
             font-size: 17px; 
             font-weight: bold; 
             border-radius: 12px; 
