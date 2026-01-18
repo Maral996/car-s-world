@@ -3,9 +3,28 @@
 <head>
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="5d23d7d2-db15-446e-8c3f-297de6dfca55" data-blockingmode="auto" type="text/javascript"></script>
     
+    <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+
     <meta name="google-adsense-account" content="ca-pub-1515990058526887">
+    
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887" crossorigin="anonymous" type="text/plain" data-cookieconsent="marketing"></script>
     
+    <script type="text/plain" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-HCL5TVJMD5"></script>
+    <script type="text/plain" data-cookieconsent="statistics">
+        gtag('js', new Date());
+        gtag('config', 'G-HCL5TVJMD5');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Marche Auto - Car's world</title>
@@ -13,7 +32,6 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Fix strutturali minimi per evitare lo zoom iniziale sul cellulare */
         html, body { 
             overflow-x: hidden; 
             width: 100%; 
@@ -27,24 +45,27 @@
             display: flex; 
             flex-direction: column; 
             min-height: 100vh; 
+            background-color: #f0f2f5;
         }
         
         header { 
             position: fixed; top: 0; left: 0; right: 0; height: 60px; 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 0 10px; z-index: 10000; 
+            background: #1a73e8; color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        header h1 { flex-grow: 1; text-align: center; }
+        header h1 { flex-grow: 1; text-align: center; font-size: 20px; margin: 0; }
 
         .wrapper { 
             display: grid; 
-            grid-template-columns: 300px minmax(320px, 600px) 300px; 
+            grid-template-columns: 160px minmax(320px, 650px) 160px; 
             justify-content: center; 
             gap: 20px; 
             width: 100%; 
-            max-width: 100%;
-            margin: auto; 
+            max-width: 1200px;
+            margin: 0 auto; 
             flex: 1;
         }
 
@@ -53,12 +74,14 @@
             flex-direction: column; 
             align-items: stretch; 
             width: 100%;
-            padding: 0 15px;
+            padding: 10px 15px;
             box-sizing: border-box;
         }
 
-        .ads-side { display: flex; flex-direction: column; gap: 20px; width: 300px; }
+        .ads-side { display: flex; flex-direction: column; gap: 20px; }
         .banner-fisso-container { width: 100%; margin: 20px auto; text-align: center; }
+
+        footer a { color: #666; text-decoration: underline; }
 
         @media (max-width: 1100px) {
             .wrapper { display: block; width: 100%; }
@@ -75,7 +98,7 @@
 
     <div class="wrapper">
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
@@ -93,19 +116,19 @@
             <a href="auto-vw.html" class="main-btn">VOLKSWAGEN</a>   
             
             <div class="banner-fisso-container">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" data-cookieconsent="marketing"></ins>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
 
         <div class="ads-side">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle" data-cookieconsent="marketing"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1515990058526887" data-ad-slot="auto" data-ad-format="rectangle"></ins>
             <script type="text/plain" data-cookieconsent="marketing">(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
     <footer style="text-align: center; padding: 20px; font-size: 13px; color: #666;">
-        <p>&copy; 2026 Car's World | <a href="privacy.html">Privacy</a></p>
+        <p>&copy; 2026 Car's World | <a href="javascript: Cookiebot.renew()">Gestisci consenso</a> | <a href="privacy.html">Privacy Policy</a></p>
     </footer>
 </body>
 </html>
