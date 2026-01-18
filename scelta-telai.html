@@ -68,22 +68,47 @@
             flex: 1;
         }
 
-        .container { display: flex; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box; }
+        .container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%; 
+            box-sizing: border-box; 
+            text-align: center; /* Forza la centratura dei contenuti inline */
+        }
 
-        #barra-ricerca { width: 100%; max-width: 450px; padding: 15px; font-size: 18px; border-radius: 12px; border: 2px solid #1a73e8; margin-bottom: 5px; outline: none; box-sizing: border-box; }
-        #risultati-ricerca { width: 100%; max-width: 450px; background: white; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; z-index: 100; }
+        #barra-ricerca { width: 100%; max-width: 450px; padding: 15px; font-size: 18px; border-radius: 12px; border: 2px solid #1a73e8; margin: 0 auto 5px auto; outline: none; box-sizing: border-box; display: block; }
+        #risultati-ricerca { width: 100%; max-width: 450px; background: white; border-radius: 12px; margin: 0 auto 20px auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; z-index: 100; }
         .risultato-item { display: block; padding: 15px; text-decoration: none; color: #333; border-bottom: 1px solid #eee; font-weight: bold; text-align: center; }
         .nascosto { display: none !important; }
 
-        /* MODIFICA: margin impostato su auto per centrare su ogni schermo */
-        .main-btn { width: 100%; max-width: 450px; display: block; padding: 25px 15px; margin: 10px auto; font-size: 17px; font-weight: bold; border-radius: 12px; text-transform: uppercase; text-decoration: none; text-align: center; box-sizing: border-box; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: 0.2s; background: #1a73e8; color: white; border: 2px solid #0d47a1; }
+        /* PULSANTI: Aggiunto margin auto e display block per centratura assoluta */
+        .main-btn { 
+            width: 100%; 
+            max-width: 450px; 
+            display: block; 
+            padding: 25px 15px; 
+            margin: 10px auto !important; /* Centra orizzontalmente */
+            font-size: 17px; 
+            font-weight: bold; 
+            border-radius: 12px; 
+            text-transform: uppercase; 
+            text-decoration: none; 
+            text-align: center; 
+            box-sizing: border-box; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            transition: 0.2s; 
+            background: #1a73e8; 
+            color: white; 
+            border: 2px solid #0d47a1; 
+        }
 
-        #sezione-contatti { width: 100%; max-width: 450px; padding: 20px; background: white; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); box-sizing: border-box; margin-top: 30px; }
+        #sezione-contatti { width: 100%; max-width: 450px; padding: 20px; background: white; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); box-sizing: border-box; margin: 30px auto 0 auto; }
         input[type="text"], input[type="email"], textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; }
         .btn-invia { background: #333; color: white; padding: 12px; width: 100%; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; }
 
         .ads-side { display: flex; flex-direction: column; gap: 15px; }
-        .banner-box { width: 100%; max-width: 450px; margin: 20px 0; text-align: center; }
+        .banner-box { width: 100%; max-width: 450px; margin: 20px auto; text-align: center; }
 
         footer { text-align: center; padding: 25px; font-size: 13px; color: #666; width: 100%; margin-top: auto; }
         footer a { color: #666; text-decoration: underline; }
@@ -158,8 +183,7 @@
                 { nome: "Volkswagen Polo", url: "vw-polo.html" },
                 { nome: "Toyota Yaris", url: "toyota-yaris.html" },
                 { nome: "Toyota Yaris Hybrid (Ibrida)", url: "ibrida-toyota-yaris.html" },
-                { nome: "Ducati Monster", url: "moto-ducati-monster.html" },
-                { nome: "Porsche Cayenne", url: "porsche-cayenne.html" }
+                { nome: "Ducati Monster", url: "moto-ducati-monster.html" }
             ];
             if (input.length < 2) { 
                 div.innerHTML = ""; 
