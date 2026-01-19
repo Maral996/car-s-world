@@ -28,21 +28,9 @@
     <title>Store Ricambi - Car's world</title>
     <link rel="canonical" href="https://www.carsworld.it/store.html" />
     <style>
-        /* RESET E BLOCCO ZOOM CSS */
-        * { 
-            box-sizing: border-box !important; 
-            touch-action: manipulation; /* DISABILITA DOUBLE-TAP TO ZOOM */
-        }
-        
-        html, body { 
-            overflow-x: hidden !important; 
-            width: 100%; 
-            margin: 0; 
-            padding: 0; 
-            position: relative;
-            -webkit-text-size-adjust: 100%; /* Impedisce ridimensionamento testo su orientamento */
-        }
-
+        /* RESET E PROTEZIONE ZOOM */
+        * { box-sizing: border-box !important; touch-action: manipulation; }
+        html, body { overflow-x: hidden !important; width: 100%; margin: 0; padding: 0; position: relative; -webkit-text-size-adjust: 100%; }
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; padding-top: 90px; }
         
         header { position: fixed; top: 0; left: 0; right: 0; height: 75px; background: #ff9800; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -50,13 +38,13 @@
         header h1 { font-size: 19px; text-transform: uppercase; margin: 0; line-height: 1.1; }
         .sub-title { font-size: 14px; font-weight: bold; text-transform: uppercase; opacity: 0.9; margin-top: 2px; }
         
-        .btn-apri-carrello { background: white; color: #ff9800; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .btn-apri-carrello { background: white; color: #ff9800; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; }
         
         .container { max-width: 650px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         #search-ricambi { width: 100%; max-width: 500px; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 20px; outline: none; font-size: 16px; }
 
         .product-card { background: white; width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; }
-        .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #eee; cursor: zoom-in; }
+        .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #eee; cursor: zoom-in; flex-shrink: 0; }
         .product-info { flex-grow: 1; text-align: left; }
         .product-info h4 { margin: 0; color: #1a73e8; font-size: 17px; cursor: pointer; text-decoration: underline; }
         .price { font-weight: bold; color: #ff9800; font-size: 18px; }
@@ -71,11 +59,12 @@
         .header-carrello { position: sticky; top: 0; background: #f0f2f5; z-index: 20001; display: flex; flex-direction: column; gap: 10px; border-bottom: 2px solid #ff9800; padding: 20px 0 15px 0; margin-bottom: 20px; }
         .btn-continua { background: #ff9800; color: white; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; width: 100%; }
         .carrello-item { background: white; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .cart-thumb { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; background: #eee; margin-right: 10px; }
+        .cart-thumb { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; background: #eee; margin-right: 10px; flex-shrink: 0; }
 
         .box-riepilogo-superiore { display: flex; justify-content: space-between; align-items: center; background: #e3f2fd; padding: 12px; border-radius: 8px; margin: 15px 0; border: 1px dashed #1565c0; }
         .btn-svuota { background: #d32f2f; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
+        /* FORM */
         .sezione-form { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .sezione-form h3 { margin-top: 0; color: #ff9800; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; }
@@ -84,8 +73,6 @@
         .linea-riepilogo { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; }
         .totale-grande { font-size: 24px; font-weight: bold; color: #e65100; text-align: right; border-top: 2px solid #ffb74d; padding-top: 10px; margin-top: 10px; }
         
-        .hidden { display: none !important; }
-
         /* MODALI E ZOOM */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 30000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 15px; padding: 20px; position: relative; text-align: center; }
@@ -94,7 +81,7 @@
         #zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 40000; display: none; align-items: center; justify-content: center; cursor: zoom-out; }
         #zoom-overlay img { max-width: 95%; max-height: 95%; border-radius: 5px; }
 
-        /* FOOTER */
+        .hidden { display: none !important; }
         footer { background: #333; color: white; padding: 40px 20px; margin-top: 50px; text-align: left; }
         .btn-invia { background: #ff9800; color: white; padding: 18px; width: 100%; border-radius: 12px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; }
         .note-pre-footer { max-width: 600px; margin: 40px auto 20px; text-align: center; font-size: 14px; color: #555; line-height: 1.6; }
@@ -130,7 +117,7 @@
             </div>
              
             <div class="product-card" data-id="2">
-                <img src="" class="product-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'">
+                <img src="img/batteria.jpg" class="product-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'">
                 <div class="product-info">
                     <h4 onclick="openDetails(2)">Batteria 60Ah</h4>
                     <p style="margin:2px 0; font-size:12px; color:#888;">Batteria 12V 60Ah con spunto maggiorato...</p>
@@ -176,7 +163,6 @@
             <p>🇮🇹 <strong>Spedizioni Nazionali:</strong> Consegniamo in tutta Italia, isole comprese.</p>
             <p>💰 <strong>Prezzi Trasparenti:</strong> Tutti i prezzi indicati sono IVA inclusa.</p>
         </div>
-
         <a href="index.html" style="margin:20px 0; text-decoration:none; color:#666; font-weight:bold;">← Torna a Car's world</a>
     </div>
 
@@ -186,9 +172,7 @@
                 <h2>Riepilogo Ordine</h2>
                 <button class="btn-continua" onclick="toggleCarrello(false)">← Continua lo shopping</button>
             </div>
-            
             <div id="lista-carrello-full"></div>
-            
             <div id="mini-totale-box" class="box-riepilogo-superiore hidden">
                 <div>Totale Ricambi: <strong><span id="mini-res-ricambi">0.00</span>€</strong></div>
                 <button class="btn-svuota" onclick="emptyCart()">🗑 Svuota Carrello</button>
@@ -213,7 +197,6 @@
                         </div>
                         <textarea name="ind_fatturazione" id="ind_fatt" placeholder="Indirizzo" required onkeyup="syncSped()"></textarea>
                     </div>
-
                     <div class="sezione-form">
                         <h3>2. Spedizione e Contatti</h3>
                         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
@@ -223,7 +206,6 @@
                         <textarea name="ind_spedizione" id="ind_sped" placeholder="Indirizzo di spedizione" required></textarea>
                         <input type="tel" name="telefono" placeholder="Cellulare per il corriere (facoltativo)">
                     </div>
-
                     <div class="sezione-form">
                         <h3>3. Metodo di Pagamento</h3>
                         <select name="pagamento" id="metodo_pag" onchange="renderCart()">
@@ -231,9 +213,8 @@
                             <option value="Contrassegno">Contrassegno (+5.00€)</option>
                         </select>
                     </div>
-
                     <div class="riepilogo-finale-box">
-                        <div class="linea-riepilogo"><span>Costo Ricambi:</span><span><span id="res-ricambi">0.00</span>€</span></div>
+                        <div class="linea-riepilogo"><span>Ricambi:</span><span><span id="res-ricambi">0.00</span>€</span></div>
                         <div class="linea-riepilogo"><span>Spedizione:</span><span id="res-sped-text">7.50€</span></div>
                         <div id="riga-contrassegno" class="linea-riepilogo hidden"><span>Contrassegno:</span><span>5.00€</span></div>
                         <div class="totale-grande">TOTALE: <span id="res-totale">0.00</span>€</div>
@@ -249,10 +230,10 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-modal" onclick="closeDetails()">×</span>
             <img id="m-img" src="" class="modal-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'">
-            <h2 id="m-titolo"></h2>
-            <p id="m-desc"></p>
-            <div id="m-price" class="price" style="margin: 15px 0;"></div>
-            <div id="m-ctrl"></div>
+            <h2 id="m-titolo" style="color:#333; margin:10px 0;"></h2>
+            <p id="m-desc" style="color:#666; font-size:14px; padding:0 15px;"></p>
+            <div id="m-price" class="price" style="margin: 15px 0; font-size:22px;"></div>
+            <div id="m-ctrl" style="max-width:250px; margin:auto;"></div>
         </div>
     </div>
     <div id="zoom-overlay" onclick="this.style.display='none'"><img id="zoom-img" src=""></div>
@@ -271,25 +252,18 @@
     </footer>
 
     <script>
-        // BLOCCA ZOOM AL TOCCO (JS EXTRA PROTECTION)
-        document.addEventListener('touchstart', function (event) {
-            if (event.touches.length > 1) {
-                event.preventDefault(); // Impedisce pinch-to-zoom multi-tocco
-            }
-        }, { passive: false });
-
+        // BLOCCA ZOOM GLOBALE
+        document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
+        document.addEventListener('touchend', (e) => {
             let now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault(); // Impedisce double-tap to zoom
-            }
+            if (now - lastTouchEnd <= 300) e.preventDefault();
             lastTouchEnd = now;
         }, false);
 
         const prodotti = {
             1: { nome: "Spazzole Tergicristallo", prezzo: 30.00, img: "img/spazzole.jpg", desc: "Coppia spazzole anteriori alta visibilità." },
-            2: { nome: "Batteria 60Ah", prezzo: 75.00, img: "", desc: "Batteria 12V 60Ah spunto maggiorato." },
+            2: { nome: "Batteria 60Ah", prezzo: 75.00, img: "img/batteria.jpg", desc: "Batteria 12V 60Ah spunto maggiorato." },
             3: { nome: "Lampadina Bosch H7", prezzo: 12.00, img: "img/lampadinah7bosch.jpg", desc: "Lampadina H7 Bosch 12V." }
         };
 
@@ -300,10 +274,9 @@
             let newQty = current + delta;
             if (newQty <= 0) delete cart[id];
             else cart[id] = newQty;
-            saveCart();
-            renderUI();
+            saveCart(); renderUI();
         }
-        function emptyCart() { if(confirm("Svuotare completamente il carrello?")) { cart = {}; saveCart(); renderUI(); } }
+        function emptyCart() { if(confirm("Svuotare il carrello?")) { cart = {}; saveCart(); renderUI(); } }
         function saveCart() { localStorage.setItem('cart_carsworld', JSON.stringify(cart)); }
 
         function renderUI() {
@@ -344,35 +317,21 @@
             sText.innerText = (spedizione === 0) ? "GRATIS" : "7.50€";
             sText.style.color = (spedizione === 0) ? "green" : "black";
 
-            const isContrassegno = document.getElementById('metodo_pag').value === "Contrassegno";
-            document.getElementById('riga-contrassegno').classList.toggle('hidden', !isContrassegno);
+            const isContr = document.getElementById('metodo_pag').value === "Contrassegno";
+            document.getElementById('riga-contrassegno').classList.toggle('hidden', !isContr);
 
-            let finale = totalRicambi + spedizione + (isContrassegno ? 5.0 : 0);
+            let finale = totalRicambi + spedizione + (isContr ? 5.0 : 0);
             document.getElementById('res-ricambi').innerText = totalRicambi.toFixed(2);
             document.getElementById('res-totale').innerText = finale.toFixed(2);
             document.getElementById('hidden_ordine').value = dettagli + " TOTALE: " + finale.toFixed(2) + "€";
             document.getElementById('modulo-completo').classList.toggle('hidden', count === 0);
         }
 
-        function syncSped() {
-            const check = document.getElementById('check_uguale');
-            const indSped = document.getElementById('ind_sped');
-            if(check.checked) {
-                indSped.value = document.getElementById('ind_fatt').value;
-                indSped.readOnly = true; indSped.style.background = "#eee";
-            } else {
-                indSped.readOnly = false; indSped.style.background = "white";
-            }
-        }
-        function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; }
-        function switchFatt() {
-            const ditta = document.getElementById('tipo_cliente').value === 'Azienda';
-            document.getElementById('box-privato').classList.toggle('hidden', ditta);
-            document.getElementById('box-ditta').classList.toggle('hidden', !ditta);
-        }
         function openDetails(id) {
             const p = prodotti[id];
-            document.getElementById('m-img').src = p.img || "";
+            const mImg = document.getElementById('m-img');
+            mImg.src = p.img || "";
+            mImg.style.display = p.img ? "inline-block" : "none";
             document.getElementById('m-titolo').innerText = p.nome;
             document.getElementById('m-desc').innerText = p.desc;
             document.getElementById('m-price').innerText = p.prezzo.toFixed(2) + "€";
@@ -388,12 +347,25 @@
         }
         function closeDetails() { document.getElementById('modal-details').style.display = 'none'; delete document.getElementById('modal-details').dataset.currentId; }
         function zoomImg(src) { if(!src) return; document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; }
+        function syncSped() {
+            const check = document.getElementById('check_uguale');
+            const indSped = document.getElementById('ind_sped');
+            if(check.checked) {
+                indSped.value = document.getElementById('ind_fatt').value;
+                indSped.readOnly = true; indSped.style.background = "#eee";
+            } else { indSped.readOnly = false; indSped.style.background = "white"; }
+        }
+        function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; }
+        function switchFatt() {
+            const ditta = document.getElementById('tipo_cliente').value === 'Azienda';
+            document.getElementById('box-privato').classList.toggle('hidden', ditta);
+            document.getElementById('box-ditta').classList.toggle('hidden', !ditta);
+        }
         function filterProducts() {
             let val = document.getElementById('search-ricambi').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
             for(let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "flex" : "none"; }
         }
-
         renderUI();
     </script>
 </body>
