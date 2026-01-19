@@ -68,15 +68,26 @@
         #zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 40000; display: none; align-items: center; justify-content: center; cursor: zoom-out; }
         #zoom-overlay img { max-width: 95%; max-height: 95%; border-radius: 5px; }
 
-        /* CARRELLO */
+        /* CARRELLO FISSO */
         #overlay-carrello { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 20000; overflow-y: auto; display: none; }
-        .carrello-content { max-width: 600px; margin: 20px auto; padding: 20px; }
-        .header-carrello { display: flex; flex-direction: column; gap: 10px; border-bottom: 2px solid #ff9800; padding-bottom: 15px; margin-bottom: 20px; }
+        
+        /* TESTATA CARRELLO STICKY */
+        .header-carrello { 
+            position: sticky; 
+            top: 0; 
+            background: #f0f2f5; 
+            z-index: 20001; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            border-bottom: 2px solid #ff9800; 
+            padding: 20px 0 15px 0; 
+            margin-bottom: 20px;
+        }
         .header-carrello h2 { margin: 0; color: #333; }
-        .header-btns { display: flex; gap: 10px; }
-        .btn-header-cart { border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
-        .btn-chiudi { background: #333; color: white; }
-        .btn-continua { background: #ff9800; color: white; flex-grow: 1; }
+        .btn-continua { background: #ff9800; color: white; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; width: 100%; }
+        
+        .carrello-content { max-width: 600px; margin: 0 auto; padding: 0 20px 20px 20px; }
         
         .carrello-item { background: white; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); gap: 10px; }
         .cart-thumb { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; background: #eee; flex-shrink: 0; }
@@ -201,15 +212,13 @@
         <div class="carrello-content">
             <div class="header-carrello">
                 <h2>Riepilogo Ordine</h2>
-                <div class="header-btns">
-                    <button class="btn-header-cart btn-continua" onclick="continuaShopping()">← Continua lo shopping</button>
-                    <button class="btn-header-cart btn-chiudi" onclick="toggleCarrello(false)">Chiudi ✕</button>
-                </div>
+                <button class="btn-continua" onclick="continuaShopping()">← Continua lo shopping</button>
             </div>
+            
             <div id="lista-carrello-full"></div>
             
             <div id="modulo-completo" class="hidden">
-                <button class="btn-svuota" onclick="svuotaCarrello()" style="background:#666; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px;">🗑 Svuota Carrello</button>
+                <button class="btn-svuota" onclick="svuotaCarrello()" style="background:#666; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px; margin-top: 10px;">🗑 Svuota Carrello</button>
                 <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST">
                     <div class="sezione-form">
                         <h3>1. Dati Fatturazione</h3>
@@ -335,10 +344,8 @@
             if(count === 0) lista.innerHTML = "<p style='text-align:center; padding:20px; color:#999;'>Carrello vuoto</p>";
         }
 
-        // Funzione dedicata al tasto Continua Shopping
         function continuaShopping() {
-            toggleCarrello(false); // Chiude il carrello
-            // Fa scorrere la pagina fino all'area di ricerca prodotti
+            toggleCarrello(false);
             document.getElementById('search-ricambi').scrollIntoView({ behavior: 'smooth' });
         }
 
