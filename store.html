@@ -44,6 +44,8 @@
         /* CARD PRODOTTO */
         .product-card { background: white; width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; }
         .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #eee; cursor: zoom-in; }
+        .product-img[src=""], .product-img:not([src]) { display: none !important; } /* Nasconde se src è vuoto */
+        
         .product-info { flex-grow: 1; text-align: left; }
         .product-info h4 { margin: 0; color: #1a73e8; font-size: 17px; cursor: pointer; text-decoration: underline; }
         .right-side { text-align: right; min-width: 120px; }
@@ -59,6 +61,8 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 30000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 15px; padding: 20px; position: relative; text-align: center; }
         .modal-img { width: 100%; max-height: 250px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; cursor: zoom-in; }
+        .modal-img[src=""], .modal-img:not([src]) { display: none !important; }
+
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 25px; cursor: pointer; color: #666; }
 
         /* ZOOM IMMAGINE */
@@ -71,7 +75,6 @@
         .header-carrello { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff9800; padding-bottom: 10px; margin-bottom: 20px; }
         .carrello-item { background: white; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         
-        /* FORM CARRELLO (RIPRISTINATI) */
         .sezione-form { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .sezione-form h3 { margin-top: 0; color: #ff9800; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 15px; }
@@ -79,13 +82,11 @@
         
         .hidden { display: none !important; }
 
-        /* PREVENTIVO RAPIDO (RIPRISTINATO ORIGINALE) */
         .preventivo-rapido { background: #333; color: white; width: 100%; max-width: 500px; padding: 20px; border-radius: 15px; margin-top: 40px; margin-bottom: 30px; box-sizing: border-box; text-align: left; }
         .preventivo-rapido h3 { margin-top: 0; color: #ff9800; }
         .preventivo-rapido p { font-size: 13px; color: #ccc; margin-bottom: 15px; }
         #msg-conferma { display: none; background: #4caf50; color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-weight: bold; }
 
-        /* FOOTER (RIPRISTINATO ORIGINALE) */
         footer { background: #333; color: white; padding: 40px 20px; margin-top: 50px; text-align: center; font-size: 14px; width: 100%; box-sizing: border-box; }
         .footer-container { max-width: 650px; margin: auto; text-align: left; }
         
@@ -111,7 +112,7 @@
 
         <div id="lista-prodotti" style="width: 100%;">
             <div class="product-card" data-id="1">
-                <img src="img/spazzole.jpg" class="product-img" onclick="zoomImg(this.src)" alt="foto">
+                <img src="img/spazzole.jpg" class="product-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'" alt="foto">
                 <div class="product-info">
                     <h4 onclick="openDetails(1)">Spazzole Tergicristallo</h4>
                     <p style="margin:2px 0; font-size:12px; color:#888;">Coppia di spazzole anteriori ad alta visibilità...</p>
@@ -125,7 +126,7 @@
             </div>
              
             <div class="product-card" data-id="2">
-                <img src="img/batteria.jpg" class="product-img" onclick="zoomImg(this.src)" alt="foto">
+                <img src="" class="product-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'" alt="foto">
                 <div class="product-info">
                     <h4 onclick="openDetails(2)">Batteria 60Ah</h4>
                     <p style="margin:2px 0; font-size:12px; color:#888;">Batteria 12V 60Ah con spunto maggiorato...</p>
@@ -139,7 +140,7 @@
             </div>
 
             <div class="product-card" data-id="3">
-                <img src="img/lampadinah7bosch.jpg" class="product-img" onclick="zoomImg(this.src)" alt="foto">
+                <img src="img/lampadinah7bosch.jpg" class="product-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'" alt="foto">
                 <div class="product-info">
                     <h4 onclick="openDetails(3)">Lampadina Bosch H7</h4>
                     <p style="margin:2px 0; font-size:12px; color:#888;">Lampadina H7 - 55W - 12V - 5000K...</p>
@@ -169,7 +170,6 @@
                 <textarea name="ricambio_cercato" placeholder="Quale ricambio stai cercando?" style="height: 80px;" required></textarea>
                 <button type="submit" class="btn-invia" style="padding: 12px; font-size: 14px;">Richiedi Preventivo</button>
             </form>
-            <p style="text-align: center; font-size: 13px; margin-top: 15px; color: #ff9800;">Per assistenza mandare un’e-mail all’indirizzo 996maral@gmail.com</p>
         </div>
         <a href="index.html" style="margin:20px 0; text-decoration:none; color:#666; font-weight:bold;">← Torna a Car's world</a>
     </div>
@@ -177,7 +177,7 @@
     <div id="modal-details" class="modal-overlay" onclick="closeDetails(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-modal" onclick="closeDetails(event)">×</span>
-            <img id="m-img" src="" class="modal-img" onclick="zoomImg(this.src)">
+            <img id="m-img" src="" class="modal-img" onclick="zoomImg(this.src)" onerror="this.style.display='none'">
             <h2 id="m-titolo" style="color:#333; margin:10px 0;"></h2>
             <p id="m-desc" style="color:#666; font-size:14px; line-height:1.5; padding:0 10px;"></p>
             <div id="m-price" class="price" style="font-size:22px; margin:15px 0;"></div>
@@ -199,7 +199,6 @@
             
             <div id="modulo-completo" class="hidden">
                 <button class="btn-svuota" onclick="svuotaCarrello()" style="background:#666; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px;">🗑 Svuota Carrello</button>
-                
                 <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST">
                     <div class="sezione-form">
                         <h3>1. Dati Fatturazione</h3>
@@ -262,7 +261,7 @@
     <script>
         const prodotti = {
             1: { nome: "Spazzole Tergicristallo", prezzo: 30.00, img: "img/spazzole.jpg", desc: "Coppia di spazzole anteriori ad alta visibilità, compatibili con attacchi originali. Garantiscono una pulizia perfetta senza rumori." },
-            2: { nome: "Batteria 60Ah", prezzo: 75.00, img: "img/batteria.jpg", desc: "Batteria 12V 60Ah con spunto maggiorato per partenze sicure in ogni condizione climatica. Tecnologia senza manutenzione." },
+            2: { nome: "Batteria 60Ah", prezzo: 75.00, img: "", desc: "Batteria 12V 60Ah con spunto maggiorato per partenze sicure in ogni condizione climatica. Tecnologia senza manutenzione." },
             3: { nome: "Lampadina Bosch H7", prezzo: 12.00, img: "img/lampadinah7bosch.jpg", desc: "Lampadina H7 - 55W - 12V - Temperatura colore: 5000K. Alta luminosità Bosch per una guida notturna sicura." }
         };
 
@@ -314,7 +313,9 @@
 
         function openDetails(id) {
             const p = prodotti[id];
-            document.getElementById('m-img').src = p.img;
+            const mImg = document.getElementById('m-img');
+            mImg.style.display = p.img ? "inline-block" : "none";
+            mImg.src = p.img || "";
             document.getElementById('m-titolo').innerText = p.nome;
             document.getElementById('m-desc').innerText = p.desc;
             document.getElementById('m-price').innerText = p.prezzo.toFixed(2) + "€";
@@ -334,7 +335,7 @@
         }
 
         function closeDetails(e) { document.getElementById('modal-details').style.display = 'none'; delete document.getElementById('modal-details').dataset.currentId; }
-        function zoomImg(src) { document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; }
+        function zoomImg(src) { if(!src || src.includes(window.location.host)) return; document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; }
         function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; }
         function svuotaCarrello() { if(confirm("Svuotare il carrello?")) { cart = {}; saveCart(); renderUI(); } }
         function switchFatt() {
