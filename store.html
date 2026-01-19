@@ -373,7 +373,14 @@
         }
 
         function closeDetails(e) { document.getElementById('modal-details').style.display = 'none'; delete document.getElementById('modal-details').dataset.currentId; }
-        function zoomImg(src) { if(!src || src.includes(window.location.host)) return; document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; }
+        
+        // Funzione per ingrandire la foto
+        function zoomImg(src) { 
+            if(!src || src === "") return; 
+            document.getElementById('zoom-img').src = src; 
+            document.getElementById('zoom-overlay').style.display = 'flex'; 
+        }
+
         function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; }
         function svuotaCarrello() { if(confirm("Svuotare il carrello?")) { cart = {}; saveCart(); renderUI(); } }
         function switchFatt() {
