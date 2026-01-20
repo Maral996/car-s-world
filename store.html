@@ -302,17 +302,20 @@
             3: { nome: "Lampadina Bosch H7", prezzo: 12.00, img: "img/lampadinah7bosch.jpg", desc: "Lampadina H7 Bosch alta luminosità per una guida notturna sicura." }
         };
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
+        // GESTIONE SVUOTAMENTO CARRELLO AL RITORNO
+        let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
+
+        function checkPendingOrder() {
             if (localStorage.getItem('pending_order') === 'true') {
                 localStorage.removeItem('cart_carsworld');
                 localStorage.removeItem('pending_order');
                 cart = {};
                 renderUI();
             }
-        });
+        }
 
-        let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
+        window.addEventListener('load', checkPendingOrder);
+
         let currentDoc = null; 
         let allowSubmit = false; 
 
@@ -438,14 +441,12 @@
             document.getElementById('box-privato').classList.toggle('hidden', isDitta);
             document.getElementById('box-ditta').classList.toggle('hidden', !isDitta);
             
-            // Gestione required campi Privato
             const campiPrivato = document.querySelectorAll('#box-privato input');
             campiPrivato.forEach(input => {
                 if(isDitta) input.removeAttribute('required');
                 else input.setAttribute('required', 'required');
             });
 
-            // Gestione required campi Ditta
             const ragSoc = document.getElementsByName('ragione_sociale')[0];
             const piva = document.getElementsByName('piva')[0];
             const codUnivoco = document.getElementById('cod_univoco');
@@ -579,10 +580,12 @@
         }
         
         function chiudiEInvia() { 
+            localStorage.setItem('pending_order', 'true');
             document.getElementById('modal-pdf').style.display = 'none'; 
             allowSubmit = true; 
-            localStorage.setItem('pending_order', 'true');
-            document.getElementById('form-carrello').submit(); 
+            setTimeout(() => {
+                document.getElementById('form-carrello').submit(); 
+            }, 150);
         }
 
         renderUI();
