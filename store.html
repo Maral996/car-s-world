@@ -27,8 +27,8 @@
     <title>Store Ricambi - Car's world</title>
     <link rel="canonical" href="https://www.carsworld.it/store.html" />
     <style>
-        /* RESET E BLOCCO SCIVOLAMENTO */
-        * { box-sizing: border-box !important; }
+        /* RESET E BLOCCO SCIVOLAMENTO/ZOOM */
+        * { box-sizing: border-box !important; touch-action: manipulation; }
         html, body { overflow-x: hidden !important; width: 100%; margin: 0; padding: 0; position: relative; }
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; padding-top: 90px; }
         
@@ -264,7 +264,7 @@
                 <li>💳 <strong>Pagamenti:</strong> Bonifico o Contrassegno (+5,00€).</li>
                 <li>🔍 <strong>Compatibilità:</strong> Verifica tramite targa inclusa.</li>
             </ul>
-            <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">&copy; 2026 Car's World - Store Ricambi Online</p>
+            <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">&copy; 2026 Car's World - Store Ricambi Online | <a href="javascript:Cookiebot.renew()" style="color: #888;">Gestisci consenso cookie</a> | <a href="privacy.html" style="color: #888; text-decoration: underline;">Privacy Policy</a></p>
         </div>
     </footer>
 
@@ -322,27 +322,22 @@
                     </div>`;
             });
 
-            // Calcolo Spedizione
             let spedizione = (totalRicambi >= 100 || totalRicambi === 0) ? 0 : 7.50;
             let contrassegno = document.getElementById('metodo_pag').value === "Contrassegno" ? 5 : 0;
             let finale = totalRicambi + spedizione + contrassegno;
 
-            // Aggiornamento etichette Header
             const labelCart = document.getElementById('label-cart');
             labelCart.innerText = totalRicambi > 0 ? totalRicambi.toFixed(2) + "€" : "CARRELLO";
             document.getElementById('count-cart').innerText = count;
 
-            // Aggiornamento Riepilogo Finale
             document.getElementById('res-ricambi').innerText = totalRicambi.toFixed(2) + "€";
             document.getElementById('res-spedizione').innerText = totalRicambi >= 100 ? "Gratis" : (totalRicambi === 0 ? "0.00€" : "7.50€");
             document.getElementById('riga-contrassegno').classList.toggle('hidden', contrassegno === 0);
             document.getElementById('res-totale').innerText = finale.toFixed(2);
             
-            // Mini box lista
             document.getElementById('mini-tot-prezzo').innerText = totalRicambi.toFixed(2);
             document.getElementById('mini-box-ricambi').classList.toggle('hidden', count === 0);
 
-            // Form e Hidden
             document.getElementById('hidden_ordine').value = `${dettagli} | Ricambi: ${totalRicambi.toFixed(2)}€ | Sped: ${spedizione.toFixed(2)}€ | Pagamento: ${document.getElementById('metodo_pag').value} | TOTALE: ${finale.toFixed(2)}€`;
             document.getElementById('modulo-completo').classList.toggle('hidden', count === 0);
             if(count === 0) lista.innerHTML = "<p style='text-align:center; padding:20px; color:#999;'>Carrello vuoto</p>";
@@ -378,17 +373,17 @@
             const isDitta = document.getElementById('tipo_cliente').value === 'Azienda';
             document.getElementById('box-privato').classList.toggle('hidden', isDitta);
             document.getElementById('box-ditta').classList.toggle('hidden', !isDitta);
-            
-            // Obbligatorietà Codice Univoco
             const codUnivoco = document.getElementById('cod_univoco');
-            if (isDitta) {
-                codUnivoco.setAttribute('required', 'required');
-            } else {
-                codUnivoco.removeAttribute('required');
+            if (isDitta) codUnivoco.setAttribute('required', 'required');
+            else codUnivoco.removeAttribute('required');
+        }
+        
+        function syncSped() { 
+            if(document.getElementById('check_uguale').checked) {
+                document.getElementById('ind_sped').value = document.getElementById('ind_fatt').value;
             }
         }
         
-        function syncSped() { if(document.getElementById('check_uguale').checked) document.getElementById('ind_sped').value = document.getElementById('ind_fatt').value; }
         function filterProducts() {
             let val = document.getElementById('search-ricambi').value.toLowerCase();
             let cards = document.getElementsByClassName('product-card');
