@@ -99,10 +99,8 @@
         .preventivo-rapido h3 { margin-top: 0; color: #ff9800; }
         .preventivo-rapido p { font-size: 13px; color: #ccc; margin-bottom: 15px; }
 
-        /* STILE FOOTER */
         footer { background: #333; color: white; padding: 40px 20px; margin-top: 50px; text-align: center; font-size: 14px; width: 100%; box-sizing: border-box; }
         .footer-container { max-width: 650px; margin: auto; text-align: left; }
-        footer a { color: #888; text-decoration: underline; }
         
         .btn-invia { background: #ff9800; color: white; padding: 18px; width: 100%; border-radius: 12px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 15px rgba(255,152,0,0.3); }
         .totale-grande { font-size: 24px; font-weight: bold; color: #e65100; text-align: right; border-top: 2px solid #ff9800; margin-top: 10px; padding-top: 5px; }
@@ -290,14 +288,13 @@
             </ul>
             <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">
                 &copy; 2026 Car's World - Store Ricambi Online | 
-                <a href="javascript: Cookiebot.renew()">Gestisci consenso cookie</a> | 
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="javascript:Cookiebot.renew()" style="color: #888;">Gestisci consenso cookie</a> | 
+                <a href="privacy.html" style="color: #888; text-decoration: underline;">Privacy Policy</a>
             </p>
         </div>
     </footer>
 
     <script>
-        // ... (Tutto il resto del tuo script JavaScript rimane invariato) ...
         const prodotti = {
             1: { nome: "Spazzole Tergicristallo", prezzo: 30.00, img: "img/spazzole.jpg", desc: "Coppia di spazzole anteriori ad alta visibilità, compatibili con attacchi originali." },
             2: { nome: "Batteria 60Ah", prezzo: 75.00, img: "img/batteria.jpg", desc: "Batteria 12V 60Ah con spunto maggiorato per partenze sicure." },
