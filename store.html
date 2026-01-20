@@ -89,6 +89,7 @@
         .riepilogo-finale-box { background: #fff3e0; padding: 20px; border-radius: 12px; border: 2px solid #ff9800; margin: 20px 0; text-align: right; line-height: 1.6; }
         .riepilogo-linea { display: flex; justify-content: space-between; font-size: 15px; border-bottom: 1px solid #ffe0b2; padding: 4px 0; }
         
+        /* Stile per sezione disabilitata */
         .sezione-disabled { background: #f0f0f0 !important; }
         .sezione-disabled textarea { background: #e9e9e9; color: #777; cursor: not-allowed; }
 
@@ -98,22 +99,19 @@
         .preventivo-rapido h3 { margin-top: 0; color: #ff9800; }
         .preventivo-rapido p { font-size: 13px; color: #ccc; margin-bottom: 15px; }
 
+        /* STILE FOOTER */
         footer { background: #333; color: white; padding: 40px 20px; margin-top: 50px; text-align: center; font-size: 14px; width: 100%; box-sizing: border-box; }
         .footer-container { max-width: 650px; margin: auto; text-align: left; }
+        footer a { color: #888; text-decoration: underline; }
         
         .btn-invia { background: #ff9800; color: white; padding: 18px; width: 100%; border-radius: 12px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 15px rgba(255,152,0,0.3); }
         .totale-grande { font-size: 24px; font-weight: bold; color: #e65100; text-align: right; border-top: 2px solid #ff9800; margin-top: 10px; padding-top: 5px; }
 
-        /* MODALE PDF */
+        /* NUOVA MODALE PER PDF */
         #modal-pdf { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 50000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .pdf-actions { background: white; padding: 15px; border-radius: 12px; display: flex; gap: 10px; margin-bottom: 10px; width: 95%; max-width: 750px; justify-content: center; flex-wrap: wrap; }
-        .btn-pdf { border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 5px; font-size: 13px; }
-        #pdf-preview { width: 95%; height: 75vh; max-width: 800px; background: white; border-radius: 8px; border: none; }
-
-        /* LOGICA NASCONDERE DOWNLOAD SU MOBILE */
-        @media (max-width: 768px) {
-            .btn-download-pdf { display: none !important; }
-        }
+        .pdf-actions { background: white; padding: 15px; border-radius: 12px; display: flex; gap: 10px; margin-bottom: 10px; width: 90%; max-width: 600px; justify-content: center; flex-wrap: wrap; }
+        .btn-pdf { border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; }
+        #pdf-preview { width: 90%; height: 70vh; max-width: 800px; background: white; border-radius: 8px; border: none; }
     </style>
 </head>
 
@@ -209,14 +207,17 @@
             <h2>Riepilogo Ordine</h2>
             <button class="btn-continua" onclick="toggleCarrello(false)">← Continua lo shopping</button>
         </div>
+        
         <div class="carrello-content">
             <div id="lista-carrello-full"></div>
+            
             <div id="mini-box-ricambi" class="hidden">
                 <div class="mini-riepilogo-ricambi">
                     <span>Totale Ricambi: <strong><span id="mini-tot-prezzo">0.00</span>€</strong></span>
-                    <button onclick="svuotaCarrello(true)" style="background:#d32f2f; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px;">🗑 Svuota</button>
+                    <button onclick="svuotaCarrello()" style="background:#d32f2f; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px;">🗑 Svuota</button>
                 </div>
             </div>
+
             <div id="modulo-completo" class="hidden">
                 <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="return gestisciInvioOrdine(event)">
                     <div class="sezione-form">
@@ -259,8 +260,7 @@
                         <div class="totale-grande">TOTALE: <span id="res-totale">0.00</span>€</div>
                     </div>
                     <input type="hidden" name="ordine_dettagliato" id="hidden_ordine">
-                    <input type="hidden" name="numero_ordine_generato" id="hidden_num_ordine">
-                    <button type="submit" class="btn-invia">Visualizza Ordine</button>
+                    <button type="submit" class="btn-invia">Invia Ordine</button>
                 </form>
             </div>
         </div>
@@ -268,10 +268,9 @@
 
     <div id="modal-pdf">
         <div class="pdf-actions">
-            <button class="btn-pdf" style="background:#6c757d;" onclick="modificaOrdine()">✏️ INDIETRO</button>
-            <button class="btn-pdf btn-download-pdf" style="background:#28a745;" onclick="downloadPDF()">💾 Download</button>
-            <button class="btn-pdf" style="background:#007bff;" onclick="condividiPDF()">📲 Condividi</button>
-            <button class="btn-pdf" style="background:#ff9800;" onclick="chiudiEInvia()">🚀 INVIA ORDINE</button>
+            <button class="btn-pdf" style="background:#4caf50;" onclick="downloadPDF()">⬇️ Download</button>
+            <button class="btn-pdf" style="background:#2196f3;" onclick="printPDF()">🖨️ Stampa</button>
+            <button class="btn-pdf" style="background:#ff9800;" onclick="chiudiEInvia()">🚀 INVIA ORDINE E CHIUDI</button>
         </div>
         <iframe id="pdf-preview"></iframe>
     </div>
@@ -287,19 +286,18 @@
                 <li>📦 <strong>Resi:</strong> Diritto di recesso entro 14 giorni.</li>
                 <li>💳 <strong>Pagamenti:</strong> Bonifico o Contrassegno (+5,00€).</li>
                 <li>🔍 <strong>Compatibilità:</strong> Verifica tramite targa inclusa.</li>
+                <li>🛠️ <strong>Manutenzione:</strong> I piani tagliandi devono essere bloccati.</li>
             </ul>
-            
-            <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap; border-top: 1px solid #444; padding-top: 15px;">
-                <a href="javascript: Cookiebot.renew()" style="color: #bbb; text-decoration: none; font-size: 12px;">🔄 Personalizza Cookie</a>
-                <a href="https://www.carsworld.it/privacy-policy.html" target="_blank" style="color: #bbb; text-decoration: none; font-size: 12px;">📄 Privacy Policy</a>
-                <a href="https://www.carsworld.it/cookie-policy.html" target="_blank" style="color: #bbb; text-decoration: none; font-size: 12px;">🍪 Cookie Policy</a>
-            </div>
-
-            <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">&copy; 2026 Car's World - Store Ricambi Online</p>
+            <p style="text-align: center; color: #888; margin-top: 20px; font-size: 12px;">
+                &copy; 2026 Car's World - Store Ricambi Online | 
+                <a href="javascript: Cookiebot.renew()">Gestisci consenso cookie</a> | 
+                <a href="privacy.html">Privacy Policy</a>
+            </p>
         </div>
     </footer>
 
     <script>
+        // ... (Tutto il resto del tuo script JavaScript rimane invariato) ...
         const prodotti = {
             1: { nome: "Spazzole Tergicristallo", prezzo: 30.00, img: "img/spazzole.jpg", desc: "Coppia di spazzole anteriori ad alta visibilità, compatibili con attacchi originali." },
             2: { nome: "Batteria 60Ah", prezzo: 75.00, img: "img/batteria.jpg", desc: "Batteria 12V 60Ah con spunto maggiorato per partenze sicure." },
@@ -307,24 +305,7 @@
         };
 
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
-        let currentDoc = null;
-        let currentOrderNum = "";
-
-        // Aggiorna la pagina quando si torna indietro dal browser (es. dopo invio Formspree)
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        });
-
-        function generateOrderNumber() {
-            const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            let result = "";
-            for (let i = 0; i < 10; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
+        let currentDoc = null; 
 
         function updateQty(id, delta) {
             let current = cart[id] || 0;
@@ -346,8 +327,8 @@
                     `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id}, -1)">-</button><span class="qty-val">${qty}</span><button class="btn-qty" onclick="updateQty(${id}, 1)">+</button></div>` :
                     `<button class="btn-add" onclick="updateQty(${id}, 1)">+ Aggiungi</button>`;
             });
-            const mDetails = document.getElementById('modal-details');
-            if(mDetails && mDetails.dataset.currentId) updateModalQty(mDetails.dataset.currentId);
+            const modalId = document.getElementById('modal-details').dataset.currentId;
+            if(modalId) updateModalQty(modalId);
             renderCart();
         }
 
@@ -358,7 +339,7 @@
             
             Object.keys(cart).forEach(id => {
                 let p = prodotti[id]; let qty = cart[id]; let subtot = p.prezzo * qty;
-                totalRicambi += subtot; count += qty; dettagli += `${p.nome} x${qty} (${subtot.toFixed(2)}€), `;
+                totalRicambi += subtot; count += qty; dettagli += `${p.nome} x${qty}, `;
                 lista.innerHTML += `
                     <div class="carrello-item">
                         <img src="${p.img}" class="cart-thumb" onclick="zoomImg(this.src)" onerror="this.style.display='none'">
@@ -375,15 +356,18 @@
             let contrassegno = document.getElementById('metodo_pag').value === "Contrassegno" ? 5 : 0;
             let finale = totalRicambi + spedizione + contrassegno;
 
-            document.getElementById('label-cart').innerText = totalRicambi > 0 ? totalRicambi.toFixed(2) + "€" : "CARRELLO";
+            const labelCart = document.getElementById('label-cart');
+            labelCart.innerText = totalRicambi > 0 ? totalRicambi.toFixed(2) + "€" : "CARRELLO";
             document.getElementById('count-cart').innerText = count;
+
             document.getElementById('res-ricambi').innerText = totalRicambi.toFixed(2) + "€";
             document.getElementById('res-spedizione').innerText = totalRicambi >= 100 ? "Gratis" : (totalRicambi === 0 ? "0.00€" : "7.50€");
             document.getElementById('riga-contrassegno').classList.toggle('hidden', contrassegno === 0);
             document.getElementById('res-totale').innerText = finale.toFixed(2);
+            
             document.getElementById('mini-tot-prezzo').innerText = totalRicambi.toFixed(2);
             document.getElementById('mini-box-ricambi').classList.toggle('hidden', count === 0);
-            
+
             document.getElementById('hidden_ordine').value = `${dettagli} | Ricambi: ${totalRicambi.toFixed(2)}€ | Sped: ${spedizione.toFixed(2)}€ | Pagamento: ${document.getElementById('metodo_pag').value} | TOTALE: ${finale.toFixed(2)}€`;
             document.getElementById('modulo-completo').classList.toggle('hidden', count === 0);
             if(count === 0) lista.innerHTML = "<p style='text-align:center; padding:20px; color:#999;'>Carrello vuoto</p>";
@@ -413,16 +397,15 @@
         function closeDetails() { document.getElementById('modal-details').style.display = 'none'; delete document.getElementById('modal-details').dataset.currentId; }
         function zoomImg(src) { if(!src) return; document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; }
         function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; }
-        
-        function svuotaCarrello(conferma) { 
-            if(conferma && !confirm("Svuotare il carrello?")) return;
-            cart = {}; saveCart(); renderUI(); 
-        }
+        function svuotaCarrello() { if(confirm("Svuotare il carrello?")) { cart = {}; saveCart(); renderUI(); } }
         
         function switchFatt() {
             const isDitta = document.getElementById('tipo_cliente').value === 'Azienda';
             document.getElementById('box-privato').classList.toggle('hidden', isDitta);
             document.getElementById('box-ditta').classList.toggle('hidden', !isDitta);
+            const codUnivoco = document.getElementById('cod_univoco');
+            if (isDitta) codUnivoco.setAttribute('required', 'required');
+            else codUnivoco.removeAttribute('required');
         }
         
         function syncSped() { 
@@ -430,6 +413,7 @@
             const indFatt = document.getElementById('ind_fatt');
             const indSped = document.getElementById('ind_sped');
             const sezSped = document.getElementById('sez_spedizione');
+
             if(checkUguale.checked) {
                 indSped.value = indFatt.value;
                 indSped.readOnly = true;
@@ -446,13 +430,18 @@
             for(let c of cards) { c.style.display = c.innerText.toLowerCase().includes(val) ? "flex" : "none"; }
         }
 
-        let allowSubmit = false;
+        let allowSubmit = false; 
+
         function gestisciInvioOrdine(e) {
-            if(allowSubmit) return true;
+            if(allowSubmit) return true; 
             e.preventDefault();
-            currentOrderNum = generateOrderNumber();
-            document.getElementById('hidden_num_ordine').value = currentOrderNum;
-            generaPDF();
+            const vuoiPDF = confirm("Vuoi creare il riepilogo PDF prima di inviare l'ordine?");
+            if (vuoiPDF) {
+                generaPDF();
+            } else {
+                allowSubmit = true;
+                document.getElementById('form-carrello').submit();
+            }
             return false;
         }
 
@@ -460,73 +449,71 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const ora = new Date().toLocaleString('it-IT');
-            doc.setFontSize(22); doc.setTextColor(255, 152, 0); doc.text("Car's World - Store Ricambi", 20, 20);
-            doc.setFontSize(10); doc.setTextColor(100); 
-            doc.text(`Ordine N: ${currentOrderNum}`, 20, 30);
-            doc.text(`Data: ${ora}`, 140, 30);
-            doc.line(20, 35, 190, 35);
-            doc.setFontSize(14); doc.setTextColor(0); doc.text("Dati Fatturazione:", 20, 45);
+            doc.setFontSize(22);
+            doc.setTextColor(255, 152, 0); 
+            doc.text("Car's World - Store Ricambi", 20, 20);
             doc.setFontSize(10);
-            let y = 52;
+            doc.setTextColor(100);
+            doc.text(`Data Documento: ${ora}`, 20, 30);
+            doc.text("Sito Web: www.carsworld.it", 20, 35);
+            doc.line(20, 40, 190, 40);
+            doc.setFontSize(14); doc.setTextColor(0);
+            doc.text("Dati Fatturazione:", 20, 50);
+            doc.setFontSize(11);
+            let y = 58;
             if (document.getElementById('tipo_cliente').value === 'Azienda') {
-                doc.text(`Azienda: ${document.getElementsByName('ragione_sociale')[0].value}`, 20, y); y+=5;
-                doc.text(`P.IVA: ${document.getElementsByName('piva')[0].value}`, 20, y); y+=5;
-                doc.text(`Cod. Univoco: ${document.getElementById('cod_univoco').value}`, 20, y); y+=5;
+                doc.text(`Ragione Sociale: ${document.getElementsByName('ragione_sociale')[0].value}`, 20, y); y+=7;
+                doc.text(`P.IVA: ${document.getElementsByName('piva')[0].value}`, 20, y); y+=7;
+                doc.text(`Codice/PEC: ${document.getElementById('cod_univoco').value}`, 20, y); y+=7;
             } else {
-                doc.text(`Cliente: ${document.getElementsByName('nome')[0].value}`, 20, y); y+=5;
-                doc.text(`C.F.: ${document.getElementsByName('cf')[0].value}`, 20, y); y+=5;
+                doc.text(`Nome: ${document.getElementsByName('nome')[0].value}`, 20, y); y+=7;
+                doc.text(`Cod. Fiscale: ${document.getElementsByName('cf')[0].value}`, 20, y); y+=7;
             }
-            doc.text(`Indirizzo: ${document.getElementById('ind_fatt').value}`, 20, y); y += 10;
-            doc.setFontSize(14); doc.text("Dati Spedizione:", 20, y); y += 7;
-            doc.setFontSize(10);
-            doc.text(`Indirizzo Spedizione: ${document.getElementById('ind_sped').value}`, 20, y); y+=5;
-            doc.text(`Telefono: ${document.getElementsByName('telefono')[0].value || "Non fornito"}`, 20, y);
-            y += 15; doc.setFontSize(14); doc.text("Dettaglio Ricambi:", 20, y);
-            y += 5; doc.line(20, y, 190, y); y += 8;
-            let totaleRicambi = 0; doc.setFontSize(10);
+            doc.text(`Indirizzo: ${document.getElementById('ind_fatt').value}`, 20, y);
+            y += 20;
+            doc.setFontSize(14); doc.text("Riepilogo Ricambi:", 20, y);
+            y += 10;
+            doc.setFontSize(10); doc.setFont(undefined, 'bold');
+            doc.text("Descrizione", 20, y); doc.text("Quantità", 130, y); doc.text("Prezzo", 160, y);
+            doc.setFont(undefined, 'normal'); doc.line(20, y+2, 190, y+2); y += 10;
+            let totRicambi = 0;
             Object.keys(cart).forEach(id => {
-                let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
-                totaleRicambi += sub;
-                doc.text(`${p.nome} (x${qty})`, 20, y); doc.text(`${sub.toFixed(2)}€`, 170, y, { align: 'right' });
-                y += 6;
+                let p = prodotti[id];
+                let qty = cart[id];
+                let sub = p.prezzo * qty;
+                totRicambi += sub;
+                doc.text(p.nome, 20, y);
+                doc.text(qty.toString(), 130, y);
+                doc.text(`${sub.toFixed(2)}€`, 160, y);
+                y += 7;
             });
-            y += 10; doc.line(120, y-5, 190, y-5);
-            doc.text(`Imponibile Ricambi:`, 120, y); doc.text(`${totaleRicambi.toFixed(2)}€`, 190, y, { align: 'right' }); y += 6;
-            let spedizione = (totaleRicambi >= 100) ? 0 : 7.50;
-            doc.text(`Spese Spedizione:`, 120, y); doc.text(`${spedizione === 0 ? "GRATIS" : "7.50€"}`, 190, y, { align: 'right' }); y += 6;
-            let contrassegno = document.getElementById('metodo_pag').value === "Contrassegno" ? 5 : 0;
-            if(contrassegno > 0){
-                doc.text(`Supplemento Contrassegno:`, 120, y); doc.text(`5.00€`, 190, y, { align: 'right' }); y += 6;
+            y += 5;
+            doc.line(120, y, 190, y); y += 10;
+            doc.text(`Totale Ricambi:`, 120, y); doc.text(`${totRicambi.toFixed(2)}€`, 160, y); y += 7;
+            let sped = (totRicambi >= 100) ? 0 : 7.50;
+            doc.text(`Spese Spedizione:`, 120, y); doc.text(`${sped === 0 ? "Gratis" : "7.50€"}`, 160, y); y += 7;
+            let contr = document.getElementById('metodo_pag').value === "Contrassegno" ? 5 : 0;
+            if(contr > 0) {
+                doc.text(`Suppl. Contrassegno:`, 120, y); doc.text(`5.00€`, 160, y); y += 7;
             }
-            const totaleFin = (totaleRicambi + spedizione + contrassegno).toFixed(2);
-            doc.setFontSize(14); doc.setFont(undefined, 'bold'); doc.text(`TOTALE ORDINE:`, 120, y + 5); doc.text(`${totaleFin}€`, 190, y + 5, { align: 'right' });
-            y += 20; doc.setFontSize(10); doc.setFont(undefined, 'normal');
-            doc.text(`Metodo di Pagamento: ${document.getElementById('metodo_pag').value}`, 20, y);
+            y += 3;
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            const totaleFin = (totRicambi + sped + contr).toFixed(2);
+            doc.text(`TOTALE FINALE:`, 120, y); doc.text(`${totaleFin}€`, 160, y);
+            doc.setFontSize(9); doc.setFont(undefined, 'italic'); doc.setTextColor(150);
+            doc.text("Il presente documento è un riepilogo d'ordine generato automaticamente.", 20, 280);
             currentDoc = doc;
-            const pdfBlobUrl = doc.output('bloburl');
-            document.getElementById('pdf-preview').src = pdfBlobUrl + '#view=FitH';
+            const pdfData = doc.output('bloburl');
+            document.getElementById('pdf-preview').src = pdfData;
             document.getElementById('modal-pdf').style.display = 'flex';
         }
 
-        function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
-        function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_${currentOrderNum}_CarsWorld.pdf`); }
-        async function condividiPDF() {
-            if (!currentDoc) return;
-            const pdfBlob = currentDoc.output('blob');
-            const file = new File([pdfBlob], `Riepilogo_Ordine_${currentOrderNum}.pdf`, { type: "application/pdf" });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                try { await navigator.share({ files: [file], title: 'Ordine Car\'s World', text: `Ecco il riepilogo del mio ordine n. ${currentOrderNum}` }); } catch (err) { alert("Condivisione annullata."); }
-            } else { alert("La condivisione non è supportata su questo browser. Usa il tasto Download."); }
-        }
-
-        function chiudiEInvia() {
-            cart = {}; saveCart();
-            document.getElementById('modal-pdf').style.display = 'none';
-            allowSubmit = true;
-            document.getElementById('form-carrello').submit();
-        }
+        function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld_${Date.now()}.pdf`); }
+        function printPDF() { if(currentDoc) currentDoc.autoPrint(); window.open(currentDoc.output('bloburl'), '_blank').print(); }
+        function chiudiEInvia() { document.getElementById('modal-pdf').style.display = 'none'; allowSubmit = true; document.getElementById('form-carrello').submit(); }
 
         renderUI();
     </script>
 </body>
+
 </html>
