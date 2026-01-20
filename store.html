@@ -258,7 +258,7 @@
                         <div class="totale-grande">TOTALE: <span id="res-totale">0.00</span>€</div>
                     </div>
                     <input type="hidden" name="ordine_dettagliato" id="hidden_ordine">
-                    <button type="submit" class="btn-invia">Invia Ordine</button>
+                    <button type="submit" class="btn-invia">riepilogo ordine</button>
                 </form>
             </div>
         </div>
@@ -304,6 +304,15 @@
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
         let currentDoc = null; 
 
+        function generateOrderNumber() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 10; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
         function updateQty(id, delta) {
             let current = cart[id] || 0;
             let newQty = current + delta;
@@ -336,7 +345,7 @@
             
             Object.keys(cart).forEach(id => {
                 let p = prodotti[id]; let qty = cart[id]; let subtot = p.prezzo * qty;
-                totalRicambi += subtot; count += qty; dettagli += `${p.nome} x${qty}, `;
+                totalRicambi += subtot; count += qty; dettagli += `${p.nome} (x${qty} - ${subtot.toFixed(2)}€), `;
                 lista.innerHTML += `
                     <div class="carrello-item">
                         <img src="${p.img}" class="cart-thumb" onclick="zoomImg(this.src)" onerror="this.style.display='none'">
@@ -365,7 +374,19 @@
             document.getElementById('mini-tot-prezzo').innerText = totalRicambi.toFixed(2);
             document.getElementById('mini-box-ricambi').classList.toggle('hidden', count === 0);
 
-            document.getElementById('hidden_ordine').value = `${dettagli} | Ricambi: ${totalRicambi.toFixed(2)}€ | Sped: ${spedizione.toFixed(2)}€ | Pagamento: ${document.getElementById('metodo_pag').value} | TOTALE: ${finale.toFixed(2)}€`;
+            // Costruiamo la stringa dettagliata per Formspree
+            let infoCliente = "";
+            if (document.getElementById('tipo_cliente').value === 'Azienda') {
+                infoCliente = `Azienda: ${document.getElementsByName('ragione_sociale')[0].value}, P.IVA: ${document.getElementsByName('piva')[0].value}, SDI/PEC: ${document.getElementById('cod_univoco').value}`;
+            } else {
+                infoCliente = `Privato: ${document.getElementsByName('nome')[0].value}, CF: ${document.getElementsByName('cf')[0].value}`;
+            }
+            let indFatt = document.getElementById('ind_fatt').value;
+            let indSped = document.getElementById('ind_sped').value;
+            let tel = document.getElementsByName('telefono')[0].value;
+
+            document.getElementById('hidden_ordine').value = `CLIENTE: ${infoCliente} | INDIRIZZO FATT: ${indFatt} | INDIRIZZO SPED: ${indSped} | TEL: ${tel} | LISTA RICAMBI: ${dettagli} | COSTO RICAMBI: ${totalRicambi.toFixed(2)}€ | SPEDIZIONE: ${spedizione.toFixed(2)}€ | PAGAMENTO: ${document.getElementById('metodo_pag').value} | TOTALE: ${finale.toFixed(2)}€`;
+            
             document.getElementById('modulo-completo').classList.toggle('hidden', count === 0);
             if(count === 0) lista.innerHTML = "<p style='text-align:center; padding:20px; color:#999;'>Carrello vuoto</p>";
         }
@@ -432,6 +453,8 @@
         function gestisciInvioOrdine(e) {
             if(allowSubmit) return true; 
             e.preventDefault();
+            // Aggiorna il riepilogo testuale prima di procedere
+            renderCart();
             const vuoiPDF = confirm("Vuoi creare il riepilogo PDF prima di inviare l'ordine?");
             if (vuoiPDF) {
                 generaPDF();
@@ -446,13 +469,22 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const ora = new Date().toLocaleString('it-IT');
+            const numOrdine = generateOrderNumber(); // Generazione numero ordine alfanumerico
+
             doc.setFontSize(22);
             doc.setTextColor(255, 152, 0); 
             doc.text("Car's World - Store Ricambi", 20, 20);
+            
             doc.setFontSize(10);
             doc.setTextColor(100);
             doc.text(`Data Documento: ${ora}`, 20, 30);
+            doc.setTextColor(255, 0, 0); // Rosso per evidenziare il numero ordine
+            doc.setFont(undefined, 'bold');
+            doc.text(`NUMERO ORDINE: ${numOrdine}`, 140, 30);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(100);
             doc.text("Sito Web: www.carsworld.it", 20, 35);
+            
             doc.line(20, 40, 190, 40);
             doc.setFontSize(14); doc.setTextColor(0);
             doc.text("Dati Fatturazione:", 20, 50);
@@ -466,7 +498,10 @@
                 doc.text(`Nome: ${document.getElementsByName('nome')[0].value}`, 20, y); y+=7;
                 doc.text(`Cod. Fiscale: ${document.getElementsByName('cf')[0].value}`, 20, y); y+=7;
             }
-            doc.text(`Indirizzo: ${document.getElementById('ind_fatt').value}`, 20, y);
+            doc.text(`Indirizzo Fatturazione: ${document.getElementById('ind_fatt').value}`, 20, y); y+=7;
+            doc.text(`Indirizzo Spedizione: ${document.getElementById('ind_sped').value}`, 20, y); y+=7;
+            doc.text(`Telefono: ${document.getElementsByName('telefono')[0].value}`, 20, y);
+            
             y += 20;
             doc.setFontSize(14); doc.text("Riepilogo Ricambi:", 20, y);
             y += 10;
@@ -486,6 +521,7 @@
             });
             y += 5;
             doc.line(120, y, 190, y); y += 10;
+            doc.text(`Metodo Pagamento: ${document.getElementById('metodo_pag').value}`, 20, y);
             doc.text(`Totale Ricambi:`, 120, y); doc.text(`${totRicambi.toFixed(2)}€`, 160, y); y += 7;
             let sped = (totRicambi >= 100) ? 0 : 7.50;
             doc.text(`Spese Spedizione:`, 120, y); doc.text(`${sped === 0 ? "Gratis" : "7.50€"}`, 160, y); y += 7;
@@ -497,6 +533,10 @@
             doc.setFontSize(14); doc.setFont(undefined, 'bold');
             const totaleFin = (totRicambi + sped + contr).toFixed(2);
             doc.text(`TOTALE FINALE:`, 120, y); doc.text(`${totaleFin}€`, 160, y);
+            
+            // Aggiorna anche il campo nascosto con il numero ordine prima dell'invio finale
+            document.getElementById('hidden_ordine').value = `ORDINE: ${numOrdine} | ` + document.getElementById('hidden_ordine').value;
+            
             doc.setFontSize(9); doc.setFont(undefined, 'italic'); doc.setTextColor(150);
             doc.text("Il presente documento è un riepilogo d'ordine generato automaticamente.", 20, 280);
             currentDoc = doc;
