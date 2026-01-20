@@ -226,12 +226,12 @@
                         </select>
                         <div id="box-privato">
                             <input type="text" name="nome" placeholder="Nome e Cognome" required>
-                            <input type="text" name="cf" placeholder="Codice Fiscale" required>
+                            <input type="text" name="cf" placeholder="Codice Fiscale" required oninput="this.value = this.value.toUpperCase()">
                         </div>
                         <div id="box-ditta" class="hidden">
                             <input type="text" name="ragione_sociale" placeholder="Ragione Sociale">
                             <input type="text" name="piva" placeholder="Partita IVA">
-                            <input type="text" name="codice_univoco" id="cod_univoco" placeholder="Codice Univoco o PEC">
+                            <input type="text" name="codice_univoco" id="cod_univoco" placeholder="Codice Univoco o PEC" oninput="this.value = this.value.toUpperCase()">
                         </div>
                         <textarea name="ind_fatturazione" id="ind_fatt" placeholder="Indirizzo" required onkeyup="syncSped()"></textarea>
                     </div>
@@ -416,7 +416,12 @@
 
         function closeDetails() { document.getElementById('modal-details').style.display = 'none'; delete document.getElementById('modal-details').dataset.currentId; }
         function zoomImg(src) { if(!src) return; document.getElementById('zoom-img').src = src; document.getElementById('zoom-overlay').style.display = 'flex'; }
-        function toggleCarrello(show) { document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; }
+        
+        function toggleCarrello(show) { 
+            document.getElementById('overlay-carrello').style.display = show ? 'block' : 'none'; 
+            if(!show) window.scrollTo(0, 0);
+        }
+        
         function svuotaCarrello() { if(confirm("Svuotare il carrello?")) { cart = {}; saveCart(); renderUI(); } }
         
         function switchFatt() {
@@ -513,22 +518,19 @@
                 y += 7;
             });
             y += 5;
-            doc.line(100, y, 190, y); // Allungata linea separatrice per il totale
-            y += 10;
+            doc.line(120, y, 190, y); y += 10;
             doc.text(`Metodo Pagamento: ${document.getElementById('metodo_pag').value}`, 20, y);
-            doc.text(`Totale Ricambi:`, 100, y); doc.text(`${totRicambi.toFixed(2)}€`, 175, y); y += 7;
+            doc.text(`Totale Ricambi:`, 120, y); doc.text(`${totRicambi.toFixed(2)}€`, 160, y); y += 7;
             let sped = (totRicambi >= 100) ? 0 : 7.50;
-            doc.text(`Spese Spedizione:`, 100, y); doc.text(`${sped === 0 ? "Gratis" : "7.50€"}`, 175, y); y += 7;
+            doc.text(`Spese Spedizione:`, 120, y); doc.text(`${sped === 0 ? "Gratis" : "7.50€"}`, 160, y); y += 7;
             let contr = document.getElementById('metodo_pag').value === "Contrassegno" ? 5 : 0;
             if(contr > 0) {
-                doc.text(`Suppl. Contrassegno:`, 100, y); doc.text(`5.00€`, 175, y); y += 7;
+                doc.text(`Suppl. Contrassegno:`, 120, y); doc.text(`5.00€`, 160, y); y += 7;
             }
             y += 3;
-            doc.setFontSize(16); doc.setFont(undefined, 'bold');
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
             const totaleFin = (totRicambi + sped + contr).toFixed(2);
-            doc.text(`TOTALE FINALE:`, 100, y); 
-            doc.setTextColor(230, 81, 0); // Colore arancio scuro per il prezzo nel PDF
-            doc.text(`${totaleFin}€`, 175, y); // Prezzo allargato (posizionato a 175 invece di 160)
+            doc.text(`TOTALE FINALE:`, 120, y); doc.text(`${totaleFin}€`, 160, y);
             
             document.getElementById('hidden_ordine').value = `ORDINE: ${numOrdine} | ` + document.getElementById('hidden_ordine').value;
             
@@ -542,18 +544,15 @@
 
         function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld_${Date.now()}.pdf`); }
         function printPDF() { if(currentDoc) currentDoc.autoPrint(); window.open(currentDoc.output('bloburl'), '_blank').print(); }
-        function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
+        
+        function modificaOrdine() { 
+            document.getElementById('modal-pdf').style.display = 'none'; 
+            window.scrollTo(0, 0);
+        }
         
         function chiudiEInvia() { 
             document.getElementById('modal-pdf').style.display = 'none'; 
             allowSubmit = true; 
-            
-            // LOGICA SVUOTA CARRELLO: Pulisce la memoria locale e l'oggetto
-            localStorage.removeItem('cart_carsworld');
-            cart = {};
-            renderUI();
-            
-            // Procede con l'invio
             document.getElementById('form-carrello').submit(); 
         }
 
