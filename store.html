@@ -302,6 +302,18 @@
             3: { nome: "Lampadina Bosch H7", prezzo: 12.00, img: "img/lampadinah7bosch.jpg", desc: "Lampadina H7 Bosch alta luminosità per una guida notturna sicura." }
         };
 
+        // CONTROLLO RITORNO DA FORMSPREE PER SVUOTARE CARRELLO
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Formspree di solito reindirizza o torna alla pagina. Se torniamo e c'era un invio in corso, svuotiamo.
+            if (localStorage.getItem('pending_order') === 'true') {
+                localStorage.removeItem('cart_carsworld');
+                localStorage.removeItem('pending_order');
+                cart = {};
+                renderUI();
+            }
+        });
+
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
         let currentDoc = null; 
         let allowSubmit = false; 
@@ -553,6 +565,8 @@
         function chiudiEInvia() { 
             document.getElementById('modal-pdf').style.display = 'none'; 
             allowSubmit = true; 
+            // Segnaliamo che stiamo inviando l'ordine
+            localStorage.setItem('pending_order', 'true');
             document.getElementById('form-carrello').submit(); 
         }
 
