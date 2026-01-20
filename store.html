@@ -109,6 +109,11 @@
         .pdf-actions { background: white; padding: 15px; border-radius: 12px; display: flex; gap: 10px; margin-bottom: 10px; width: 95%; max-width: 750px; justify-content: center; flex-wrap: wrap; }
         .btn-pdf { border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 5px; font-size: 13px; }
         #pdf-preview { width: 95%; height: 75vh; max-width: 800px; background: white; border-radius: 8px; border: none; }
+
+        /* LOGICA NASCONDERE DOWNLOAD SU MOBILE */
+        @media (max-width: 768px) {
+            .btn-download-pdf { display: none !important; }
+        }
     </style>
 </head>
 
@@ -266,7 +271,7 @@
     <div id="modal-pdf">
         <div class="pdf-actions">
             <button class="btn-pdf" style="background:#6c757d;" onclick="modificaOrdine()">✏️ MODIFICA</button>
-            <button class="btn-pdf" style="background:#28a745;" onclick="downloadPDF()">💾 Download</button>
+            <button class="btn-pdf btn-download-pdf" style="background:#28a745;" onclick="downloadPDF()">💾 Download</button>
             <button class="btn-pdf" style="background:#007bff;" onclick="condividiPDF()">📲 Condividi</button>
             <button class="btn-pdf" style="background:#ff9800;" onclick="chiudiEInvia()">🚀 INVIA E CHIUDI</button>
         </div>
@@ -487,7 +492,6 @@
             document.getElementById('modal-pdf').style.display = 'flex';
         }
 
-        // QUARTO PULSANTE: CHIUDE IL PDF E TORNA AL CARRELLO
         function modificaOrdine() {
             document.getElementById('modal-pdf').style.display = 'none';
         }
@@ -522,10 +526,8 @@
             document.getElementById('modal-pdf').style.display = 'none';
             allowSubmit = true;
             
-            // Piccola pausa per dare feedback visivo e poi invio
             const form = document.getElementById('form-carrello');
             
-            // Svuotiamo il carrello immediatamente prima del redirect di Formspree
             setTimeout(() => {
                 svuotaCarrello(false);
                 form.submit();
