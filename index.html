@@ -123,7 +123,14 @@
 
         .btn-telai { background: #1a73e8; border-bottom: 4px solid #0d47a1; }
         .btn-maint { background: #9acd32; border-bottom: 4px solid #6b8e23; } 
-        .btn-store-home { background: #ff9800; border-bottom: 4px solid #e65100; }
+        .btn-store-home { 
+    background: #ff9800; 
+    border-bottom: 4px solid #e65100; 
+    opacity: 0.5;                /* Rende il colore sbiadito */
+    pointer-events: none;        /* Impedisce il click del mouse */
+    cursor: default;             /* Toglie la manina quando ci passi sopra */
+}
+
 
         /* GESTIONE ADS */
         .ads-side { display: flex; flex-direction: column; gap: 15px; overflow: hidden; }
@@ -181,7 +188,7 @@
             <div class="grid-menu">
                 <a href="scelta-telai.html" class="btn-box btn-telai">Telai EOBD</a>
                 <a href="scelta-ibride.html" class="btn-box btn-maint">Maintenance Mode</a>
-                <a href="store.html" class="btn-box btn-store-home">Store</a>
+                <a href= "javascript:void(0)"class="btn-box btn-store-home">Store</a>
             </div>
 
  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1515990058526887"
