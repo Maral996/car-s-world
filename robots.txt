@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Indica ai motori di ricerca dove trovare la mappa del tuo sito
+Sitemap: https://www.carsworld.it/sitemap.xml
