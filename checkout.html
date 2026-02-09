@@ -25,14 +25,13 @@
             padding: 30px; 
             border-radius: 18px; 
             box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-            text-align: center; /* Centra i testi e gli elementi inline */
+            text-align: center; 
             box-sizing: border-box;
         }
 
         h2 { color: #ff9800; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-top: 0; text-align: center; }
         h3 { font-size: 16px; text-transform: uppercase; color: #555; margin-top: 25px; text-align: center; }
 
-        /* Centratura dei campi di input e quadrati */
         input, select, textarea { 
             width: 100%; 
             padding: 12px; 
@@ -45,7 +44,7 @@
             margin-left: auto; 
             margin-right: auto; 
             box-sizing: border-box;
-            text-align: center; /* Centra il testo all'interno dei quadrati */
+            text-align: center; 
         }
 
         .riepilogo-box { background: #fff8ef; padding: 20px; border-radius: 12px; border: 1px solid #ffe0b2; margin-bottom: 25px; }
@@ -72,7 +71,6 @@
         
         .hidden { display: none !important; }
 
-        /* Centratura checkbox e label */
         .checkbox-container { 
             display: flex; 
             align-items: center; 
@@ -85,11 +83,10 @@
         }
         .checkbox-container input { width: auto; margin-bottom: 0; cursor: pointer; margin-left: 0; margin-right: 0; }
 
-        /* Ottimizzazione mobile */
         @media (max-width: 480px) {
             body { padding: 10px; }
             .checkout-box { padding: 20px; }
-            input, select, textarea { font-size: 16px; } /* Impedisce zoom automatico su mobile */
+            input, select, textarea { font-size: 16px; }
         }
     </style>
 </head>
@@ -100,8 +97,6 @@
     <h2 style="margin-top:10px;">Check-out Ordine</h2>
 
     <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="return gestisciInvioOrdine(event)">
-        <input type="hidden" name="_next" value="https://carsworld.it/store.html">
-        
         <h3>Contatti</h3>
         <input type="email" name="email" id="contatto_email" placeholder="Indirizzo Email">
         <input type="tel" name="telefono" id="contatto_tel" placeholder="Numero di Telefono / WhatsApp">
@@ -152,25 +147,18 @@
     <div class="pdf-actions">
         <button class="btn-pdf" style="background:#ff9800;" onclick="modificaOrdine()">✏️ Modifica Ordine</button>
         <button class="btn-pdf" style="background:#4caf50;" onclick="downloadPDF()">⬇️ Download</button>
-        <button class="btn-pdf" style="background:#d32f2f; font-size:15px; padding:10px 20px;" onclick="chiudiEInvia()">🚀 INVIA ORDINE ADESSO</button>
+        <button id="btn-invia-finale" class="btn-pdf" style="background:#d32f2f; font-size:15px; padding:10px 20px;" onclick="chiudiEInvia()">🚀 INVIA ORDINE ADESSO</button>
     </div>
     <iframe id="pdf-preview"></iframe>
 </div>
 
 <script>
-    // Se l'utente torna qui dopo un successo, svuoto il carrello (pulizia post-redirect)
-    if(localStorage.getItem('order_sent') === 'true'){
-        localStorage.removeItem('cart_carsworld');
-        localStorage.removeItem('order_sent');
-    }
-
     let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
     const prodotti = { 
         1:{nome:"Spazzole Tergicristallo", prezzo:30}, 
         2:{nome:"Batteria 60Ah", prezzo:75}, 
         3:{nome:"Lampadina Bosch H7", prezzo:12} 
     };
-    let allowSubmit = false;
     let currentDoc = null;
 
     function generateOrderNumber() {
@@ -211,15 +199,12 @@
     }
 
     function gestisciInvioOrdine(e) { 
-        if(!allowSubmit) { 
-            e.preventDefault(); 
-            const email = document.getElementById('contatto_email').value.trim();
-            const tel = document.getElementById('contatto_tel').value.trim();
-            if(email === "" && tel === "") { alert("Inserisci almeno un recapito (Email o Telefono)."); return false; }
-            generaPDF(); 
-            return false; 
-        } 
-        return true; 
+        e.preventDefault(); 
+        const email = document.getElementById('contatto_email').value.trim();
+        const tel = document.getElementById('contatto_tel').value.trim();
+        if(email === "" && tel === "") { alert("Inserisci almeno un recapito (Email o Telefono)."); return false; }
+        generaPDF(); 
+        return false; 
     }
 
     function generaPDF() {
@@ -245,7 +230,6 @@
         
         doc.line(20, 40, 190, 40);
         doc.setFontSize(14); doc.setTextColor(0); doc.text("Dati Fatturazione:", 20, 50);
-        doc.setFontSize(11); doc.setFont(undefined, 'normal');
         
         let y = 58;
         if (tipo === 'Azienda') {
@@ -297,10 +281,24 @@
     function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
     
     function chiudiEInvia() { 
-        // Segno l'ordine come inviato per svuotare il carrello al ritorno
-        localStorage.setItem('order_sent', 'true');
-        allowSubmit = true; 
-        document.getElementById('form-carrello').submit(); 
+        const btn = document.getElementById('btn-invia-finale');
+        btn.innerText = "Invio in corso...";
+        btn.disabled = true;
+
+        const formData = new FormData(document.getElementById('form-carrello'));
+
+        fetch("https://formspree.io/f/mlgdkage", {
+            method: "POST",
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            localStorage.removeItem('cart_carsworld');
+            window.location.href = "https://carsworld.it/store.html";
+        }).catch(error => {
+            alert("Errore durante l'invio. Riprova.");
+            btn.innerText = "🚀 INVIA ORDINE ADESSO";
+            btn.disabled = false;
+        });
     }
 
     window.onload = calcola;
