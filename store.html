@@ -33,7 +33,6 @@
         .container { max-width: 650px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         #search-ricambi { width: 100%; max-width: 500px; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 25px; outline: none; font-size: 16px; }
         
-        /* CARD PRODOTTI */
         .product-card { background: white; width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); display: flex; align-items: center; gap: 15px; }
         .product-img { width: 85px; height: 85px; border-radius: 10px; object-fit: cover; background: #eee; cursor: zoom-in; }
         .product-info { flex-grow: 1; text-align: left; }
@@ -44,15 +43,14 @@
         .qty-controls { display: flex; align-items: center; gap: 12px; background: #f8f9fa; padding: 5px 10px; border-radius: 20px; border: 1px solid #ddd; }
         .btn-qty { background: white; border: 1px solid #ccc; width: 28px; height: 28px; border-radius: 50%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* MODALI */
         .modal { display: none; position: fixed; z-index: 30000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background-color: white; padding: 20px; border-radius: 15px; max-width: 500px; width: 100%; position: relative; text-align: center; }
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 25px; cursor: pointer; color: #666; font-weight: bold; }
         .modal-img { max-width: 100%; max-height: 300px; border-radius: 10px; object-fit: contain; margin-bottom: 15px; }
         .zoom-img-full { max-width: 95%; max-height: 95%; object-fit: contain; }
 
-        /* TENDINA CARRELLO */
-        #overlay-carrello { position: absolute; top: 80px; right: 20px; width: 350px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); display: none; flex-direction: column; z-index: 20000; padding: 20px; border: 1px solid #eee; }
+        /* MODIFICA: position fixed per seguire lo scroll */
+        #overlay-carrello { position: fixed; top: 80px; right: 20px; width: 320px; max-width: 90vw; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); display: none; flex-direction: column; z-index: 20000; padding: 20px; border: 1px solid #eee; }
         #overlay-carrello::before { content: ""; position: absolute; top: -10px; right: 35px; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid white; }
         .carrello-list { max-height: 300px; overflow-y: auto; margin-bottom: 15px; }
         
@@ -71,7 +69,16 @@
         .preventivo-rapido h3 { color: #ff9800; margin-top: 0; }
         .form-group { margin-bottom: 12px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #3d3d3d; color: white; outline: none; font-family: inherit; }
+        .hidden { display: none !important; }
         
+        .pneu-grid { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: nowrap; width: 100%; justify-content: space-between; }
+        .pneu-grid input { text-align: center; padding: 12px 5px; min-width: 0; flex: 1; font-size: 14px; }
+        .pneu-grid span { font-weight: bold; color: #ff9800; flex-shrink: 0; }
+        
+        .check-group { display: flex; justify-content: space-around; background: #3d3d3d; padding: 10px; border-radius: 10px; border: 1px solid #444; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+        .check-item { display: flex; align-items: center; gap: 5px; font-size: 13px; white-space: nowrap; }
+        .check-item input { width: auto; margin: 0; }
+
         footer { background: #333; color: white; padding: 40px 20px; margin-top: 50px; text-align: center; font-size: 14px; width: 100%; box-sizing: border-box; border-top: 3px solid #ff9800; }
         .footer-container { max-width: 650px; margin: auto; text-align: left; }
         footer a { color: #888; text-decoration: none; }
@@ -126,25 +133,72 @@
         </div>
 
         <div class="preventivo-rapido">
-            <h3>Non trovi il tuo ricambio?</h3>
+            <h3>non trovi quello che cerchi?</h3>
             <p>Inviaci i dati e ti risponderemo con un preventivo personalizzato.</p>
             <form action="https://formspree.io/f/mlgdkage" method="POST">
-                <div class="form-group"><input type="text" name="nome_contatto" placeholder="Il tuo Nome" required></div>
                 <div class="form-group">
-                    <select name="preferenza_contatto" id="pref_contatto" onchange="updateRecapitoField()" required>
+                    <input type="text" name="nome_richiedente" placeholder="Il tuo Nome" required>
+                </div>
+                <div class="form-group">
+                    <select name="modalita_contatto" id="scelta_contatto" onchange="toggleContatto()" required>
                         <option value="" disabled selected>Come vuoi essere contattato?</option>
-                        <option value="WhatsApp">WhatsApp</option>
                         <option value="Email">E-mail</option>
+                        <option value="WhatsApp">WhatsApp</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="recapito" id="recapito_field" placeholder="Scegli prima la modalità di contatto" required disabled>
+                <div id="campo_email" class="form-group hidden">
+                    <input type="email" name="email_contatto" placeholder="Inserisci la tua E-mail">
                 </div>
-                <div class="form-group"><input type="text" name="targa_richiesta" placeholder="Targa del veicolo" required></div>
-                <div class="form-group"><textarea name="ricambio_cercato" placeholder="Quale ricambio stai cercando?" rows="3" required></textarea></div>
-                <button type="submit" style="background:#ff9800; color:white; border:none; padding:15px; border-radius:12px; width:100%; cursor:pointer; font-weight:bold; font-size: 16px; text-transform: uppercase;">Richiedi Preventivo</button>
+                <div id="campo_whatsapp" class="form-group hidden">
+                    <input type="tel" name="wa_contatto" placeholder="Inserisci il tuo numero WhatsApp">
+                </div>
+                <div class="form-group">
+                    <select name="categoria_richiesta" id="scelta_categoria" onchange="toggleCategoria()" required>
+                        <option value="" disabled selected>Cosa cerchi?</option>
+                        <option value="Ricambi">Ricambio</option>
+                        <option value="Pneumatici">Pneumatici</option>
+                        <option value="Altro">Altro</option>
+                    </select>
+                </div>
+                <div id="sez_ricambi" class="hidden">
+                    <div class="form-group">
+                        <input type="text" name="targa_veicolo" id="targa_input" placeholder="Targa Veicolo (Obbligatoria)" oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="descrizione_ricambio" placeholder="Descrivi ciò di cui hai bisogno..." rows="3"></textarea>
+                    </div>
+                </div>
+                <div id="sez_pneumatici" class="hidden">
+                    <p style="font-size: 12px; margin-bottom: 8px; color: #ff9800; font-weight: bold;">MISURA PNEUMATICO:</p>
+                    <div class="pneu-grid">
+                        <input type="number" name="p_larghezza" id="p_1" placeholder="Larg." oninput="autoTab(this, 'p_2', 3)">
+                        <span>/</span>
+                        <input type="number" name="p_altezza" id="p_2" placeholder="Alt." oninput="autoTab(this, 'p_3', 2)">
+                        <span>R</span>
+                        <input type="number" name="p_diametro" id="p_3" placeholder="Diam." oninput="autoTab(this, 'p_carico', 2)">
+                    </div>
+                    <div class="pneu-grid">
+                        <input type="text" name="p_carico" id="p_carico" placeholder="Ind. Carico">
+                        <input type="text" name="p_velocita" placeholder="Ind. Velocità">
+                    </div>
+                    <div class="check-group">
+                        <label class="check-item"><input type="radio" name="stagione" value="Estivo"> Estivo</label>
+                        <label class="check-item"><input type="radio" name="stagione" value="4 Stagioni"> 4 Stagioni</label>
+                        <label class="check-item"><input type="radio" name="stagione" value="Invernale"> Invernale</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="marca_modello_pneu" placeholder="Marca e Modello desiderati">
+                    </div>
+                </div>
+                <div id="sez_altro" class="hidden">
+                    <div class="form-group">
+                        <textarea name="richiesta_libera" placeholder="Descrivi qui ciò che cerchi..." rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="submit" style="background:#ff9800; color:white; border:none; padding:15px; border-radius:12px; width:100%; cursor:pointer; font-weight:bold; font-size: 16px; text-transform: uppercase;">Invia Richiesta</button>
             </form>
         </div>
+        
         <a href="index.html" style="margin:40px 0; text-decoration:none; color:#ff9800; font-weight:bold;">← Torna a Car's World Home</a>
     </div>
 
@@ -206,30 +260,40 @@
         };
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
 
-        function handleImgError(img) {
-            img.style.display = 'none';
+        function toggleContatto() {
+            const scelta = document.getElementById('scelta_contatto').value;
+            const cEmail = document.getElementById('campo_email');
+            const cWa = document.getElementById('campo_whatsapp');
+            cEmail.classList.add('hidden');
+            cWa.classList.add('hidden');
+            if(scelta === 'Email') { cEmail.classList.remove('hidden'); } 
+            else if(scelta === 'WhatsApp') { cWa.classList.remove('hidden'); }
         }
 
-        function zoomFoto(img) {
-            document.getElementById('img-zoomata').src = img.src;
-            document.getElementById('modal-zoom').style.display = 'flex';
+        function toggleCategoria() {
+            const cat = document.getElementById('scelta_categoria').value;
+            document.getElementById('sez_ricambi').classList.add('hidden');
+            document.getElementById('sez_pneumatici').classList.add('hidden');
+            document.getElementById('sez_altro').classList.add('hidden');
+            if(cat === 'Ricambi') document.getElementById('sez_ricambi').classList.remove('hidden');
+            else if(cat === 'Pneumatici') document.getElementById('sez_pneumatici').classList.remove('hidden');
+            else if(cat === 'Altro') document.getElementById('sez_altro').classList.remove('hidden');
         }
 
-        function chiudiModali() {
-            document.getElementById('modal-zoom').style.display = 'none';
-            document.getElementById('modal-dettagli').style.display = 'none';
+        function autoTab(current, nextId, maxLen) {
+            if (current.value.length >= maxLen) document.getElementById(nextId).focus();
         }
+
+        function handleImgError(img) { img.style.display = 'none'; }
+        function zoomFoto(img) { document.getElementById('img-zoomata').src = img.src; document.getElementById('modal-zoom').style.display = 'flex'; }
+        function chiudiModali() { document.getElementById('modal-zoom').style.display = 'none'; document.getElementById('modal-dettagli').style.display = 'none'; }
 
         function apriDettagli(id) {
             const p = prodotti[id];
-            const q = cart[id] || 0;
-            const detImg = document.getElementById('dettaglio-img');
-            detImg.src = p.img;
-            detImg.style.display = p.img ? 'inline-block' : 'none';
+            document.getElementById('dettaglio-img').src = p.img;
             document.getElementById('dettaglio-nome').innerText = p.nome;
             document.getElementById('dettaglio-prezzo').innerText = p.prezzo.toFixed(2) + "€";
             document.getElementById('dettaglio-info-testo').innerText = p.desc;
-            
             aggiornaDettaglioCtrl(id);
             document.getElementById('modal-dettagli').style.display = 'flex';
         }
@@ -242,19 +306,6 @@
                 `<button class="btn-add" onclick="updateQty(${id},1); aggiornaDettaglioCtrl(${id})">+ Aggiungi al carrello</button>`;
         }
 
-        function updateRecapitoField() {
-            const select = document.getElementById('pref_contatto');
-            const field = document.getElementById('recapito_field');
-            field.disabled = false;
-            if (select.value === 'WhatsApp') {
-                field.type = 'tel';
-                field.placeholder = 'Inserisci il tuo Numero di Telefono';
-            } else if (select.value === 'Email') {
-                field.type = 'email';
-                field.placeholder = 'Inserisci la tua E-mail';
-            }
-        }
-
         function updateQty(id, delta) {
             cart[id] = (cart[id] || 0) + delta;
             if (cart[id] <= 0) delete cart[id];
@@ -263,11 +314,7 @@
         }
 
         function svuotaCarrello() {
-            if(confirm("Vuoi svuotare il carrello?")) {
-                cart = {};
-                localStorage.removeItem('cart_carsworld');
-                renderUI();
-            }
+            if(confirm("Vuoi svuotare il carrello?")) { cart = {}; localStorage.removeItem('cart_carsworld'); renderUI(); }
         }
 
         function renderUI() {
@@ -275,37 +322,22 @@
                 const ctrl = document.getElementById(`ctrl-${id}`);
                 if(!ctrl) return;
                 const q = cart[id] || 0;
-                ctrl.innerHTML = q > 0 ? `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div>` : `<button class="btn-add" onclick="updateQty(${id},1)">+ Aggiungi</button>`;
+                ctrl.innerHTML = q > 0 ? 
+                    `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div>` : 
+                    `<button class="btn-add" onclick="updateQty(${id},1)">+ Aggiungi</button>`;
             });
-
             let tot = 0; let count = 0; const list = document.getElementById('mini-lista'); list.innerHTML = "";
             const idsInCart = Object.keys(cart);
-            
             if(idsInCart.length === 0) {
                 list.innerHTML = "<p style='text-align:center; color:#999; padding:20px;'>Il carrello è vuoto</p>";
                 document.getElementById('box-azioni-carrello').style.display = "none";
             } else {
                 document.getElementById('box-azioni-carrello').style.display = "block";
                 idsInCart.forEach(id => {
-                    let p = prodotti[id];
-                    let q = cart[id];
-                    let sub = p.prezzo * q; tot += sub; count += q;
-                    list.innerHTML += `
-                        <div class="mini-item">
-                            <img src="${p.img}" class="mini-img" onerror="this.style.display='none'">
-                            <div class="mini-details">
-                                <span class="mini-name">${p.nome}</span>
-                                <div class="mini-qty-box">
-                                    <button class="btn-qty" onclick="updateQty(${id},-1)">-</button>
-                                    <span style="font-weight:bold">${q}</span>
-                                    <button class="btn-qty" onclick="updateQty(${id},1)">+</button>
-                                </div>
-                            </div>
-                            <span class="mini-price">${sub.toFixed(2)}€</span>
-                        </div>`;
+                    let p = prodotti[id]; let q = cart[id]; let sub = p.prezzo * q; tot += sub; count += q;
+                    list.innerHTML += `<div class="mini-item"><img src="${p.img}" class="mini-img" onerror="this.style.display='none'"><div class="mini-details"><span class="mini-name">${p.nome}</span><div class="mini-qty-box"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div></div><span class="mini-price">${sub.toFixed(2)}€</span></div>`;
                 });
             }
-            
             document.getElementById('mini-tot').innerText = tot.toFixed(2)+"€";
             document.getElementById('btn-count').innerText = count;
             document.getElementById('btn-text').innerText = tot > 0 ? tot.toFixed(2)+"€" : "CARRELLO";
