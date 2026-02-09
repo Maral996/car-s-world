@@ -105,6 +105,8 @@
     <h2 style="margin-top:10px;">Check-out Ordine</h2>
 
     <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="return gestisciInvioOrdine(event)">
+        <input type="hidden" name="_next" value="https://carsworld.it/store.html?status=success">
+        
         <h3>Contatti</h3>
         <input type="email" name="email" id="contatto_email" placeholder="Indirizzo Email">
         <input type="tel" name="telefono" id="contatto_tel" placeholder="Numero di Telefono / WhatsApp">
@@ -214,7 +216,7 @@
 
     function toggleSpedizione() {
         const diversa = document.getElementById('check_spedizione_diversa').checked;
-        document.getElementById('box-spedizione').classList.toggle('hidden', !diversa);
+        document.getElementById('box-spedizione').classList.toggle('hidden', !diverse);
         const fields = ['sped_via', 'sped_citta', 'sped_prov', 'sped_cap'];
         fields.forEach(id => document.getElementById(id).required = diversa);
     }
@@ -240,7 +242,6 @@
         const tipo = document.getElementById('tipo_cliente').value;
         const metodo = document.getElementById('metodo_pag').value;
 
-        // Componi stringhe indirizzo
         const f_via = document.getElementById('fatt_via').value;
         const f_cit = document.getElementById('fatt_citta').value;
         const f_pro = document.getElementById('fatt_prov').value;
@@ -258,17 +259,13 @@
 
         doc.setFontSize(22); doc.setTextColor(255, 152, 0); 
         doc.text("Car's World - Store Ricambi", 20, 20);
-        
         doc.setFontSize(10); doc.setTextColor(100);
         doc.text(`Data Documento: ${ora}`, 20, 30);
         doc.setTextColor(255, 0, 0); doc.setFont(undefined, 'bold');
         doc.text(`NUMERO ORDINE: ${numOrdine}`, 140, 30);
-        
         doc.line(20, 40, 190, 40);
         doc.setFontSize(14); doc.setTextColor(0); doc.text("Dati Fatturazione:", 20, 50);
-        
-        let y = 58;
-        doc.setFontSize(11); doc.setFont(undefined, 'normal');
+        let y = 58; doc.setFontSize(11); doc.setFont(undefined, 'normal');
         if (tipo === 'Azienda') {
             doc.text(`Ragione Sociale: ${document.getElementsByName('ragione_sociale')[0].value}`, 20, y); y+=7;
             doc.text(`P.IVA: ${document.getElementsByName('piva')[0].value}`, 20, y); y+=7;
@@ -280,12 +277,10 @@
         doc.text(`Indirizzo Fatturazione: ${indFattCompleto}`, 20, y); y+=7;
         doc.text(`Indirizzo Spedizione: ${indSpedCompleto}`, 20, y); y+=7;
         doc.text(`Contatto: ${document.getElementById('contatto_email').value || document.getElementById('contatto_tel').value}`, 20, y);
-        
         y += 20; doc.setFontSize(14); doc.text("Riepilogo Ricambi:", 20, y);
         y += 10; doc.setFontSize(10); doc.setFont(undefined, 'bold');
         doc.text("Descrizione", 20, y); doc.text("Quantità", 130, y); doc.text("Prezzo", 165, y);
         doc.setFont(undefined, 'normal'); doc.line(20, y+2, 190, y+2); y += 10;
-        
         let totRicambi = 0; let dettagliString = "";
         Object.keys(cart).forEach(id => {
             let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
@@ -293,7 +288,6 @@
             doc.text(p.nome, 20, y); doc.text(qty.toString(), 130, y); doc.text(`${sub.toFixed(2)}€`, 165, y);
             y += 7;
         });
-
         y += 5; doc.line(110, y, 190, y); y += 10;
         doc.text(`Metodo Pagamento: ${metodo}`, 20, y);
         doc.text(`Totale Ricambi:`, 110, y); doc.text(`${totRicambi.toFixed(2)}€`, 165, y); y += 7;
@@ -301,14 +295,12 @@
         doc.text(`Spese Spedizione:`, 110, y); doc.text(`${spedVal === 0 ? "Gratis" : "7.50€"}`, 165, y); y += 7;
         let contrVal = metodo === "Contrassegno" ? 5 : 0;
         if(contrVal > 0) { doc.text(`Suppl. Contrassegno:`, 110, y); doc.text(`5.00€`, 165, y); y += 7; }
-        
         y += 5; doc.setDrawColor(255, 152, 0); doc.setLineWidth(0.5); doc.line(110, y, 190, y);
         y += 10; doc.setFontSize(16); doc.setFont(undefined, 'bold'); doc.setTextColor(230, 81, 0);
         const totaleFin = (totRicambi + spedVal + contrVal).toFixed(2);
         doc.text(`TOTALE FINALE:`, 110, y); doc.text(`${totaleFin}€`, 165, y);
 
         document.getElementById('hidden_ordine').value = `NUM ORDINE: ${numOrdine} | PRODOTTI: ${dettagliString} | TOTALE: ${totaleFin}€`;
-
         currentDoc = doc;
         document.getElementById('pdf-preview').src = doc.output('bloburl');
         document.getElementById('modal-pdf').style.display = 'flex';
@@ -319,23 +311,11 @@
     
     function chiudiEInvia() { 
         const btn = document.getElementById('btn-invia-finale');
-        btn.innerText = "Invio in corso...";
+        btn.innerText = "Reindirizzamento...";
         btn.disabled = true;
-
-        const formData = new FormData(document.getElementById('form-carrello'));
-
-        fetch("https://formspree.io/f/mlgdkage", {
-            method: "POST",
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-        }).then(response => {
-            localStorage.removeItem('cart_carsworld');
-            window.location.href = "https://carsworld.it/store.html";
-        }).catch(error => {
-            alert("Errore durante l'invio. Riprova.");
-            btn.innerText = "🚀 INVIA ORDINE ADESSO";
-            btn.disabled = false;
-        });
+        // Metodo standard per evitare avvisi di sicurezza del browser
+        localStorage.removeItem('cart_carsworld'); 
+        document.getElementById('form-carrello').submit();
     }
 
     window.onload = calcola;
