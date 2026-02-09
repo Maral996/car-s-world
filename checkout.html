@@ -158,6 +158,12 @@
 </div>
 
 <script>
+    // Se l'utente torna qui dopo un successo, svuoto il carrello (pulizia post-redirect)
+    if(localStorage.getItem('order_sent') === 'true'){
+        localStorage.removeItem('cart_carsworld');
+        localStorage.removeItem('order_sent');
+    }
+
     let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
     const prodotti = { 
         1:{nome:"Spazzole Tergicristallo", prezzo:30}, 
@@ -291,9 +297,8 @@
     function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
     
     function chiudiEInvia() { 
-        localStorage.setItem('pending_order', 'true');
-        // Svuoto il carrello prima dell'invio finale
-        localStorage.removeItem('cart_carsworld');
+        // Segno l'ordine come inviato per svuotare il carrello al ritorno
+        localStorage.setItem('order_sent', 'true');
         allowSubmit = true; 
         document.getElementById('form-carrello').submit(); 
     }
