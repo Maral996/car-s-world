@@ -1,36 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riepilogo Ordine - Car's world</title>
+    
+    <script src="prodotti.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; }
+        .summary-box { width: 100%; max-width: 800px; background: white; padding: 25px; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+        h2 { color: #ff9800; margin-bottom: 20px; }
+        #pdf-preview { width: 100%; height: 60vh; border: 1px solid #ddd; border-radius: 10px; background: white; margin-bottom: 20px; }
+        .pdf-actions { display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .btn { border: none; padding: 15px 25px; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; font-size: 16px; flex: 1; max-width: 250px; transition: 0.3s; }
+        
+        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #ff9800; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+    <p style="margin-top:15px; font-weight:bold; color:#ff9800;">Invio ordine in corso...</p>
+</div>
+
+<div class="summary-box">
+    <h2 id="titolo-pagina">Anteprima del tuo Ordine</h2>
+    <p id="istruzioni">Controlla i dettagli nel PDF prima di confermare l'invio.</p>
+    
+    <iframe id="pdf-preview"></iframe>
+
+    <div class="pdf-actions" id="azioni">
+        <button class="btn" style="background:#888;" onclick="history.back()">✏️ Modifica</button>
+        <button class="btn" style="background:#4caf50;" onclick="downloadPDF()">⬇️ Download</button>
+        <button id="btn-invia-finale" class="btn" style="background:#d32f2f;" onclick="inviaOrdineAJAX()">🚀 INVIA ORDINE ORA</button>
+    </div>
+</div>
+
 <script>
-    // COLLEGA I DATABASE
+    // Caricamento Dati
     const prodotti = typeof LISTA_PRODOTTI !== 'undefined' ? LISTA_PRODOTTI : {};
     const dati = JSON.parse(sessionStorage.getItem('dati_checkout'));
     let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
     
     let currentDoc = null;
     let payload = {}; 
-    
-    <script src="prodotti.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-
-    // Se mancano i dati, torna indietro
     if (!dati) { window.location.href = 'checkout.html'; }
 
     function generateOrderNumber() {
-        const anno = new Date().getFullYear();
-        const caratteri = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let casuale = '';
-        for (let i = 0; i < 6; i++) {
-            casuale += caratteri.charAt(Math.floor(Math.random() * caratteri.length));
-        }
-        return `${anno}${casuale}`;
+        return `${new Date().getFullYear()}${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
     }
 
     function generaPDF() {
         try {
-            const { jsPDF } = window.jspdf; 
+            const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const ora = new Date().toLocaleString('it-IT');
             const numOrdine = generateOrderNumber();
             
+            // Intestazione
             doc.setFontSize(22); doc.setTextColor(255, 152, 0); 
             doc.text("Car's World - Store Ricambi", 20, 20);
             
@@ -38,17 +71,13 @@
             doc.text(`Ordine: ${numOrdine} | Data: ${ora}`, 20, 30);
             
             // FATTURAZIONE
-            doc.setFontSize(11); doc.setTextColor(0);
-            doc.setFont(undefined, 'bold');
+            doc.setFontSize(11); doc.setTextColor(0); doc.setFont(undefined, 'bold');
             doc.text("DESTINATARIO (Fatturazione):", 20, 45);
-            
-            // Gestione Nome o Ragione Sociale (usa nomi corretti dal tuo checkout)
             let infoFatt = dati.tipo === 'Azienda' ? (dati.rag_soc || "") : (dati.nome || "");
-            
             doc.setFont(undefined, 'normal');
             doc.text(`${infoFatt}\n${dati.f_via || ""}\n${dati.f_cap || ""} ${dati.f_cit || ""} (${dati.f_pro || ""})\nTel: ${dati.tel || ""}`, 20, 52);
 
-            // SPEDIZIONE - Appare solo se NON è uguale
+            // SPEDIZIONE (Se uguale, non scrive nulla come richiesto)
             if (dati.spedizione_uguale === false) {
                 doc.setFont(undefined, 'bold');
                 doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
@@ -57,19 +86,18 @@
                 doc.text(`${dati.s_nome || infoFatt}\n${dati.s_via || ""}\n${dati.s_cap || ""} ${dati.s_cit || ""} (${dati.s_pro || ""})\n${telSped}`, 110, 52);
             }
 
-            // NOTE
-            let yNote = 80;
+            // NOTE CORRIERE
+            let y = 85;
             if (dati.note && dati.note.trim() !== "") {
                 doc.setFont(undefined, 'bold');
-                doc.text("Note per la consegna:", 20, yNote);
-                doc.setFont(undefined, 'normal');
-                doc.setFontSize(9);
+                doc.text("Note per la consegna:", 20, y);
+                doc.setFont(undefined, 'normal'); doc.setFontSize(9);
                 const noteSplit = doc.splitTextToSize(dati.note, 170);
-                doc.text(noteSplit, 20, yNote + 7);
-                yNote += 20; 
+                doc.text(noteSplit, 20, y + 7);
+                y += 20;
             }
 
-            let y = yNote + 10;
+            // DETTAGLIO PRODOTTI
             doc.setFontSize(11); doc.setFont(undefined, 'bold');
             doc.text("Dettaglio Ordine:", 20, y); y += 10;
             doc.setFontSize(10); doc.setFont(undefined, 'normal');
@@ -82,41 +110,71 @@
                     totRicambi += sub;
                     doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); 
                     doc.text(`${sub.toFixed(2)}€`, 160, y);
-                    listaTesto += `Cod: ${id} - ${p.nome} (x${qty}), `;
+                    listaTesto += `${p.nome} (x${qty}), `;
                     y += 7;
                 }
             });
 
+            // TOTALI
             let spedVal = (totRicambi >= 100) ? 0 : 7.50;
             let contrVal = dati.pagamento === "Contrassegno" ? 5 : 0;
             let totaleFin = (totRicambi + spedVal + contrVal).toFixed(2);
 
             y += 10;
-            doc.text(`Spedizione: ${spedVal === 0 ? "Gratis" : spedVal.toFixed(2) + "€"}`, 130, y); y += 7;
+            doc.text(`Spedizione: ${spedVal === 0 ? "Gratis" : spedVal.toFixed(2) + "€"}`, 130, y);
             if (dati.pagamento === "Contrassegno") {
-                doc.text(`Pagamento in contrassegno: ${contrVal.toFixed(2)}€`, 130, y); y += 10;
+                y += 7;
+                doc.text(`Supplemento Contrassegno: 5.00€`, 130, y);
             }
-
+            y += 10;
             doc.setFontSize(14); doc.setFont(undefined, 'bold');
-            doc.text(`TOTALE: ${totaleFin}€`, 130, y + 5);
+            doc.text(`TOTALE: ${totaleFin}€`, 130, y);
 
+            // Payload per invio email
             payload = {
                 email: dati.email,
-                telefono: dati.tel,
                 cliente: infoFatt,
-                spedizione: dati.spedizione_uguale ? "Uguale a fatturazione" : (dati.s_via || "Vedi PDF"),
-                note: dati.note || "",
-                dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
+                telefono: dati.tel,
+                pagamento: dati.pagamento,
+                note: dati.note || "Nessuna",
+                dettagli: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
             };
 
             currentDoc = doc;
             document.getElementById('pdf-preview').src = doc.output('bloburl');
-        } catch (error) {
-            console.error("Errore PDF:", error);
-            // In caso di errore, non mostriamo bianco ma un messaggio
-            document.body.innerHTML = "<h2>Errore nella generazione del riepilogo. Controlla la console.</h2>";
+
+        } catch (e) {
+            console.error(e);
+            alert("Errore nella generazione del PDF. Controlla i dati.");
         }
+    }
+
+    function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld.pdf`); }
+
+    function inviaOrdineAJAX() {
+        const loader = document.getElementById('loader');
+        loader.style.display = 'flex';
+        
+        const form = new FormData();
+        for (const key in payload) { form.append(key, payload[key]); }
+
+        fetch("https://formspree.io/f/mlgdkage", {
+            method: "POST",
+            body: form,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            loader.style.display = 'none';
+            if (response.ok) {
+                document.getElementById('titolo-pagina').innerText = "✅ Ordine Inviato!";
+                document.getElementById('azioni').style.display = "none";
+                localStorage.removeItem('cart_carsworld');
+                sessionStorage.removeItem('dati_checkout');
+                setTimeout(() => { window.location.href = "store.html"; }, 4000);
+            }
+        });
     }
 
     window.onload = generaPDF;
 </script>
+</body>
+</html>
