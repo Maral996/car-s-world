@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check-out - Car's world</title>
+    
+    <script src="prodotti.js"></script>
+
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; }
         .checkout-box { width: 100%; max-width: 600px; background: white; padding: 30px; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; box-sizing: border-box; }
@@ -90,11 +93,8 @@
 </div>
 
 <script>
-    const prodotti = { 
-        1:{nome:"Spazzole Tergicristallo", prezzo:30}, 
-        2:{nome:"Batteria 60Ah", prezzo:75}, 
-        3:{nome:"Lampadina Bosch H7", prezzo:12} 
-    };
+    // COLLEGA IL DATABASE ESTERNO
+    const prodotti = LISTA_PRODOTTI;
 
     function calcolaImporti() {
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
@@ -115,7 +115,6 @@
         const isDitta = document.getElementById('tipo_cliente').value === 'Azienda';
         document.getElementById('box-privato').classList.toggle('hidden', isDitta);
         document.getElementById('box-ditta').classList.toggle('hidden', !isDitta);
-        // Aggiorna required dinamicamente
         document.getElementById('nome').required = !isDitta;
         document.getElementById('cf').required = !isDitta;
         document.querySelector('#box-ditta input[id="ragione_sociale"]').required = isDitta;
@@ -129,16 +128,13 @@
 
     function procediAlRiepilogo(e) {
         e.preventDefault();
-        
-        // --- LOGICA DI CONTROLLO CONTATTI ---
         const emailVal = document.getElementById('email').value.trim();
         const telVal = document.getElementById('tel').value.trim();
 
         if (emailVal === "" && telVal === "") {
             alert("Per favore, inserisci almeno un metodo di contatto (Email o Telefono) per procedere.");
-            return; // Blocca l'invio
+            return;
         }
-        // ------------------------------------
 
         const dati = {
             email: emailVal,
