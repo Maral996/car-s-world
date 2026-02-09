@@ -35,7 +35,6 @@
         .container { max-width: 650px; margin: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         #search-ricambi { width: 100%; max-width: 500px; padding: 15px; border-radius: 12px; border: 2px solid #ff9800; margin-bottom: 15px; outline: none; font-size: 16px; }
 
-        /* NUOVO: STYLE CATEGORIE */
         .category-nav { display: flex; gap: 8px; overflow-x: auto; width: 100%; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; }
         .category-nav::-webkit-scrollbar { display: none; }
         .cat-btn { background: white; border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.3s; color: #555; }
@@ -283,9 +282,10 @@
         function aggiornaDettaglioCtrl(id) {
             const q = cart[id] || 0;
             const container = document.getElementById('dettaglio-ctrl');
+            // MODIFICATO: aggiunti apici '${id}' per gestire ID alfanumerici
             container.innerHTML = q > 0 ? 
-                `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id},-1); aggiornaDettaglioCtrl(${id})">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1); aggiornaDettaglioCtrl(${id})">+</button></div>` : 
-                `<button class="btn-add" onclick="updateQty(${id},1); aggiornaDettaglioCtrl(${id})">+ Aggiungi al carrello</button>`;
+                `<div class="qty-controls"><button class="btn-qty" onclick="updateQty('${id}',-1); aggiornaDettaglioCtrl('${id}')">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty('${id}',1); aggiornaDettaglioCtrl('${id}')">+</button></div>` : 
+                `<button class="btn-add" onclick="updateQty('${id}',1); aggiornaDettaglioCtrl('${id}')">+ Aggiungi al carrello</button>`;
         }
 
         function updateQty(id, delta) {
@@ -307,7 +307,6 @@
                 const p = prodotti[id];
                 const q = cart[id] || 0;
                 
-                // FILTRO CATEGORIA E RICERCA
                 const matchesCategory = (currentCategory === 'Tutti' || p.categoria === currentCategory);
                 const searchText = document.getElementById('search-ricambi').value.toLowerCase();
                 const matchesSearch = p.nome.toLowerCase().includes(searchText);
@@ -316,18 +315,19 @@
                     let imgHtml = (p.immagine && p.immagine !== "") ? 
                         `<img src="${p.immagine}" class="product-img" onclick="zoomFoto(this)" onerror="handleImgError(this)">` : "";
 
+                    // MODIFICATO: aggiunti apici '${id}' nelle chiamate onclick
                     const card = `
                         <div class="product-card">
                             ${imgHtml}
                             <div class="product-info">
-                                <h4 onclick="apriDettagli(${id})">${p.nome}</h4>
+                                <h4 onclick="apriDettagli('${id}')">${p.nome}</h4>
                                 <p style="font-size: 12px; color: #777; margin: 0 0 5px 0;">${p.desc || ""}</p>
                                 <div class="price">${p.prezzo.toFixed(2)}€</div>
                             </div>
                             <div class="right-side" id="ctrl-${id}">
                                 ${q > 0 ? 
-                                    `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div>` : 
-                                    `<button class="btn-add" onclick="updateQty(${id},1)">+ Aggiungi</button>`
+                                    `<div class="qty-controls"><button class="btn-qty" onclick="updateQty('${id}',-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty('${id}',1)">+</button></div>` : 
+                                    `<button class="btn-add" onclick="updateQty('${id}',1)">+ Aggiungi</button>`
                                 }
                             </div>
                         </div>
@@ -336,18 +336,18 @@
                 }
             });
 
-            // CARRELLO
             let tot = 0; let count = 0; const list = document.getElementById('mini-lista'); list.innerHTML = "";
             const idsInCart = Object.keys(cart);
             if(idsInCart.length === 0) {
                 list.innerHTML = "<p style='text-align:center; color:#999; padding:20px;'>Il carrello è vuoto</p>";
-                document.getElementById('box-actions-carrello').style.display = "none";
+                document.getElementById('box-azioni-carrello').style.display = "none";
             } else {
-                document.getElementById('box-actions-carrello').style.display = "block";
+                document.getElementById('box-azioni-carrello').style.display = "block";
                 idsInCart.forEach(id => {
                     let p = prodotti[id]; let q = cart[id]; let sub = p.prezzo * q; tot += sub; count += q;
                     let miniImg = (p.immagine && p.immagine !== "") ? `<img src="${p.immagine}" class="mini-img" onerror="this.style.display='none'">` : "";
-                    list.innerHTML += `<div class="mini-item">${miniImg}<div class="mini-details"><span class="mini-name">${p.nome}</span><div class="mini-qty-box"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div></div><span class="mini-price">${sub.toFixed(2)}€</span></div>`;
+                    // MODIFICATO: aggiunti apici '${id}' nelle chiamate onclick nel carrello
+                    list.innerHTML += `<div class="mini-item">${miniImg}<div class="mini-details"><span class="mini-name">${p.nome}</span><div class="mini-qty-box"><button class="btn-qty" onclick="updateQty('${id}',-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty('${id}',1)">+</button></div></div><span class="mini-price">${sub.toFixed(2)}€</span></div>`;
                 });
             }
             document.getElementById('mini-tot').innerText = tot.toFixed(2)+"€";
