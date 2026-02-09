@@ -14,6 +14,8 @@
         gtag('config', 'G-HCL5TVJMD5');
     </script>
 
+    <script src="prodotti.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Store Ricambi - Car's world</title>
@@ -49,7 +51,6 @@
         .modal-img { max-width: 100%; max-height: 300px; border-radius: 10px; object-fit: contain; margin-bottom: 15px; }
         .zoom-img-full { max-width: 95%; max-height: 95%; object-fit: contain; }
 
-        /* MODIFICA: position fixed per seguire lo scroll */
         #overlay-carrello { position: fixed; top: 80px; right: 20px; width: 320px; max-width: 90vw; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); display: none; flex-direction: column; z-index: 20000; padding: 20px; border: 1px solid #eee; }
         #overlay-carrello::before { content: ""; position: absolute; top: -10px; right: 35px; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid white; }
         .carrello-list { max-height: 300px; overflow-y: auto; margin-bottom: 15px; }
@@ -100,37 +101,7 @@
     <div class="container">
         <input type="text" id="search-ricambi" placeholder="🔍 Cerca per nome ricambio..." onkeyup="filterProducts()">
         
-        <div id="lista-prodotti" style="width: 100%;">
-            <div class="product-card">
-                <img src="img/spazzole.jpg" class="product-img" onclick="zoomFoto(this)" onerror="handleImgError(this)">
-                <div class="product-info">
-                    <h4 onclick="apriDettagli(1)">Spazzole Tergicristallo</h4>
-                    <p style="font-size: 12px; color: #777; margin: 0 0 5px 0;">Coppia anteriori Premium</p>
-                    <div class="price">30.00€</div>
-                </div>
-                <div class="right-side" id="ctrl-1"></div>
-            </div>
-
-            <div class="product-card">
-                <img src="img/batteria.jpg" class="product-img" onclick="zoomFoto(this)" onerror="handleImgError(this)">
-                <div class="product-info">
-                    <h4 onclick="apriDettagli(2)">Batteria 60Ah - 12V</h4>
-                    <p style="font-size: 12px; color: #777; margin: 0 0 5px 0;">Spunto maggiorato 540A</p>
-                    <div class="price">75.00€</div>
-                </div>
-                <div class="right-side" id="ctrl-2"></div>
-            </div>
-
-            <div class="product-card">
-                <img src="img/lampadinah7bosch.jpg" class="product-img" onclick="zoomFoto(this)" onerror="handleImgError(this)">
-                <div class="product-info">
-                    <h4 onclick="apriDettagli(3)">Lampadina Bosch H7</h4>
-                    <p style="font-size: 12px; color: #777; margin: 0 0 5px 0;">Luce bianca 55W</p>
-                    <div class="price">12.00€</div>
-                </div>
-                <div class="right-side" id="ctrl-3"></div>
-            </div>
-        </div>
+        <div id="lista-prodotti" style="width: 100%;"></div>
 
         <div class="preventivo-rapido">
             <h3>non trovi quello che cerchi?</h3>
@@ -253,11 +224,8 @@
     </footer>
 
     <script>
-        const prodotti = { 
-            1:{nome:"Spazzole Tergicristallo", prezzo:30, img:"img/spazzole.jpg", desc:"Coppia anteriori Premium di alta qualità per una visibilità perfetta."}, 
-            2:{nome:"Batteria 60Ah", prezzo:75, img:"img/batteria.jpg", desc:"Batteria auto 12V con spunto maggiorato 540A."}, 
-            3:{nome:"Lampadina Bosch H7", prezzo:12, img:"img/lampadinah7bosch.jpg", desc:"Luce bianca 55W per una guida sicura di notte."} 
-        };
+        // CARICAMENTO PRODOTTI DA FILE ESTERNO
+        const prodotti = LISTA_PRODOTTI;
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
 
         function toggleContatto() {
@@ -290,10 +258,16 @@
 
         function apriDettagli(id) {
             const p = prodotti[id];
-            document.getElementById('dettaglio-img').src = p.img;
+            const imgElement = document.getElementById('dettaglio-img');
+            if (p.immagine && p.immagine !== "") {
+                imgElement.src = p.immagine;
+                imgElement.style.display = 'block';
+            } else {
+                imgElement.style.display = 'none';
+            }
             document.getElementById('dettaglio-nome').innerText = p.nome;
             document.getElementById('dettaglio-prezzo').innerText = p.prezzo.toFixed(2) + "€";
-            document.getElementById('dettaglio-info-testo').innerText = p.desc;
+            document.getElementById('dettaglio-info-testo').innerText = p.desc || "";
             aggiornaDettaglioCtrl(id);
             document.getElementById('modal-dettagli').style.display = 'flex';
         }
@@ -318,14 +292,38 @@
         }
 
         function renderUI() {
+            // GENERAZIONE DINAMICA DELLA LISTA PRODOTTI
+            const containerLista = document.getElementById('lista-prodotti');
+            containerLista.innerHTML = ""; // Pulisce la lista
+
             Object.keys(prodotti).forEach(id => {
-                const ctrl = document.getElementById(`ctrl-${id}`);
-                if(!ctrl) return;
+                const p = prodotti[id];
                 const q = cart[id] || 0;
-                ctrl.innerHTML = q > 0 ? 
-                    `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div>` : 
-                    `<button class="btn-add" onclick="updateQty(${id},1)">+ Aggiungi</button>`;
+                
+                // Gestione immagine (nulla se non c'è)
+                let imgHtml = (p.immagine && p.immagine !== "") ? 
+                    `<img src="${p.immagine}" class="product-img" onclick="zoomFoto(this)" onerror="handleImgError(this)">` : "";
+
+                const card = `
+                    <div class="product-card">
+                        ${imgHtml}
+                        <div class="product-info">
+                            <h4 onclick="apriDettagli(${id})">${p.nome}</h4>
+                            <p style="font-size: 12px; color: #777; margin: 0 0 5px 0;">${p.desc || ""}</p>
+                            <div class="price">${p.prezzo.toFixed(2)}€</div>
+                        </div>
+                        <div class="right-side" id="ctrl-${id}">
+                            ${q > 0 ? 
+                                `<div class="qty-controls"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div>` : 
+                                `<button class="btn-add" onclick="updateQty(${id},1)">+ Aggiungi</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+                containerLista.innerHTML += card;
             });
+
+            // GESTIONE MINI CARRELLO OVERLAY
             let tot = 0; let count = 0; const list = document.getElementById('mini-lista'); list.innerHTML = "";
             const idsInCart = Object.keys(cart);
             if(idsInCart.length === 0) {
@@ -335,7 +333,8 @@
                 document.getElementById('box-azioni-carrello').style.display = "block";
                 idsInCart.forEach(id => {
                     let p = prodotti[id]; let q = cart[id]; let sub = p.prezzo * q; tot += sub; count += q;
-                    list.innerHTML += `<div class="mini-item"><img src="${p.img}" class="mini-img" onerror="this.style.display='none'"><div class="mini-details"><span class="mini-name">${p.nome}</span><div class="mini-qty-box"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div></div><span class="mini-price">${sub.toFixed(2)}€</span></div>`;
+                    let miniImg = (p.immagine && p.immagine !== "") ? `<img src="${p.immagine}" class="mini-img" onerror="this.style.display='none'">` : "";
+                    list.innerHTML += `<div class="mini-item">${miniImg}<div class="mini-details"><span class="mini-name">${p.nome}</span><div class="mini-qty-box"><button class="btn-qty" onclick="updateQty(${id},-1)">-</button><span style="font-weight:bold">${q}</span><button class="btn-qty" onclick="updateQty(${id},1)">+</button></div></div><span class="mini-price">${sub.toFixed(2)}€</span></div>`;
                 });
             }
             document.getElementById('mini-tot').innerText = tot.toFixed(2)+"€";
