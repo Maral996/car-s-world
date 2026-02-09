@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riepilogo - Car's world</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; }
+        .summary-box { width: 100%; max-width: 800px; background: white; padding: 25px; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+        h2 { color: #ff9800; margin-bottom: 20px; }
+        #pdf-preview { width: 100%; height: 60vh; border: 1px solid #ddd; border-radius: 10px; background: white; }
+        .pdf-actions { display: flex; gap: 10px; margin-top: 20px; width: 100%; justify-content: center; }
+        .btn { border: none; padding: 15px 25px; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; font-size: 16px; flex: 1; max-width: 250px; }
+    </style>
+</head>
+<body>
+
+<div class="summary-box">
+    <h2>Anteprima del tuo Ordine</h2>
+    <p>Controlla i dettagli nel PDF qui sotto prima di confermare.</p>
+    
+    <iframe id="pdf-preview"></iframe>
+
+    <div class="pdf-actions">
+        <button class="btn" style="background:#888;" onclick="history.back()">✏️ Modifica</button>
+        <button class="btn" style="background:#4caf50;" onclick="downloadPDF()">⬇️ Download</button>
+        <button id="btn-invia-finale" class="btn" style="background:#d32f2f;" onclick="chiudiEInvia()">🚀 INVIA ORDINE ORA</button>
+    </div>
+
+    <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST" style="display:none;">
+        <input type="hidden" name="email" id="hidden_email">
+        <input type="hidden" name="telefono" id="hidden_tel">
+        <input type="hidden" name="dati_fatturazione" id="hidden_fatt">
+        <input type="hidden" name="ordine_dettagliato" id="hidden_ordine">
+        <input type="hidden" name="_next" value="https://carsworld.it/store.html?status=success">
+    </form>
+</div>
+
+<script>
+    const dati = JSON.parse(sessionStorage.getItem('dati_checkout'));
+    let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
+    const prodotti = { 1:{nome:"Spazzole Tergicristallo", prezzo:30}, 2:{nome:"Batteria 60Ah", prezzo:75}, 3:{nome:"Lampadina Bosch H7", prezzo:12} };
+    let currentDoc = null;
+
+    if (!dati) { window.location.href = 'checkout.html'; }
+
+    function generaPDF() {
+        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        const ora = new Date().toLocaleString('it-IT');
+        const numOrdine = Date.now().toString(36).toUpperCase();
+        
+        doc.setFontSize(22); doc.setTextColor(255, 152, 0); 
+        doc.text("Car's World - Store Ricambi", 20, 20);
+        doc.setFontSize(10); doc.setTextColor(100);
+        doc.text(`Ordine: ${numOrdine} | Data: ${ora}`, 20, 30);
+        
+        doc.setFontSize(12); doc.setTextColor(0);
+        doc.text("DESTINATARIO:", 20, 45);
+        doc.setFont(undefined, 'normal');
+        let infoFatt = dati.tipo === 'Azienda' ? dati.rag_soc : dati.nome;
+        doc.text(`${infoFatt}\n${dati.f_via}\n${dati.f_cap} ${dati.f_cit} (${dati.f_pro})`, 20, 52);
+
+        let y = 80;
+        doc.setFont(undefined, 'bold');
+        doc.text("Dettaglio Ordine:", 20, y); y += 10;
+        doc.setFontSize(10);
+        
+        let totRicambi = 0;
+        let listaTesto = "";
+        Object.keys(cart).forEach(id => {
+            let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
+            totRicambi += sub;
+            doc.text(`${p.nome} x${qty}`, 20, y); doc.text(`${sub.toFixed(2)}€`, 160, y);
+            listaTesto += `${p.nome} (x${qty}), `;
+            y += 7;
+        });
+
+        let spedVal = (totRicambi >= 100) ? 0 : 7.50;
+        let contrVal = dati.pagamento === "Contrassegno" ? 5 : 0;
+        let totaleFin = (totRicambi + spedVal + contrVal).toFixed(2);
+
+        y += 10;
+        doc.text(`Spedizione: ${spedVal}€`, 130, y); y += 7;
+        doc.text(`Supplemento: ${contrVal}€`, 130, y); y += 10;
+        doc.setFontSize(14); doc.text(`TOTALE: ${totaleFin}€`, 130, y);
+
+        // Prepara i dati per Formspree
+        document.getElementById('hidden_email').value = dati.email;
+        document.getElementById('hidden_tel').value = dati.tel;
+        document.getElementById('hidden_fatt').value = `${infoFatt} - ${dati.f_via}, ${dati.f_cit}`;
+        document.getElementById('hidden_ordine').value = `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`;
+
+        currentDoc = doc;
+        document.getElementById('pdf-preview').src = doc.output('bloburl');
+    }
+
+    function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld.pdf`); }
+
+    function chiudiEInvia() {
+        const btn = document.getElementById('btn-invia-finale');
+        btn.innerText = "Invio in corso...";
+        btn.disabled = true;
+        localStorage.removeItem('cart_carsworld');
+        sessionStorage.removeItem('dati_checkout');
+        document.getElementById('form-carrello').submit();
+    }
+
+    window.onload = generaPDF;
+</script>
+</body>
+</html>
