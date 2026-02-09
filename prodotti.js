@@ -1,5 +1,3 @@
-
-
 const LISTA_PRODOTTI = {
     R1: { 
         nome: "Spazzole Tergicristallo", 
