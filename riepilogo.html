@@ -86,15 +86,11 @@
         doc.setFont(undefined, 'normal');
         doc.text(`${infoFatt}\n${dati.f_via}\n${dati.f_cap} ${dati.f_cit} (${dati.f_pro})`, 20, 52);
 
-        // INDIRIZZO SPEDIZIONE (Logica corretta richiesta)
-        doc.setFont(undefined, 'bold');
-        doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
-        doc.setFont(undefined, 'normal');
-
-        // Se spedizione è uguale a fatturazione, riscrivo gli stessi dati
-        if (dati.spedizione_uguale) {
-            doc.text(`${infoFatt}\n${dati.f_via}\n${dati.f_cap} ${dati.f_cit} (${dati.f_pro})`, 110, 52);
-        } else {
+        // INDIRIZZO SPEDIZIONE - Mostrato solo se diverso da fatturazione
+        if (!dati.spedizione_uguale) {
+            doc.setFont(undefined, 'bold');
+            doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
+            doc.setFont(undefined, 'normal');
             doc.text(`${dati.s_nome}\n${dati.s_via}\n${dati.s_cap} ${dati.s_cit} (${dati.s_pro})`, 110, 52);
         }
 
@@ -137,7 +133,7 @@
             email: dati.email,
             telefono: dati.tel,
             cliente: infoFatt,
-            indirizzo_spedizione: dati.spedizione_uguale ? `${dati.f_via}, ${dati.f_cit} (${dati.f_pro})` : `${dati.s_via}, ${dati.s_cit} (${dati.s_pro})`,
+            indirizzo_spedizione: dati.spedizione_uguale ? "Uguale a fatturazione" : `${dati.s_via}, ${dati.s_cit} (${dati.s_pro})`,
             pagamento: dati.pagamento,
             dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
         };
