@@ -100,6 +100,8 @@
     <h2 style="margin-top:10px;">Check-out Ordine</h2>
 
     <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="return gestisciInvioOrdine(event)">
+        <input type="hidden" name="_next" value="https://carsworld.it/store.html">
+        
         <h3>Contatti</h3>
         <input type="email" name="email" id="contatto_email" placeholder="Indirizzo Email">
         <input type="tel" name="telefono" id="contatto_tel" placeholder="Numero di Telefono / WhatsApp">
@@ -215,7 +217,6 @@
     }
 
     function generaPDF() {
-        // Controllo carrello vuoto prima di procedere
         if (Object.keys(cart).length === 0) {
             alert("carrello vuoto impossibile creare l’ordine");
             return;
@@ -288,8 +289,11 @@
 
     function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld_${Date.now()}.pdf`); }
     function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
+    
     function chiudiEInvia() { 
         localStorage.setItem('pending_order', 'true');
+        // Svuoto il carrello prima dell'invio finale
+        localStorage.removeItem('cart_carsworld');
         allowSubmit = true; 
         document.getElementById('form-carrello').submit(); 
     }
