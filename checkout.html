@@ -4,152 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check-out - Car's world</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        /* Centratura totale del corpo pagina */
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background: #f0f2f5; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-start; 
-            min-height: 100vh; 
-            margin: 0; 
-        }
-
-        .checkout-box { 
-            width: 100%; 
-            max-width: 600px; 
-            background: white; 
-            padding: 30px; 
-            border-radius: 18px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-            text-align: center; 
-            box-sizing: border-box;
-        }
-
-        h2 { color: #ff9800; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-top: 0; text-align: center; }
-        h3 { font-size: 16px; text-transform: uppercase; color: #555; margin-top: 25px; text-align: center; }
-
-        input, select, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 15px; 
-            border-radius: 10px; 
-            border: 1px solid #ddd; 
-            font-size: 15px; 
-            outline: none; 
-            display: block; 
-            margin-left: auto; 
-            margin-right: auto; 
-            box-sizing: border-box;
-            text-align: center; 
-        }
-
-        /* Stile per i campi affiancati (Città, Prov, CAP) */
-        .address-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
-        }
-
-        .riepilogo-box { background: #fff8ef; padding: 20px; border-radius: 12px; border: 1px solid #ffe0b2; margin-bottom: 25px; }
-        .row { display: flex; justify-content: space-between; margin-bottom: 8px; color: #666; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; }
+        .checkout-box { width: 100%; max-width: 600px; background: white; padding: 30px; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; box-sizing: border-box; }
+        h2 { color: #ff9800; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-top: 0; }
+        h3 { font-size: 16px; text-transform: uppercase; color: #555; margin-top: 25px; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ddd; font-size: 15px; outline: none; box-sizing: border-box; text-align: center; }
+        .address-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
+        
+        /* Stile Riepilogo Importi */
+        .riepilogo-box { background: #fff8ef; padding: 20px; border-radius: 12px; border: 1px solid #ffe0b2; margin-top: 25px; margin-bottom: 15px; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 8px; color: #666; font-size: 15px; }
         .totale-grande { display: flex; justify-content: space-between; font-weight: 800; font-size: 22px; color: #e65100; border-top: 2px solid #ffb74d; padding-top: 15px; margin-top: 10px; }
         
-        .btn-invia { 
-            background: #ff9800; 
-            color: white; 
-            border: none; 
-            width: 100%; 
-            padding: 18px; 
-            border-radius: 15px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            font-size: 17px; 
-            margin-top: 10px;
-        }
-        
-        #modal-pdf { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 50000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .pdf-actions { background: white; padding: 15px; border-radius: 12px; display: flex; gap: 10px; margin-bottom: 10px; width: 95%; max-width: 700px; justify-content: center; flex-wrap: wrap; }
-        .btn-pdf { border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; font-size: 13px; }
-        #pdf-preview { width: 95%; height: 65vh; max-width: 800px; background: white; border-radius: 8px; border: none; }
-        
+        .btn-procedi { background: #ff9800; color: white; border: none; width: 100%; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 17px; margin-top: 10px; }
         .hidden { display: none !important; }
-
-        .checkbox-container { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-            margin-bottom: 15px; 
-            font-size: 14px; 
-            color: #555; 
-            cursor: pointer; 
-        }
-        .checkbox-container input { width: auto; margin-bottom: 0; cursor: pointer; margin-left: 0; margin-right: 0; }
-
-        @media (max-width: 480px) {
-            body { padding: 10px; }
-            .checkout-box { padding: 20px; }
-            input, select, textarea { font-size: 16px; }
-            .address-grid { grid-template-columns: 1fr; gap: 0; }
-        }
+        .checkbox-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; font-size: 14px; color: #555; cursor: pointer; }
+        .checkbox-container input { width: auto; margin: 0; }
+        @media (max-width: 480px) { .address-grid { grid-template-columns: 1fr; gap: 0; } }
     </style>
 </head>
 <body>
 
 <div class="checkout-box">
     <a href="store.html" style="text-decoration:none; color:#888; font-size: 14px; display: block; margin-bottom: 10px;">← Torna allo store</a>
-    <h2 style="margin-top:10px;">Check-out Ordine</h2>
+    <h2>Dati di Spedizione</h2>
 
-    <form id="form-carrello" action="https://formspree.io/f/mlgdkage" method="POST" onsubmit="return gestisciInvioOrdine(event)">
-        <input type="hidden" name="_next" value="https://carsworld.it/store.html?status=success">
-        
+    <form id="form-dati" onsubmit="procediAlRiepilogo(event)">
         <h3>Contatti</h3>
-        <input type="email" name="email" id="contatto_email" placeholder="Indirizzo Email">
-        <input type="tel" name="telefono" id="contatto_tel" placeholder="Numero di Telefono / WhatsApp">
+        <input type="email" id="email" placeholder="Indirizzo Email" required>
+        <input type="tel" id="tel" placeholder="Numero di Telefono / WhatsApp" required>
 
         <h3>Dati Fatturazione</h3>
-        <select name="tipo_cliente" id="tipo_cliente" onchange="switchFatt()">
+        <select id="tipo_cliente" onchange="switchFatt()">
             <option value="Privato">Privato</option>
             <option value="Azienda">Azienda</option>
         </select>
         <div id="box-privato">
-            <input type="text" name="nome" placeholder="Nome e Cognome" required>
-            <input type="text" name="cf" placeholder="Codice Fiscale" required oninput="this.value = this.value.toUpperCase()">
+            <input type="text" id="nome" placeholder="Nome e Cognome">
+            <input type="text" id="cf" placeholder="Codice Fiscale" oninput="this.value = this.value.toUpperCase()">
         </div>
         <div id="box-ditta" class="hidden">
-            <input type="text" name="ragione_sociale" placeholder="Ragione Sociale">
-            <input type="text" name="piva" placeholder="Partita IVA">
-            <input type="text" name="codice_univoco" id="cod_univoco" placeholder="Codice Univoco o PEC">
+            <input type="text" id="ragione_sociale" placeholder="Ragione Sociale">
+            <input type="text" id="piva" placeholder="Partita IVA">
+            <input type="text" id="cod_univoco" placeholder="Codice Univoco o PEC">
         </div>
         
-        <input type="text" name="fatt_via" id="fatt_via" placeholder="Via e Numero Civico" required>
+        <input type="text" id="fatt_via" placeholder="Via e Numero Civico" required>
         <div class="address-grid">
-            <input type="text" name="fatt_citta" id="fatt_citta" placeholder="Città" required>
-            <input type="text" name="fatt_prov" id="fatt_prov" placeholder="Prov." maxlength="2" oninput="this.value = this.value.toUpperCase()" required>
-            <input type="text" name="fatt_cap" id="fatt_cap" placeholder="CAP" maxlength="5" required>
+            <input type="text" id="fatt_citta" placeholder="Città" required>
+            <input type="text" id="fatt_prov" placeholder="Prov." maxlength="2" oninput="this.value = this.value.toUpperCase()" required>
+            <input type="text" id="fatt_cap" placeholder="CAP" maxlength="5" required>
         </div>
 
         <h3>Spedizione</h3>
         <label class="checkbox-container">
             <input type="checkbox" id="check_spedizione_diversa" onchange="toggleSpedizione()">
-            L'indirizzo di spedizione è diverso?
+            Spedizione diversa da fatturazione?
         </label>
         
         <div id="box-spedizione" class="hidden">
-            <input type="text" name="sped_via" id="sped_via" placeholder="Via e Numero Civico">
+            <input type="text" id="sped_via" placeholder="Via e Numero Civico">
             <div class="address-grid">
-                <input type="text" name="sped_citta" id="sped_citta" placeholder="Città">
-                <input type="text" name="sped_prov" id="sped_prov" placeholder="Prov." maxlength="2" oninput="this.value = this.value.toUpperCase()">
-                <input type="text" name="sped_cap" id="sped_cap" placeholder="CAP" maxlength="5">
+                <input type="text" id="sped_citta" placeholder="Città">
+                <input type="text" id="sped_prov" placeholder="Prov." maxlength="2" oninput="this.value = this.value.toUpperCase()">
+                <input type="text" id="sped_cap" placeholder="CAP" maxlength="5">
             </div>
         </div>
 
         <h3>Metodo di Pagamento</h3>
-        <select name="pagamento" id="metodo_pag" onchange="calcola()">
+        <select id="metodo_pag" onchange="calcolaImporti()">
             <option value="Bonifico">Bonifico Bancario</option>
             <option value="Contrassegno">Contrassegno (+5.00€)</option>
         </select>
@@ -157,179 +81,79 @@
         <div class="riepilogo-box">
             <div class="row"><span>Prodotti:</span><span id="res-ric">0.00€</span></div>
             <div class="row"><span>Spedizione:</span><span id="res-sped">0.00€</span></div>
-            <div class="row id-contrassegno hidden"><span>Supplemento Contrassegno:</span><span>5.00€</span></div>
+            <div id="row-contrassegno" class="row hidden"><span>Supplemento Contrassegno:</span><span>5.00€</span></div>
             <div class="totale-grande"><span>TOTALE:</span><span id="res-tot">0.00€</span></div>
         </div>
-        <input type="hidden" name="ordine_dettagliato" id="hidden_ordine">
-        <button type="submit" class="btn-invia">CONFERMA E GENERA PDF</button>
+
+        <button type="submit" class="btn-procedi">VAI AL RIEPILOGO PDF →</button>
     </form>
 </div>
 
-<div id="modal-pdf">
-    <div class="pdf-actions">
-        <button class="btn-pdf" style="background:#ff9800;" onclick="modificaOrdine()">✏️ Modifica Ordine</button>
-        <button class="btn-pdf" style="background:#4caf50;" onclick="downloadPDF()">⬇️ Download</button>
-        <button id="btn-invia-finale" class="btn-pdf" style="background:#d32f2f; font-size:15px; padding:10px 20px;" onclick="chiudiEInvia()">🚀 INVIA ORDINE ADESSO</button>
-    </div>
-    <iframe id="pdf-preview"></iframe>
-</div>
-
 <script>
-    // CONTROLLO DI SICUREZZA: Reindirizza allo store se la provenienza è diversa da store.html
-    if (document.referrer === "" || !document.referrer.includes("store.html")) {
-        window.location.href = "https://carsworld.it/store.html";
-    }
-
-    let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
+    // Carichiamo i prodotti per il calcolo (devono essere uguali a quelli dello store)
     const prodotti = { 
         1:{nome:"Spazzole Tergicristallo", prezzo:30}, 
         2:{nome:"Batteria 60Ah", prezzo:75}, 
         3:{nome:"Lampadina Bosch H7", prezzo:12} 
     };
-    let currentDoc = null;
 
-    function generateOrderNumber() {
-        const anno = new Date().getFullYear();
-        const uniquePart = Date.now().toString(36).slice(-6).toUpperCase();
-        return `${anno}${uniquePart}`;
-    }
-
-    function calcola() {
+    function calcolaImporti() {
+        let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
         let ric = 0;
+        
         Object.keys(cart).forEach(id => { 
-            let p = prodotti[id]; let qty = cart[id]; 
-            ric += p.prezzo * qty;
+            if(prodotti[id]) ric += prodotti[id].prezzo * cart[id];
         });
         
         let sped = (ric >= 100 || ric === 0) ? 0 : 7.50;
         let isContr = document.getElementById('metodo_pag').value === "Contrassegno";
         let contr = isContr ? 5 : 0;
         
-        document.querySelector('.id-contrassegno').classList.toggle('hidden', !isContr);
-        document.getElementById('res-ric').innerText = ric.toFixed(2)+"€";
+        document.getElementById('row-contrassegno').classList.toggle('hidden', !isContr);
+        document.getElementById('res-ric').innerText = ric.toFixed(2) + "€";
         document.getElementById('res-sped').innerText = sped === 0 ? "Gratis" : "7.50€";
-        document.getElementById('res-tot').innerText = (ric + sped + contr).toFixed(2)+"€";
+        document.getElementById('res-tot').innerText = (ric + sped + contr).toFixed(2) + "€";
     }
 
     function switchFatt() {
         const isDitta = document.getElementById('tipo_cliente').value === 'Azienda';
         document.getElementById('box-privato').classList.toggle('hidden', isDitta);
         document.getElementById('box-ditta').classList.toggle('hidden', !isDitta);
-        document.querySelectorAll('#box-privato input').forEach(i => i.required = !isDitta);
-        document.querySelectorAll('#box-ditta input').forEach(i => i.required = isDitta);
     }
 
     function toggleSpedizione() {
         const diversa = document.getElementById('check_spedizione_diversa').checked;
         document.getElementById('box-spedizione').classList.toggle('hidden', !diversa);
-        const fields = ['sped_via', 'sped_citta', 'sped_prov', 'sped_cap'];
-        fields.forEach(id => document.getElementById(id).required = diversa);
     }
 
-    function gestisciInvioOrdine(e) { 
-        e.preventDefault(); 
-        const email = document.getElementById('contatto_email').value.trim();
-        const tel = document.getElementById('contatto_tel').value.trim();
-        if(email === "" && tel === "") { alert("Inserisci almeno un recapito (Email o Telefono)."); return false; }
-        generaPDF(); 
-        return false; 
+    function procediAlRiepilogo(e) {
+        e.preventDefault();
+        const dati = {
+            email: document.getElementById('email').value,
+            tel: document.getElementById('tel').value,
+            tipo: document.getElementById('tipo_cliente').value,
+            nome: document.getElementById('nome').value,
+            cf: document.getElementById('cf').value,
+            rag_soc: document.getElementById('ragione_sociale').value,
+            piva: document.getElementById('piva').value,
+            univoco: document.getElementById('cod_univoco').value,
+            f_via: document.getElementById('fatt_via').value,
+            f_cit: document.getElementById('fatt_citta').value,
+            f_pro: document.getElementById('fatt_prov').value,
+            f_cap: document.getElementById('fatt_cap').value,
+            check_sped: document.getElementById('check_spedizione_diversa').checked,
+            s_via: document.getElementById('sped_via').value,
+            s_cit: document.getElementById('sped_citta').value,
+            s_pro: document.getElementById('sped_prov').value,
+            s_cap: document.getElementById('sped_cap').value,
+            pagamento: document.getElementById('metodo_pag').value
+        };
+        sessionStorage.setItem('dati_checkout', JSON.stringify(dati));
+        window.location.href = 'riepilogo.html';
     }
 
-    function generaPDF() {
-        if (Object.keys(cart).length === 0) {
-            alert("carrello vuoto impossibile creare l’ordine");
-            return;
-        }
-
-        const { jsPDF } = window.jspdf; const doc = new jsPDF();
-        const ora = new Date().toLocaleString('it-IT');
-        const numOrdine = generateOrderNumber();
-        const tipo = document.getElementById('tipo_cliente').value;
-        const metodo = document.getElementById('metodo_pag').value;
-
-        const f_via = document.getElementById('fatt_via').value;
-        const f_cit = document.getElementById('fatt_citta').value;
-        const f_pro = document.getElementById('fatt_prov').value;
-        const f_cap = document.getElementById('fatt_cap').value;
-        const indFattCompleto = `${f_via}, ${f_cap} ${f_cit} (${f_pro})`;
-
-        let indSpedCompleto = indFattCompleto;
-        if(document.getElementById('check_spedizione_diversa').checked) {
-            const s_via = document.getElementById('sped_via').value;
-            const s_cit = document.getElementById('sped_citta').value;
-            const s_pro = document.getElementById('sped_prov').value;
-            const s_cap = document.getElementById('sped_cap').value;
-            indSpedCompleto = `${s_via}, ${s_cap} ${s_cit} (${s_pro})`;
-        }
-
-        doc.setFontSize(22); doc.setTextColor(255, 152, 0); 
-        doc.text("Car's World - Store Ricambi", 20, 20);
-        doc.setFontSize(10); doc.setTextColor(100);
-        doc.text(`Data Documento: ${ora}`, 20, 30);
-        doc.setTextColor(255, 0, 0); doc.setFont(undefined, 'bold');
-        doc.text(`NUMERO ORDINE: ${numOrdine}`, 140, 30);
-        doc.line(20, 40, 190, 40);
-        doc.setFontSize(14); doc.setTextColor(0); doc.text("Dati Fatturazione:", 20, 50);
-        let y = 58; doc.setFontSize(11); doc.setFont(undefined, 'normal');
-        if (tipo === 'Azienda') {
-            doc.text(`Ragione Sociale: ${document.getElementsByName('ragione_sociale')[0].value}`, 20, y); y+=7;
-            doc.text(`P.IVA: ${document.getElementsByName('piva')[0].value}`, 20, y); y+=7;
-            doc.text(`Codice/PEC: ${document.getElementById('cod_univoco').value}`, 20, y); y+=7;
-        } else {
-            doc.text(`Nome: ${document.getElementsByName('nome')[0].value}`, 20, y); y+=7;
-            doc.text(`Cod. Fiscale: ${document.getElementsByName('cf')[0].value}`, 20, y); y+=7;
-        }
-        doc.text(`Indirizzo Fatturazione: ${indFattCompleto}`, 20, y); y+=7;
-        doc.text(`Indirizzo Spedizione: ${indSpedCompleto}`, 20, y); y+=7;
-        doc.text(`Contatto: ${document.getElementById('contatto_email').value || document.getElementById('contatto_tel').value}`, 20, y);
-        y += 20; doc.setFontSize(14); doc.text("Riepilogo Ricambi:", 20, y);
-        y += 10; doc.setFontSize(10); doc.setFont(undefined, 'bold');
-        doc.text("Descrizione", 20, y); doc.text("Quantità", 130, y); doc.text("Prezzo", 165, y);
-        doc.setFont(undefined, 'normal'); doc.line(20, y+2, 190, y+2); y += 10;
-        let totRicambi = 0; let dettagliString = "";
-        Object.keys(cart).forEach(id => {
-            let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
-            totRicambi += sub; dettagliString += `${p.nome} (x${qty}), `;
-            doc.text(p.nome, 20, y); doc.text(qty.toString(), 130, y); doc.text(`${sub.toFixed(2)}€`, 165, y);
-            y += 7;
-        });
-        y += 5; doc.line(110, y, 190, y); y += 10;
-        doc.text(`Metodo Pagamento: ${metodo}`, 20, y);
-        doc.text(`Totale Ricambi:`, 110, y); doc.text(`${totRicambi.toFixed(2)}€`, 165, y); y += 7;
-        let spedVal = (totRicambi >= 100) ? 0 : 7.50;
-        doc.text(`Spese Spedizione:`, 110, y); doc.text(`${spedVal === 0 ? "Gratis" : "7.50€"}`, 165, y); y += 7;
-        let contrVal = metodo === "Contrassegno" ? 5 : 0;
-        if(contrVal > 0) { doc.text(`Suppl. Contrassegno:`, 110, y); doc.text(`5.00€`, 165, y); y += 7; }
-        y += 5; doc.setDrawColor(255, 152, 0); doc.setLineWidth(0.5); doc.line(110, y, 190, y);
-        y += 10; doc.setFontSize(16); doc.setFont(undefined, 'bold'); doc.setTextColor(230, 81, 0);
-        const totaleFin = (totRicambi + spedVal + contrVal).toFixed(2);
-        doc.text(`TOTALE FINALE:`, 110, y); doc.text(`${totaleFin}€`, 165, y);
-
-        document.getElementById('hidden_ordine').value = `NUM ORDINE: ${numOrdine} | PRODOTTI: ${dettagliString} | TOTALE: ${totaleFin}€`;
-        currentDoc = doc;
-        document.getElementById('pdf-preview').src = doc.output('bloburl');
-        document.getElementById('modal-pdf').style.display = 'flex';
-    }
-
-    function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld_${Date.now()}.pdf`); }
-    function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
-    
-    function chiudiEInvia() { 
-        const btn = document.getElementById('btn-invia-finale');
-        btn.innerText = "Invio in corso...";
-        btn.disabled = true;
-
-        // CHIUDE LA FINESTRA PDF IMMEDIATAMENTE
-        document.getElementById('modal-pdf').style.display = 'none';
-
-        // Svuota il carrello
-        localStorage.removeItem('cart_carsworld'); 
-        
-        // Spedisce il modulo
-        document.getElementById('form-carrello').submit();
-    }
-
-    window.onload = calcola;
+    // Esegui il calcolo all'avvio
+    window.onload = calcolaImporti;
 </script>
 </body>
 </html>
