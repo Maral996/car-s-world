@@ -1,11 +1,17 @@
 <script>
-    const prodotti = LISTA_PRODOTTI;
+    // COLLEGA I DATABASE
+    const prodotti = typeof LISTA_PRODOTTI !== 'undefined' ? LISTA_PRODOTTI : {};
     const dati = JSON.parse(sessionStorage.getItem('dati_checkout'));
     let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
     
     let currentDoc = null;
     let payload = {}; 
+    
+    <script src="prodotti.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+
+    // Se mancano i dati, torna indietro
     if (!dati) { window.location.href = 'checkout.html'; }
 
     function generateOrderNumber() {
@@ -19,98 +25,97 @@
     }
 
     function generaPDF() {
-        const { jsPDF } = window.jspdf; 
-        const doc = new jsPDF();
-        const ora = new Date().toLocaleString('it-IT');
-        const numOrdine = generateOrderNumber();
-        
-        doc.setFontSize(22); doc.setTextColor(255, 152, 0); 
-        doc.text("Car's World - Store Ricambi", 20, 20);
-        
-        doc.setFontSize(10); doc.setTextColor(100);
-        doc.text(`Ordine: ${numOrdine} | Data: ${ora}`, 20, 30);
-        
-        // DESTINATARIO FATTURAZIONE
-        doc.setFontSize(11); doc.setTextColor(0);
-        doc.setFont(undefined, 'bold');
-        doc.text("DESTINATARIO (Fatturazione):", 20, 45);
-        
-        // Controllo se è azienda o privato per il nome
-        let infoFatt = (dati.tipo === 'Azienda') ? (dati.rag_soc || "N/D") : (dati.nome || "N/D");
-        
-        doc.setFont(undefined, 'normal');
-        doc.text(`${infoFatt}\n${dati.f_via || ''}\n${dati.f_cap || ''} ${dati.f_cit || ''} (${dati.f_pro || ''})\nTel: ${dati.tel || ''}`, 20, 52);
-
-        // INDIRIZZO SPEDIZIONE - Corretto il nome della variabile (spedizione_uguale)
-        // Se nel checkout hai usato check_sped, qui lo normalizziamo
-        const isUguale = dati.spedizione_uguale !== undefined ? dati.spedizione_uguale : dati.check_sped;
-
-        if (!isUguale) {
+        try {
+            const { jsPDF } = window.jspdf; 
+            const doc = new jsPDF();
+            const ora = new Date().toLocaleString('it-IT');
+            const numOrdine = generateOrderNumber();
+            
+            doc.setFontSize(22); doc.setTextColor(255, 152, 0); 
+            doc.text("Car's World - Store Ricambi", 20, 20);
+            
+            doc.setFontSize(10); doc.setTextColor(100);
+            doc.text(`Ordine: ${numOrdine} | Data: ${ora}`, 20, 30);
+            
+            // FATTURAZIONE
+            doc.setFontSize(11); doc.setTextColor(0);
             doc.setFont(undefined, 'bold');
-            doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
+            doc.text("DESTINATARIO (Fatturazione):", 20, 45);
+            
+            // Gestione Nome o Ragione Sociale (usa nomi corretti dal tuo checkout)
+            let infoFatt = dati.tipo === 'Azienda' ? (dati.rag_soc || "") : (dati.nome || "");
+            
             doc.setFont(undefined, 'normal');
-            let telSped = dati.s_tel ? `Tel: ${dati.s_tel}` : `Tel: ${dati.tel || ''}`;
-            doc.text(`${dati.s_nome || infoFatt}\n${dati.s_via || ''}\n${dati.s_cap || ''} ${dati.s_cit || ''} (${dati.s_pro || ''})\n${telSped}`, 110, 52);
-        }
+            doc.text(`${infoFatt}\n${dati.f_via || ""}\n${dati.f_cap || ""} ${dati.f_cit || ""} (${dati.f_pro || ""})\nTel: ${dati.tel || ""}`, 20, 52);
 
-        // NOTE PER IL CORRIERE
-        let yNote = 80;
-        if (dati.note && dati.note.trim() !== "") {
-            doc.setFont(undefined, 'bold');
-            doc.text("Note per la consegna:", 20, yNote);
-            doc.setFont(undefined, 'normal');
-            doc.setFontSize(9);
-            const noteSplit = doc.splitTextToSize(dati.note, 170);
-            doc.text(noteSplit, 20, yNote + 7);
-            yNote += 20; 
-        }
-
-        let y = yNote + 10;
-        doc.setFontSize(11);
-        doc.setFont(undefined, 'bold');
-        doc.text("Dettaglio Ordine:", 20, y); y += 10;
-        doc.setFontSize(10);
-        doc.setFont(undefined, 'normal');
-        
-        let totRicambi = 0;
-        let listaTesto = "";
-        Object.keys(cart).forEach(id => {
-            if(prodotti[id]) {
-                let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
-                totRicambi += sub;
-                doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); 
-                doc.text(`${sub.toFixed(2)}€`, 160, y);
-                listaTesto += `Cod: ${id} - ${p.nome} (x${qty}), `;
-                y += 7;
+            // SPEDIZIONE - Appare solo se NON è uguale
+            if (dati.spedizione_uguale === false) {
+                doc.setFont(undefined, 'bold');
+                doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
+                doc.setFont(undefined, 'normal');
+                let telSped = dati.s_tel ? `Tel: ${dati.s_tel}` : `Tel: ${dati.tel || ""}`;
+                doc.text(`${dati.s_nome || infoFatt}\n${dati.s_via || ""}\n${dati.s_cap || ""} ${dati.s_cit || ""} (${dati.s_pro || ""})\n${telSped}`, 110, 52);
             }
-        });
 
-        let spedVal = (totRicambi >= 100) ? 0 : 7.50;
-        let contrVal = dati.pagamento === "Contrassegno" ? 5 : 0;
-        let totaleFin = (totRicambi + spedVal + contrVal).toFixed(2);
+            // NOTE
+            let yNote = 80;
+            if (dati.note && dati.note.trim() !== "") {
+                doc.setFont(undefined, 'bold');
+                doc.text("Note per la consegna:", 20, yNote);
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(9);
+                const noteSplit = doc.splitTextToSize(dati.note, 170);
+                doc.text(noteSplit, 20, yNote + 7);
+                yNote += 20; 
+            }
 
-        y += 10;
-        doc.text(`Spedizione: ${spedVal === 0 ? "Gratis" : spedVal.toFixed(2) + "€"}`, 130, y); y += 7;
-        
-        if (dati.pagamento === "Contrassegno") {
-            doc.text(`Pagamento in contrassegno: ${contrVal.toFixed(2)}€`, 130, y); y += 10;
+            let y = yNote + 10;
+            doc.setFontSize(11); doc.setFont(undefined, 'bold');
+            doc.text("Dettaglio Ordine:", 20, y); y += 10;
+            doc.setFontSize(10); doc.setFont(undefined, 'normal');
+            
+            let totRicambi = 0;
+            let listaTesto = "";
+            Object.keys(cart).forEach(id => {
+                if(prodotti[id]) {
+                    let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
+                    totRicambi += sub;
+                    doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); 
+                    doc.text(`${sub.toFixed(2)}€`, 160, y);
+                    listaTesto += `Cod: ${id} - ${p.nome} (x${qty}), `;
+                    y += 7;
+                }
+            });
+
+            let spedVal = (totRicambi >= 100) ? 0 : 7.50;
+            let contrVal = dati.pagamento === "Contrassegno" ? 5 : 0;
+            let totaleFin = (totRicambi + spedVal + contrVal).toFixed(2);
+
+            y += 10;
+            doc.text(`Spedizione: ${spedVal === 0 ? "Gratis" : spedVal.toFixed(2) + "€"}`, 130, y); y += 7;
+            if (dati.pagamento === "Contrassegno") {
+                doc.text(`Pagamento in contrassegno: ${contrVal.toFixed(2)}€`, 130, y); y += 10;
+            }
+
+            doc.setFontSize(14); doc.setFont(undefined, 'bold');
+            doc.text(`TOTALE: ${totaleFin}€`, 130, y + 5);
+
+            payload = {
+                email: dati.email,
+                telefono: dati.tel,
+                cliente: infoFatt,
+                spedizione: dati.spedizione_uguale ? "Uguale a fatturazione" : (dati.s_via || "Vedi PDF"),
+                note: dati.note || "",
+                dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
+            };
+
+            currentDoc = doc;
+            document.getElementById('pdf-preview').src = doc.output('bloburl');
+        } catch (error) {
+            console.error("Errore PDF:", error);
+            // In caso di errore, non mostriamo bianco ma un messaggio
+            document.body.innerHTML = "<h2>Errore nella generazione del riepilogo. Controlla la console.</h2>";
         }
-
-        doc.setFontSize(14); doc.setFont(undefined, 'bold');
-        doc.text(`TOTALE: ${totaleFin}€`, 130, y + 5);
-
-        payload = {
-            email: dati.email,
-            telefono_rif: dati.tel,
-            cliente: infoFatt,
-            spedizione: isUguale ? "Uguale a fatturazione" : `${dati.s_via}, ${dati.s_cit} - Tel: ${dati.s_tel || 'N/D'}`,
-            note_consegna: dati.note || "Nessuna nota",
-            pagamento: dati.pagamento,
-            dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
-        };
-
-        currentDoc = doc;
-        document.getElementById('pdf-preview').src = doc.output('bloburl');
     }
 
     window.onload = generaPDF;
