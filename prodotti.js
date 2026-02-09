@@ -18,8 +18,10 @@ const LISTA_PRODOTTI = {
     
     R3: { 
         nome: "Lampadina Bosch H7", 
-        prezzo: 12, 
+        prezzo: 12,
+        categoria: "Ricambi",
         immagine: "img/lampadinah7bosch.jpg"
+        desc: "Lampadina bosch H7"
     },
     
     
@@ -35,6 +37,6 @@ const LISTA_PRODOTTI = {
         prezzo: 5, 
         categoria: "Gadget", 
         immagine: "img/profumo.jpg", 
-        desc: "Fragranza pino" 
+        desc: "Fragranza Vaniglia" 
     }
 };
