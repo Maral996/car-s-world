@@ -104,15 +104,20 @@
             
             let totRicambi = 0;
             let listaTesto = "";
+            let soliCodici = ""; // Nuova variabile per l'email
+
             Object.keys(cart).forEach(id => {
                 if(prodotti[id]) {
                     let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
                     totRicambi += sub;
+                    
+                    // PDF
                     doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); 
                     doc.text(`${sub.toFixed(2)}€`, 160, y);
                     
-                    // Inserito Codice ID nella lista per l'email
-                    listaTesto += `Cod: ${id} - ${p.nome} (x${qty}), `;
+                    // Email Stringa
+                    listaTesto += `ID:${id} - ${p.nome} (x${qty}); `;
+                    soliCodici += `[${id}] `;
                     y += 7;
                 }
             });
@@ -132,14 +137,17 @@
             doc.setFontSize(14); doc.setFont(undefined, 'bold');
             doc.text(`TOTALE: ${totaleFin}€`, 130, y);
 
-            // Payload per invio email
+            // Payload per invio email con campo codici separato
             payload = {
-                email: dati.email,
-                cliente: infoFatt,
+                _subject: `Nuovo Ordine ${numOrdine} da ${infoFatt}`,
+                email_cliente: dati.email,
+                nome_cliente: infoFatt,
                 telefono: dati.tel,
-                pagamento: dati.pagamento,
+                metodo_pagamento: dati.pagamento,
                 note: dati.note || "Nessuna",
-                dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
+                elenco_prodotti: listaTesto,
+                CODICI_ARTICOLI: soliCodici, // Campo esplicito per i codici
+                TOTALE_ORDINE: `${totaleFin}€`
             };
 
             currentDoc = doc;
@@ -147,7 +155,7 @@
 
         } catch (e) {
             console.error(e);
-            alert("Errore nella generazione del PDF. Controlla i dati.");
+            alert("Errore nella generazione del PDF.");
         }
     }
 
