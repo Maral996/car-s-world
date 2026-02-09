@@ -150,7 +150,6 @@
     <div class="pdf-actions">
         <button class="btn-pdf" style="background:#ff9800;" onclick="modificaOrdine()">✏️ Modifica Ordine</button>
         <button class="btn-pdf" style="background:#4caf50;" onclick="downloadPDF()">⬇️ Download</button>
-        <button class="btn-pdf" style="background:#2196f3;" onclick="printPDF()">🖨️ Stampa</button>
         <button class="btn-pdf" style="background:#d32f2f; font-size:15px; padding:10px 20px;" onclick="chiudiEInvia()">🚀 INVIA ORDINE ADESSO</button>
     </div>
     <iframe id="pdf-preview"></iframe>
@@ -216,6 +215,12 @@
     }
 
     function generaPDF() {
+        // Controllo carrello vuoto prima di procedere
+        if (Object.keys(cart).length === 0) {
+            alert("carrello vuoto impossibile creare l’ordine");
+            return;
+        }
+
         const { jsPDF } = window.jspdf; const doc = new jsPDF();
         const ora = new Date().toLocaleString('it-IT');
         const numOrdine = generateOrderNumber();
@@ -282,7 +287,6 @@
     }
 
     function downloadPDF() { if(currentDoc) currentDoc.save(`Ordine_CarsWorld_${Date.now()}.pdf`); }
-    function printPDF() { if(currentDoc) { const uri = currentDoc.output('bloburl'); window.open(uri, '_blank'); } }
     function modificaOrdine() { document.getElementById('modal-pdf').style.display = 'none'; }
     function chiudiEInvia() { 
         localStorage.setItem('pending_order', 'true');
