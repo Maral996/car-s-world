@@ -10,7 +10,7 @@ const LISTA_PRODOTTI = {
         nome: "Batteria xAh", 
         prezzo: 75,
         categoria: "Ricambi",
-        immagine: " "
+        immagine: "",
         desc: "Batteria xah ymh"
     }, 
     
@@ -18,7 +18,7 @@ const LISTA_PRODOTTI = {
         nome: "Lampadina Bosch H7", 
         prezzo: 12,
         categoria: "Ricambi",
-        immagine: "img/lampadinah7bosch.jpg"
+        immagine: "img/lampadinah7bosch.jpg",
         desc: "Lampadina bosch H7"
     },
     
