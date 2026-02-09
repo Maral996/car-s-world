@@ -43,7 +43,6 @@
 </div>
 
 <script>
-    // UTILIZZA IL DATABASE ESTERNO
     const prodotti = LISTA_PRODOTTI;
     const dati = JSON.parse(sessionStorage.getItem('dati_checkout'));
     let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
@@ -74,7 +73,7 @@
         doc.setFontSize(10); doc.setTextColor(100);
         doc.setFont(undefined, 'normal');
         doc.text(`Ordine: `, 20, 30);
-        doc.setFont(undefined, 'bold'); // NUMERO ORDINE IN GRASSETTO
+        doc.setFont(undefined, 'bold');
         doc.text(`${numOrdine}`, 32, 30);
         doc.setFont(undefined, 'normal');
         doc.text(` | Data: ${ora}`, 55, 30);
@@ -87,10 +86,12 @@
         doc.setFont(undefined, 'normal');
         doc.text(`${infoFatt}\n${dati.f_via}\n${dati.f_cap} ${dati.f_cit} (${dati.f_pro})`, 20, 52);
 
-        // INDIRIZZO SPEDIZIONE
+        // INDIRIZZO SPEDIZIONE (Logica corretta richiesta)
         doc.setFont(undefined, 'bold');
         doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
         doc.setFont(undefined, 'normal');
+
+        // Se spedizione è uguale a fatturazione, riscrivo gli stessi dati
         if (dati.spedizione_uguale) {
             doc.text(`${infoFatt}\n${dati.f_via}\n${dati.f_cap} ${dati.f_cit} (${dati.f_pro})`, 110, 52);
         } else {
@@ -122,22 +123,21 @@
         y += 10;
         doc.text(`Spedizione: ${spedVal === 0 ? "Gratis" : spedVal.toFixed(2) + "€"}`, 130, y); y += 7;
         
-        // GESTIONE CONTRASSEGNO / BONIFICO
         if (dati.pagamento === "Contrassegno") {
             doc.text(`Pagamento in contrassegno: ${contrVal.toFixed(2)}€`, 130, y); y += 10;
         } else {
-            // Se bonifico o altro, non aggiunge la riga del supplemento e va avanti
             y += 3;
         }
 
         doc.setFontSize(14); doc.setFont(undefined, 'bold');
         doc.text(`TOTALE: ${totaleFin}€`, 130, y);
 
+        // PAYLOAD PER FORMSPREE
         payload = {
             email: dati.email,
             telefono: dati.tel,
             cliente: infoFatt,
-            indirizzo: dati.spedizione_uguale ? `${dati.f_via}, ${dati.f_cit}` : `${dati.s_via}, ${dati.s_cit}`,
+            indirizzo_spedizione: dati.spedizione_uguale ? `${dati.f_via}, ${dati.f_cit} (${dati.f_pro})` : `${dati.s_via}, ${dati.s_cit} (${dati.s_pro})`,
             pagamento: dati.pagamento,
             dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
         };
