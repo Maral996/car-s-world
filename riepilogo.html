@@ -90,8 +90,10 @@
             if(prodotti[id]) {
                 let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
                 totRicambi += sub;
-                doc.text(`${p.nome} x${qty}`, 20, y); doc.text(`${sub.toFixed(2)}€`, 160, y);
-                listaTesto += `${p.nome} (x${qty}), `;
+                // MODIFICA: Inserito codice ID nel PDF
+                doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); doc.text(`${sub.toFixed(2)}€`, 160, y);
+                // MODIFICA: Inserito codice ID nella lista per e-mail
+                listaTesto += `Cod: ${id} - ${p.nome} (x${qty}), `;
                 y += 7;
             }
         });
