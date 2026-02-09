@@ -19,7 +19,8 @@
     }
 
     function generaPDF() {
-        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        const { jsPDF } = window.jspdf; 
+        const doc = new jsPDF();
         const ora = new Date().toLocaleString('it-IT');
         const numOrdine = generateOrderNumber();
         
@@ -33,18 +34,23 @@
         doc.setFontSize(11); doc.setTextColor(0);
         doc.setFont(undefined, 'bold');
         doc.text("DESTINATARIO (Fatturazione):", 20, 45);
-        let infoFatt = dati.tipo === 'Azienda' ? dati.rag_soc : dati.nome;
+        
+        // Controllo se è azienda o privato per il nome
+        let infoFatt = (dati.tipo === 'Azienda') ? (dati.rag_soc || "N/D") : (dati.nome || "N/D");
+        
         doc.setFont(undefined, 'normal');
-        doc.text(`${infoFatt}\n${dati.f_via}\n${dati.f_cap} ${dati.f_cit} (${dati.f_pro})\nTel: ${dati.tel}`, 20, 52);
+        doc.text(`${infoFatt}\n${dati.f_via || ''}\n${dati.f_cap || ''} ${dati.f_cit || ''} (${dati.f_pro || ''})\nTel: ${dati.tel || ''}`, 20, 52);
 
-        // INDIRIZZO SPEDIZIONE - Solo se diverso
-        if (!dati.spedizione_uguale) {
+        // INDIRIZZO SPEDIZIONE - Corretto il nome della variabile (spedizione_uguale)
+        // Se nel checkout hai usato check_sped, qui lo normalizziamo
+        const isUguale = dati.spedizione_uguale !== undefined ? dati.spedizione_uguale : dati.check_sped;
+
+        if (!isUguale) {
             doc.setFont(undefined, 'bold');
             doc.text("INDIRIZZO DI SPEDIZIONE:", 110, 45);
             doc.setFont(undefined, 'normal');
-            // Aggiunto Telefono Spedizione (s_tel)
-            let telSped = dati.s_tel ? `Tel: ${dati.s_tel}` : `Tel: ${dati.tel}`;
-            doc.text(`${dati.s_nome}\n${dati.s_via}\n${dati.s_cap} ${dati.s_cit} (${dati.s_pro})\n${telSped}`, 110, 52);
+            let telSped = dati.s_tel ? `Tel: ${dati.s_tel}` : `Tel: ${dati.tel || ''}`;
+            doc.text(`${dati.s_nome || infoFatt}\n${dati.s_via || ''}\n${dati.s_cap || ''} ${dati.s_cit || ''} (${dati.s_pro || ''})\n${telSped}`, 110, 52);
         }
 
         // NOTE PER IL CORRIERE
@@ -54,7 +60,6 @@
             doc.text("Note per la consegna:", 20, yNote);
             doc.setFont(undefined, 'normal');
             doc.setFontSize(9);
-            // Gestione testo lungo per le note
             const noteSplit = doc.splitTextToSize(dati.note, 170);
             doc.text(noteSplit, 20, yNote + 7);
             yNote += 20; 
@@ -73,7 +78,8 @@
             if(prodotti[id]) {
                 let p = prodotti[id]; let qty = cart[id]; let sub = p.prezzo * qty;
                 totRicambi += sub;
-                doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); doc.text(`${sub.toFixed(2)}€`, 160, y);
+                doc.text(`[${id}] ${p.nome} x${qty}`, 20, y); 
+                doc.text(`${sub.toFixed(2)}€`, 160, y);
                 listaTesto += `Cod: ${id} - ${p.nome} (x${qty}), `;
                 y += 7;
             }
@@ -93,12 +99,11 @@
         doc.setFontSize(14); doc.setFont(undefined, 'bold');
         doc.text(`TOTALE: ${totaleFin}€`, 130, y + 5);
 
-        // PAYLOAD AGGIORNATO CON NOTE E TELEFONO
         payload = {
             email: dati.email,
             telefono_rif: dati.tel,
             cliente: infoFatt,
-            spedizione: dati.spedizione_uguale ? "Uguale a fatturazione" : `${dati.s_via}, ${dati.s_cit} - Tel: ${dati.s_tel || 'N/D'}`,
+            spedizione: isUguale ? "Uguale a fatturazione" : `${dati.s_via}, ${dati.s_cit} - Tel: ${dati.s_tel || 'N/D'}`,
             note_consegna: dati.note || "Nessuna nota",
             pagamento: dati.pagamento,
             dettagli_ordine: `ORDINE ${numOrdine}: ${listaTesto} | TOTALE: ${totaleFin}€`
@@ -108,5 +113,5 @@
         document.getElementById('pdf-preview').src = doc.output('bloburl');
     }
 
-    // ... (restanti funzioni download e inviaOrdineAJAX invariate) ...
+    window.onload = generaPDF;
 </script>
