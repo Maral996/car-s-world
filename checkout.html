@@ -50,7 +50,7 @@
             <input type="text" id="cod_univoco" placeholder="Codice Univoco o PEC">
         </div>
         
-        <input type="text" id="fatt_via" placeholder="Via e Numero Civico" required>
+        <input type="text" id="fatt_via" placeholder="Indirizzo" required>
         <div class="address-grid">
             <input type="text" id="fatt_citta" placeholder="Città" required>
             <input type="text" id="fatt_prov" placeholder="Prov." maxlength="2" oninput="this.value = this.value.toUpperCase()" required>
@@ -60,11 +60,11 @@
         <h3>Spedizione</h3>
         <label class="checkbox-container">
             <input type="checkbox" id="check_spedizione_diversa" onchange="toggleSpedizione()">
-            Spedizione diversa da fatturazione?
+            Indirizzo di spedizione diverso da quello di fatturazione?
         </label>
         
         <div id="box-spedizione" class="hidden">
-            <input type="text" id="sped_via" placeholder="Via e Numero Civico">
+            <input type="text" id="sped_via" placeholder="Indirizzo">
             <div class="address-grid">
                 <input type="text" id="sped_citta" placeholder="Città">
                 <input type="text" id="sped_prov" placeholder="Prov." maxlength="2" oninput="this.value = this.value.toUpperCase()">
