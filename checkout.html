@@ -12,7 +12,6 @@
         input, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ddd; font-size: 15px; outline: none; box-sizing: border-box; text-align: center; }
         .address-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
         
-        /* Stile Riepilogo Importi */
         .riepilogo-box { background: #fff8ef; padding: 20px; border-radius: 12px; border: 1px solid #ffe0b2; margin-top: 25px; margin-bottom: 15px; }
         .row { display: flex; justify-content: space-between; margin-bottom: 8px; color: #666; font-size: 15px; }
         .totale-grande { display: flex; justify-content: space-between; font-weight: 800; font-size: 22px; color: #e65100; border-top: 2px solid #ffb74d; padding-top: 15px; margin-top: 10px; }
@@ -32,8 +31,9 @@
 
     <form id="form-dati" onsubmit="procediAlRiepilogo(event)">
         <h3>Contatti</h3>
-        <input type="email" id="email" placeholder="Indirizzo Email" required>
-        <input type="tel" id="tel" placeholder="Numero di Telefono / WhatsApp" required>
+        <input type="email" id="email" placeholder="Indirizzo Email">
+        <input type="tel" id="tel" placeholder="Numero di Telefono / WhatsApp">
+        <small style="color: #888; display: block; margin-top: -10px; margin-bottom: 15px;">* Inserisci almeno un recapito</small>
 
         <h3>Dati Fatturazione</h3>
         <select id="tipo_cliente" onchange="switchFatt()">
@@ -41,8 +41,8 @@
             <option value="Azienda">Azienda</option>
         </select>
         <div id="box-privato">
-            <input type="text" id="nome" placeholder="Nome e Cognome">
-            <input type="text" id="cf" placeholder="Codice Fiscale" oninput="this.value = this.value.toUpperCase()">
+            <input type="text" id="nome" placeholder="Nome e Cognome" required>
+            <input type="text" id="cf" placeholder="Codice Fiscale" oninput="this.value = this.value.toUpperCase()" required>
         </div>
         <div id="box-ditta" class="hidden">
             <input type="text" id="ragione_sociale" placeholder="Ragione Sociale">
@@ -90,7 +90,6 @@
 </div>
 
 <script>
-    // Carichiamo i prodotti per il calcolo (devono essere uguali a quelli dello store)
     const prodotti = { 
         1:{nome:"Spazzole Tergicristallo", prezzo:30}, 
         2:{nome:"Batteria 60Ah", prezzo:75}, 
@@ -100,15 +99,12 @@
     function calcolaImporti() {
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
         let ric = 0;
-        
         Object.keys(cart).forEach(id => { 
             if(prodotti[id]) ric += prodotti[id].prezzo * cart[id];
         });
-        
         let sped = (ric >= 100 || ric === 0) ? 0 : 7.50;
         let isContr = document.getElementById('metodo_pag').value === "Contrassegno";
         let contr = isContr ? 5 : 0;
-        
         document.getElementById('row-contrassegno').classList.toggle('hidden', !isContr);
         document.getElementById('res-ric').innerText = ric.toFixed(2) + "€";
         document.getElementById('res-sped').innerText = sped === 0 ? "Gratis" : "7.50€";
@@ -119,6 +115,11 @@
         const isDitta = document.getElementById('tipo_cliente').value === 'Azienda';
         document.getElementById('box-privato').classList.toggle('hidden', isDitta);
         document.getElementById('box-ditta').classList.toggle('hidden', !isDitta);
+        // Aggiorna required dinamicamente
+        document.getElementById('nome').required = !isDitta;
+        document.getElementById('cf').required = !isDitta;
+        document.querySelector('#box-ditta input[id="ragione_sociale"]').required = isDitta;
+        document.querySelector('#box-ditta input[id="piva"]').required = isDitta;
     }
 
     function toggleSpedizione() {
@@ -128,9 +129,20 @@
 
     function procediAlRiepilogo(e) {
         e.preventDefault();
+        
+        // --- LOGICA DI CONTROLLO CONTATTI ---
+        const emailVal = document.getElementById('email').value.trim();
+        const telVal = document.getElementById('tel').value.trim();
+
+        if (emailVal === "" && telVal === "") {
+            alert("Per favore, inserisci almeno un metodo di contatto (Email o Telefono) per procedere.");
+            return; // Blocca l'invio
+        }
+        // ------------------------------------
+
         const dati = {
-            email: document.getElementById('email').value,
-            tel: document.getElementById('tel').value,
+            email: emailVal,
+            tel: telVal,
             tipo: document.getElementById('tipo_cliente').value,
             nome: document.getElementById('nome').value,
             cf: document.getElementById('cf').value,
@@ -152,7 +164,6 @@
         window.location.href = 'riepilogo.html';
     }
 
-    // Esegui il calcolo all'avvio
     window.onload = calcolaImporti;
 </script>
 </body>
