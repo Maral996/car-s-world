@@ -10,6 +10,7 @@ const LISTA_PRODOTTI = {
         nome: "Batteria xAh", 
         prezzo: 75,
         categoria: "Ricambi",
+        isBatteria: true,
         immagine: "",
         desc: "Batteria xah ymh"
     }, 
@@ -22,14 +23,6 @@ const LISTA_PRODOTTI = {
         desc: "Lampadina bosch H7"
     },
     
-    P1: { 
-        nome: "Michelin Primacy 205/55 R16 91V", 
-        prezzo: 85.50, 
-        categoria: "Pneumatici", 
-        isPneumatico: true,
-        immagine: "img/michelin.jpg", 
-        desc: "Estivo, ottima tenuta" 
-    },
     G1: { 
         nome: "Profumatore Car's World", 
         prezzo: 5, 
