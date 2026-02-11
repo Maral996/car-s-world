@@ -14,7 +14,6 @@ const LISTA_PRODOTTI = {
         immagine: "",
         desc: "Batteria xah ymh"
     }, 
-    
     R3: { 
         nome: "Lampadina Bosch H7", 
         prezzo: 12,
@@ -22,7 +21,14 @@ const LISTA_PRODOTTI = {
         immagine: "img/lampadinah7bosch.jpg",
         desc: "Lampadina bosch H7"
     },
-    
+    P1: { 
+        nome: "Pneumatico Estivo 205/55 R16", 
+        prezzo: 65, 
+        categoria: "Pneumatici", 
+        isPneumatico: true,
+        immagine: "img/pneumatico_standard.jpg", 
+        desc: "Ottima aderenza sul bagnato" 
+    },
     G1: { 
         nome: "Profumatore Car's World", 
         prezzo: 5, 
