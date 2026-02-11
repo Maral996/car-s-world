@@ -15,7 +15,6 @@
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ddd; font-size: 15px; outline: none; box-sizing: border-box; text-align: center; font-family: inherit; }
         .address-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
         
-        /* BOX RIEPILOGO AGGIORNATO AL BLU */
         .riepilogo-box { background: #f0f7ff; padding: 20px; border-radius: 12px; border: 1px solid #0c83eb; margin-top: 25px; margin-bottom: 15px; }
         .row { display: flex; justify-content: space-between; margin-bottom: 8px; color: #444; font-size: 15px; }
         .totale-grande { display: flex; justify-content: space-between; font-weight: 800; font-size: 22px; color: #0c83eb; border-top: 2px solid #0c83eb; padding-top: 15px; margin-top: 10px; }
@@ -88,6 +87,7 @@
 
         <div class="riepilogo-box">
             <div class="row"><span>Prodotti:</span><span id="res-ric">0.00€</span></div>
+            <div id="row-pfu" class="row hidden"><span style="font-style: italic;">Contributo Ambientale PFU:</span><span id="res-pfu">0.00€</span></div>
             <div id="row-contributo" class="row hidden"><span style="font-style: italic;">Contributo Eco Ambientale:</span><span id="res-contributo">0.00€</span></div>
             <div class="row"><span>Spedizione:</span><span id="res-sped">0.00€</span></div>
             <div id="row-contrassegno" class="row hidden"><span>Supplemento Contrassegno:</span><span>5.00€</span></div>
@@ -104,37 +104,38 @@
     function calcolaImporti() {
         let cart = JSON.parse(localStorage.getItem('cart_carsworld')) || {};
         let ric = 0;
+        let pfu = 0;
         let contributo = 0;
+        const COSTO_PFU_SINGOLO = 2.50;
         const COSTO_CONTRIBUTO_SINGOLO = 4.00;
 
         Object.keys(cart).forEach(id => { 
             if(prodotti[id]) {
-                // Calcolo base prodotti
                 ric += prodotti[id].prezzo * cart[id];
                 
-                // Se è una batteria, calcola il Contributo Eco Ambientale
+                if(prodotti[id].isPneumatico) {
+                    pfu += (COSTO_PFU_SINGOLO * cart[id]);
+                }
                 if(prodotti[id].isBatteria) {
                     contributo += (COSTO_CONTRIBUTO_SINGOLO * cart[id]);
                 }
             }
         });
 
-        // La spedizione gratuita si calcola sul totale ricambi (escluso contributo)
         let sped = (ric >= 100 || ric === 0) ? 0 : 7.50;
         let isContr = document.getElementById('metodo_pag').value === "Contrassegno";
         let contr = isContr ? 5 : 0;
 
-        // Gestione visibilità righe
         document.getElementById('row-contrassegno').classList.toggle('hidden', !isContr);
+        document.getElementById('row-pfu').classList.toggle('hidden', pfu === 0);
         document.getElementById('row-contributo').classList.toggle('hidden', contributo === 0);
 
-        // Aggiornamento testi
         document.getElementById('res-ric').innerText = ric.toFixed(2) + "€";
+        document.getElementById('res-pfu').innerText = pfu.toFixed(2) + "€";
         document.getElementById('res-contributo').innerText = contributo.toFixed(2) + "€";
         document.getElementById('res-sped').innerText = sped === 0 ? "Gratis" : "7.50€";
         
-        // Il totale finale include tutto
-        let totaleFinale = ric + contributo + sped + contr;
+        let totaleFinale = ric + pfu + contributo + sped + contr;
         document.getElementById('res-tot').innerText = totaleFinale.toFixed(2) + "€";
     }
 
